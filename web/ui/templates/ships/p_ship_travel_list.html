@@ -1,0 +1,29 @@
+{% load bootstrap3 %}
+
+<div class="panel panel-info">
+    <div class="panel-heading"><h4>Travel to</h4></div>
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Planet</th>
+                <th>Distance</th>
+                <th>Fuel Burned</th>
+                <th/>
+            </tr>
+        </thead>
+        <tbody>
+            {% for planet in planets %}
+                <tr>
+                    <td>{{ planet.name }}</td>
+                    <td>{{ planet.distance }}</td>
+                    <td>{{ planet.fuel_burned_percent }}</td>
+                    <td>
+                        {% if ship.planet.id != planet.id %}
+                        <a href="{% url 'ship-travel-to-planet' ship.id planet.id %}" class="btn btn-xs btn-success">{% bootstrap_icon 'send' %} Warp to Planet</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

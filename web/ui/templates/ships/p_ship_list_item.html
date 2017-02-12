@@ -11,15 +11,19 @@
             <dt>Orbiting</dt>
             <dd><a href="{% url 'planet' ship.planet.id %}">{{ ship.planet.name }}</a></dd>
             <dt>Cargo</dt>
-            <dd>{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</dd>
-            <dt>Range</dt>
-            <dd>{{ ship.current_range }}</dd>
+            <dd>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</div>
+                </div>
+            </dd>
             <dt>Fuel</dt>
             <dd>
                 <div class="progress">
                     <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ ship.fuel_level }}%"></div>
                 </div>
             </dd>
+            <dt>Range</dt>
+            <dd>{{ ship.current_range }}</dd>
         </dl>
     </div>
     <div class="col-md-2">

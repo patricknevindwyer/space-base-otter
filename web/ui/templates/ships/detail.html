@@ -4,13 +4,11 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-4">
-        <div class="btn-group">
-            Ship Detail
-        </div>
+    <div class="col-md-6">
+        {% include "ships/p_ship_summary.html" with ship=ship %}
     </div>
-    <div class="col-md-8">
-            {% include "ships/p_ship_summary.html" with ship=ship %}
+    <div class="col-md-6">
+        {% include "ships/p_ship_travel_list.html" with ship=ship planets=planets %}
     </div>
 </div>
 {% endblock %}

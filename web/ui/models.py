@@ -247,3 +247,39 @@ class Ship(models.Model):
         :return:
         """
         return 0
+
+    def cargo_load_percent(self):
+        """
+        What percent of our cargo hold is filled?
+
+        :return:
+        """
+        return self.current_cargo_load() / self.cargo_capacity * 100.0
+
+    def planets_in_range(self):
+        """
+        Find the planets that are in range, and compute a bit of data
+        :return:
+        """
+        plist = []
+
+        for planet in Planet.objects.all():
+            plist.append(
+                {
+                    "name": planet.name,
+                    "id": planet.id,
+                    "distance": 0,
+                    "fuel_burned_percent": 0
+                }
+            )
+        return plist
+
+    def travel_to(self, planet):
+        """
+        Update the ship for travel to a planet.
+
+        :param planet:
+        :return:
+        """
+        self.planet = planet
+        self.save()

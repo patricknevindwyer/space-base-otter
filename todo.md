@@ -3,9 +3,10 @@
  - [x] link ship to planet
  - [x] planet list item needs # of orbiters
  - [x] progress bar for fuel level
- - [ ] progress bar for cargo capacity
- - [ ] move between planets
+ - [x] progress bar for cargo capacity
+ - [x] move between planets
  - [ ] tactical play view
+ - [ ] calculate real distance
  - [ ] limit planet movement to planets within range
  - [ ] generate large # of planets
  - [ ] page or search for planet list instead of a full list
