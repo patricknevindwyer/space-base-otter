@@ -6,6 +6,7 @@ from ui.models import Planet
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def list(request):
@@ -16,7 +17,21 @@ def list(request):
     :return:
     """
     all_planets = Planet.objects.all()
-    return render(request, "planets/list.html", context=fill_context({"planets": all_planets}))
+
+    # build pagination
+    planet_pager = Paginator(all_planets, 5)
+    page = request.GET.get("page")
+
+    try:
+        planets = planet_pager.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        planets = planet_pager.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        planets = planet_pager.page(planet_pager.num_pages)
+
+    return render(request, "planets/list.html", context=fill_context({"planets": planets}))
 
 
 def destroy_all(request):

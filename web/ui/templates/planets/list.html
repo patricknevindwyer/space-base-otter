@@ -19,6 +19,25 @@
             {% include "planets/p_planet_list_item.html" with planet=planet %}
         {% endfor %}
 
+        <ul class="pagination">
+            {% if planets.has_previous %}
+            <li>
+              <a href="?page={{ planets.previous_page_number }}" aria-label="Previous">&laquo;</a>
+            </li>
+            {% endif %}
+            {% for page in planets.paginator.page_range %}
+                {% if page == planets.number %}
+                    <li class="active"><a href="#">{{ page }}</a></li>
+                {% else %}
+                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if planets.has_next %}
+            <li>
+              <a href="?page={{ planets.next_page_number }}" aria-label="Next">&raquo;</a>
+            </li>
+            {% endif %}
+          </ul>
     </div>
 </div>
 {% endblock %}
