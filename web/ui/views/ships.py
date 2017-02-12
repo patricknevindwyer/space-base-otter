@@ -51,8 +51,7 @@ def detail(request, ship_id):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    travel_planets = ship.planets_in_range()
-    return render(request, "ships/detail.html", context=fill_context({"ship": ship, "planets": travel_planets}))
+    return render(request, "ships/detail.html", context=fill_context({"ship": ship}))
 
 
 def travel_to_planet(request, ship_id, planet_id):

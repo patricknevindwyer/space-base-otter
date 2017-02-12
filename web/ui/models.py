@@ -6,6 +6,7 @@ import random
 import string
 import json
 import os
+import math
 
 # Resource settings we use
 
@@ -185,7 +186,7 @@ class ShipManager(models.Manager):
         # home planet?
         ship_planet = Planet.objects.first()
 
-        ship_range = 2000
+        ship_range = 1000
         ship_fuel_level = 100.0
         ship_cargo_cap = 200
 
@@ -268,11 +269,20 @@ class Ship(models.Model):
                 {
                     "name": planet.name,
                     "id": planet.id,
-                    "distance": 0,
+                    "distance": self.distance_to(planet),
                     "fuel_burned_percent": 0
                 }
             )
         return plist
+
+    def distance_to(self, planet):
+        """
+        How far is it to the given planet.
+
+        :param planet:
+        :return:
+        """
+        return math.sqrt(((self.planet.x_coordinate - planet.x_coordinate)**2) + ((self.planet.y_coordinate - planet.y_coordinate)**2))
 
     def travel_to(self, planet):
         """

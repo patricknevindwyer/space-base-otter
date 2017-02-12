@@ -5,8 +5,7 @@
  - [x] progress bar for fuel level
  - [x] progress bar for cargo capacity
  - [x] move between planets
- - [ ] tactical play view
- - [ ] calculate real distance
+ - [x] calculate real distance
  - [ ] limit planet movement to planets within range
  - [ ] generate large # of planets
  - [ ] page or search for planet list instead of a full list
@@ -32,3 +31,8 @@
    - [ ] upgrade passengers to low/medium/high/luxury capacity
    - [ ] special addition: driller (mine asteroids)
    - [ ] special addition: colony ship (bulk transport colonists)
+ - [ ] tactical play view
+   - [ ] ship summary
+   - [ ] planet goods summary
+   - [ ] travel summary
+   
