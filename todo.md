@@ -1,0 +1,33 @@
+# TODO
+
+ - [ ] link ship to planet
+ - [ ] planet list item needs # of orbiters
+ - [ ] progress bar for fuel level
+ - [ ] progress bar for cargo capacity
+ - [ ] move between planets
+ - [ ] tactical play view
+ - [ ] limit planet movement to planets within range
+ - [ ] generate large # of planets
+ - [ ] page or search for planet list instead of a full list
+ - [ ] add user support
+ - [ ] users have money
+ - [ ] ships belong to users
+ - [ ] add fuel consumption
+ - [ ] add fuel purchasing
+ - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
+ - [ ] add cargo support
+ - [ ] buy cargo
+ - [ ] sell cargo
+ - [ ] set cargo purchase price 
+ - [ ] show profit/loss for selling current cargo
+ - [ ] images for cargo
+ - [ ] modular ships
+   - [ ] shipyards on some planets
+   - [ ] ship templates to buy
+   - [ ] upgrade / add capacity
+   - [ ] upgrade engine
+   - [ ] upgrade electronics
+   - [ ] add passanger capacity
+   - [ ] upgrade passengers to low/medium/high/luxury capacity
+   - [ ] special addition: driller (mine asteroids)
+   - [ ] special addition: colony ship (bulk transport colonists)
