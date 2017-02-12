@@ -1,6 +1,6 @@
 # TODO
 
- - [ ] link ship to planet
+ - [x] link ship to planet
  - [ ] planet list item needs # of orbiters
  - [ ] progress bar for fuel level
  - [ ] progress bar for cargo capacity

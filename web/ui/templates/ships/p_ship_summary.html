@@ -10,7 +10,7 @@
                 <div class="col-md-4">
                     <dl class="dl-horizontal">
                         <dt>Orbiting</dt>
-                        <dd>{{ ship.planet.name }}</dd>
+                        <dd><a href="{% url 'planet' ship.planet.id %}">{{ ship.planet.name }}</a></dd>
                         <dt>Range</dt>
                         <dd>{{ ship.current_range }}</dd>
                         <dt>Cargo</dt>
