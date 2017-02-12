@@ -4,13 +4,11 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-4">
-        <div class="btn-group">
-            Planetary Detail
-        </div>
+    <div class="col-md-6">
+        {% include "planets/p_planet_summary.html" with planet=planet %}
     </div>
-    <div class="col-md-8">
-            {% include "planets/p_planet_summary.html" with planet=planet %}
+    <div class="col-md-5 col-md-offset-1">
+        {% include "planets/p_planet_orbiters.html" with planet=planet %}
     </div>
 </div>
 {% endblock %}

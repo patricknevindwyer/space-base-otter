@@ -217,7 +217,7 @@ class Ship(models.Model):
     model = models.CharField(max_length=255, null=False, blank=False)
 
     # a ship is at a planet
-    planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location))
+    planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="orbiters")
 
     # some basic settings that we'll improve upon later
 

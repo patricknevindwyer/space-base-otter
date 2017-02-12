@@ -17,7 +17,11 @@
     <div class="col-md-2">
         <div class="btn-group">
             <a href="{% url 'planet' planet.id %}" class="btn btn-success btn-xs">{% bootstrap_icon 'eye-open' %} Open</a>
-            <a href="{% url 'planet-remove' planet.id %}" class="btn btn-danger btn-xs">{% bootstrap_icon 'trash' %}</a>
+            {% if planet.orbiters.count > 0 %}
+            <a href="#" class="btn btn-danger btn-xs" disabled>{% bootstrap_icon 'trash' %}</a>
+            {% else %}
+            <a href="{% url 'planet-remove' planet.id %}" class="btn btn-danger btn-xs" >{% bootstrap_icon 'trash' %}</a>
+            {% endif %}
         </div>
     </div>
 </div>
