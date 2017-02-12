@@ -264,7 +264,30 @@ class Ship(models.Model):
         """
         plist = []
 
-        for planet in Planet.objects.all():
+        # figure out how far we can go
+        max_range = self.current_range()
+
+        # preselect a set of planets in the box that our max range describes
+        min_x = self.planet.x_coordinate - max_range
+        max_x = self.planet.x_coordinate + max_range
+        min_y = self.planet.y_coordinate - max_range
+        max_y = self.planet.y_coordinate + max_range
+
+        close_enough = Planet.objects.filter(
+            x_coordinate__gte=min_x,
+            x_coordinate__lte=max_x,
+            y_coordinate__gte=min_y,
+            y_coordinate__lte=max_y
+        ).all()
+
+        for planet in close_enough:
+
+            # now do a real distance calculation
+            real_dist = self.distance_to(planet)
+            if real_dist > self.current_range():
+                continue
+
+            # ok! our planet is close enough
             plist.append(
                 {
                     "name": planet.name,

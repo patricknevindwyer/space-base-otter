@@ -6,7 +6,7 @@
  - [x] progress bar for cargo capacity
  - [x] move between planets
  - [x] calculate real distance
- - [ ] limit planet movement to planets within range
+ - [x] limit planet movement to planets within range
  - [ ] generate large # of planets
  - [ ] page or search for planet list instead of a full list
  - [ ] add user support
