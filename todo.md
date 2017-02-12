@@ -2,7 +2,7 @@
 
  - [x] link ship to planet
  - [x] planet list item needs # of orbiters
- - [ ] progress bar for fuel level
+ - [x] progress bar for fuel level
  - [ ] progress bar for cargo capacity
  - [ ] move between planets
  - [ ] tactical play view

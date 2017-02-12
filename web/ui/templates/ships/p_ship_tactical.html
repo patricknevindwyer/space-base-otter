@@ -7,7 +7,7 @@
                 <div class="col-md-4">
                     <img src="{% static 'ui/images/ships/'|add:ship.image_name %}" style="width:200px;height:200px">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <dl class="dl-horizontal">
                         <dt>Orbiting</dt>
                         <dd>{{ ship.planet.name }}</dd>
@@ -16,7 +16,11 @@
                         <dt>Cargo</dt>
                         <dd>{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</dd>
                         <dt>Fuel</dt>
-                        <dd>{{ ship.fuel_level }}</dd>
+                        <dd>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ ship.fuel_level }}%"></div>
+                            </div>
+                        </dd>
                     </dl>
                 </div>
             </div>

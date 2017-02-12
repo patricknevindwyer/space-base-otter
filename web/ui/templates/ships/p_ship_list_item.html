@@ -10,10 +10,16 @@
         <dl class="dl-horizontal">
             <dt>Orbiting</dt>
             <dd><a href="{% url 'planet' ship.planet.id %}">{{ ship.planet.name }}</a></dd>
-            <dt>Range</dt>
-            <dd>{{ ship.current_range }}</dd>
             <dt>Cargo</dt>
             <dd>{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</dd>
+            <dt>Range</dt>
+            <dd>{{ ship.current_range }}</dd>
+            <dt>Fuel</dt>
+            <dd>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ ship.fuel_level }}%"></div>
+                </div>
+            </dd>
         </dl>
     </div>
     <div class="col-md-2">
