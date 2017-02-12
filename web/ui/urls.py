@@ -14,8 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from ui.views import views
+from ui.views import index
+from ui.views import planets
 
 urlpatterns = [
-    url(r'^hello/$', views.index),
+    url(r'^$', index.index),
+
+    url(r'^planets/$', planets.list, name="planets"),
+    url(r'^planets/create/random/?$', planets.create_random, name="planets-create-random"),
+    url(r'^planet/(?P<planet_id>[0-9]+)/?$', planets.detail, name="planet"),
+    url(r'^planet/(?P<planet_id>[0-9]+)/remove/?$', planets.remove, name="planet-remove"),
 ]

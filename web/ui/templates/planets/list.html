@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="btn-group">
+            <a href="{% url 'planets-create-random' %}" class="btn btn-sm btn-info">{% bootstrap_icon 'refresh' %} Random</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+
+        {% for planet in planets %}
+            {% include "planets/p_planet_list_item.html" with planet=planet %}
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

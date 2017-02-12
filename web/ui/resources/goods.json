@@ -1,0 +1,183 @@
+[
+  {
+    "good": "water",
+    "price": {
+      "base": 10,
+      "import": {
+        "min": 0.8, "max": 10.0
+      },
+      "export": {
+        "min": 0.1, "max": 2.0
+      }
+    },
+    "liklihood": {
+      "import": 0.2, "export": 0.1
+    }
+  },
+  {
+    "good": "lumber",
+    "price": {
+      "base": 20,
+      "import": {
+        "min": 0.5, "max": 4.0
+      },
+      "export": {
+        "min": 0.3, "max": 4.0
+      }
+    },
+    "liklihood": {
+      "import": 0.25, "export": 0.5
+    }
+  },
+  {
+    "good": "ore",
+    "price": {
+      "base": 80,
+      "import": {
+        "min": 0.5, "max": 100.0
+      },
+      "export": {
+        "min": 0.76, "max": 4.0
+      }
+    },
+    "liklihood": {
+      "import": 0.4, "export": 0.4
+    }
+  },
+  {
+    "good": "rare metals",
+    "price": {
+      "base": 160,
+      "import": {
+        "min": 0.5, "max": 20.0
+      },
+      "export": {
+        "min": 0.5, "max": 6.0
+      }
+    },
+    "liklihood": {
+      "import": 0.75, "export": 0.15
+    }
+  },
+  {
+    "good": "steel",
+    "price": {
+      "base": 200,
+      "import": {
+        "min": 0.75, "max": 50.0
+      },
+      "export": {
+        "min": 0.8, "max": 5.0
+      }
+    },
+    "liklihood": {
+      "import": 0.8, "export": 0.05
+    }
+  },
+  {
+    "good": "machinery",
+    "price": {
+      "base": 40,
+      "import": {
+        "min": 0.9, "max": 5.0
+      },
+      "export": {
+        "min": 0.9, "max": 1.5
+      }
+    },
+    "liklihood": {
+      "import": 0.9, "export": 0.25
+    }
+  },
+  {
+    "good": "electronics",
+    "price": {
+      "base": 200,
+      "import": {
+        "min": 0.1, "max": 50.0
+      },
+      "export": {
+        "min": 0.1, "max": 10.0
+      }
+    },
+    "liklihood": {
+      "import": 0.9, "export": 0.5
+    }
+  },
+  {
+    "good": "food (low quality)",
+    "price": {
+      "base": 10,
+      "import": {
+        "min": 0.1, "max": 1.1
+      },
+      "export": {
+        "min": 0.2, "max": 1.5
+      }
+    },
+    "liklihood": {
+      "import": 0.6, "export": 0.99
+    }
+  },
+  {
+    "good": "food (medium quality)",
+    "price": {
+      "base": 20,
+      "import": {
+        "min": 0.5, "max": 1.75
+      },
+      "export": {
+        "min": 0.6, "max": 3.0
+      }
+    },
+    "liklihood": {
+      "import": 0.4, "export": 0.80
+    }
+  },
+  {
+    "good": "food (high quality)",
+    "price": {
+      "base": 50,
+      "import": {
+        "min": 0.5, "max": 4.0
+      },
+      "export": {
+        "min": 0.8, "max": 5.0
+      }
+    },
+    "liklihood": {
+      "import": 0.5, "export": 0.6
+    }
+  },
+  {
+    "good": "food (luxury)",
+    "price": {
+      "base": 100,
+      "import": {
+        "min": 1.0, "max": 100.0
+      },
+      "export": {
+        "min": 0.99, "max": 10.0
+      }
+    },
+    "liklihood": {
+      "import": 0.1, "export": 0.2
+    }
+  },
+  {
+    "good": "energy storage",
+    "price": {
+      "base": 1000,
+      "import": {
+        "min": 0.4, "max": 50.0
+      },
+      "export": {
+        "min": 0.8, "max": 3.0
+      }
+    },
+    "liklihood": {
+      "import": 0.5, "export": 0.05
+    }
+  }
+
+]
