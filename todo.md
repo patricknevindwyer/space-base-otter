@@ -7,7 +7,7 @@
  - [x] move between planets
  - [x] calculate real distance
  - [x] limit planet movement to planets within range
- - [ ] generate large # of planets
+ - [x] generate large # of planets
  - [ ] page or search for planet list instead of a full list
  - [ ] add user support
  - [ ] users have money
@@ -35,9 +35,9 @@
    - [ ] ship summary
    - [ ] planet goods summary
    - [ ] travel summary
- - [ ] buttons
-   - [ ] add new ship/planet
-   - [ ] delete ship/planet
+ - [x] buttons
+   - [x] add new ship/planet
+   - [x] delete ship/planet
  - [ ] resources
    - [ ] water
    - [ ] food

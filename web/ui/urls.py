@@ -22,8 +22,10 @@ urlpatterns = [
 
     url(r'^planets/$', planets.list, name="planets"),
     url(r'^planets/create/random/?$', planets.create_random, name="planets-create-random"),
+    url(r'^planets/create/(?P<quantity>[0-9]+)/?$', planets.create_multiple, name="planets-create-multiple"),
     url(r'^planet/(?P<planet_id>[0-9]+)/?$', planets.detail, name="planet"),
     url(r'^planet/(?P<planet_id>[0-9]+)/remove/?$', planets.remove, name="planet-remove"),
+    url(r'^planet/destroy/all/?$', planets.destroy_all, name="planets-destroy-all"),
 
     url(r'^ships/$', ships.list, name="ships"),
     url(r'^ships/create/random/?$', ships.create_random, name="ships-create-random"),

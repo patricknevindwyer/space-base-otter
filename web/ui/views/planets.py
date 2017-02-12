@@ -19,6 +19,16 @@ def list(request):
     return render(request, "planets/list.html", context=fill_context({"planets": all_planets}))
 
 
+def destroy_all(request):
+    """
+
+    :param request:
+    :return:
+    """
+    Planet.objects.all().delete()
+    return redirect(reverse("planets"))
+
+
 def create_random(request):
     """
 
@@ -26,6 +36,17 @@ def create_random(request):
     :return:
     """
     p = Planet.objects.create_random()
+    return redirect(reverse("planets"))
+
+
+def create_multiple(request, quantity):
+    """
+
+    :param request:
+    :return:
+    """
+    for i in range(int(quantity)):
+        p = Planet.objects.create_random()
     return redirect(reverse("planets"))
 
 

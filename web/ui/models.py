@@ -14,7 +14,8 @@ import math
 GOODS = json.loads(open("ui/resources/goods.json", "r").read())
 
 # What are our planet images?
-PLANET_IMAGES = ["planet%d.png" % i for i in range(1,21)]
+planet_range = range(1,8) + range(10, 21)
+PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
 # Shipyards
 SHIPYARDS = [line.strip() for line in open("ui/resources/shipyards.txt", "r").readlines()]
