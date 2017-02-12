@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from ui.views import index
-from ui.views import planets
+from ui.views import planets, ships
 
 urlpatterns = [
     url(r'^$', index.index),
@@ -24,4 +24,10 @@ urlpatterns = [
     url(r'^planets/create/random/?$', planets.create_random, name="planets-create-random"),
     url(r'^planet/(?P<planet_id>[0-9]+)/?$', planets.detail, name="planet"),
     url(r'^planet/(?P<planet_id>[0-9]+)/remove/?$', planets.remove, name="planet-remove"),
+
+    url(r'^ships/$', ships.list, name="ships"),
+    url(r'^ships/create/random/?$', ships.create_random, name="ships-create-random"),
+    url(r'^ship/(?P<ship_id>[0-9]+)/?$', ships.detail, name="ship"),
+    url(r'^ship/(?P<ship_id>[0-9]+)/remove/?$', ships.remove, name="ship-remove"),
+
 ]

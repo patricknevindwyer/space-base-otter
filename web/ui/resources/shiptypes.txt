@@ -1,0 +1,7 @@
+Diver
+Cruiser
+Long Haul
+Sprinter
+Colony Ship
+Tanker
+Travelstar

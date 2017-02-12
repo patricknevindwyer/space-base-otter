@@ -1,0 +1,25 @@
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+<div class="row">
+    <div class="col-md-2">
+        <img src="{% static 'ui/images/ships/'|add:ship.image_name %}" style="width:100px;height:100px">
+    </div>
+    <div class="col-md-8">
+        <h2>{{ ship.name }}</h2>
+        <dl class="dl-horizontal">
+            <dt>Orbiting</dt>
+            <dd>{{ ship.planet.name }}</dd>
+            <dt>Range</dt>
+            <dd>{{ ship.current_range }}</dd>
+            <dt>Cargo</dt>
+            <dd>{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</dd>
+        </dl>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group">
+            <a href="{% url 'ship' ship.id %}" class="btn btn-success btn-xs">{% bootstrap_icon 'eye-open' %} Open</a>
+            <a href="{% url 'ship-remove' ship.id %}" class="btn btn-danger btn-xs">{% bootstrap_icon 'trash' %}</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h2>{{ ship.name }}<small> {{ ship.model }}</small></h2></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{% static 'ui/images/ships/'|add:ship.image_name %}" style="width:200px;height:200px">
+                </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                        <dt>Orbiting</dt>
+                        <dd>{{ ship.planet.name }}</dd>
+                        <dt>Range</dt>
+                        <dd>{{ ship.current_range }}</dd>
+                        <dt>Cargo</dt>
+                        <dd>{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</dd>
+                        <dt>Fuel</dt>
+                        <dd>{{ ship.fuel_level }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <table class="table table-condensed table-striped table-hover">
+            <thead>
+                <tr>
+                    <th colspan="3" style="text-align:center">Cargo</th>
+                </tr>
+                <tr>
+                    <th>Good</th>
+                    <th>Quantity</th>
+                    <th/>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cargo in ship.cargo.all %}
+                <tr>
+                    <td>{{ cargo.name }}</td>
+                    <td>{{ cargo.quantity }}</td>
+                    <td/>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
