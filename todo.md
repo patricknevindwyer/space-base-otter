@@ -35,4 +35,9 @@
    - [ ] ship summary
    - [ ] planet goods summary
    - [ ] travel summary
-   
+ - [ ] buttons
+   - [ ] add new ship/planet
+   - [ ] delete ship/planet
+ - [ ] resources
+   - [ ] water
+   - [ ] food
