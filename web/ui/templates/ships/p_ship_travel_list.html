@@ -19,7 +19,7 @@
                     <td>{{ planet.fuel_burned_percent }}</td>
                     <td>
                         {% if ship.planet.id != planet.id %}
-                        <a href="{% url 'ship-travel-to-planet' ship.id planet.id %}" class="btn btn-xs btn-success">{% bootstrap_icon 'send' %} Warp to Planet</a>
+                        <a href="{% url 'ship-travel-to-planet' ship.id planet.id %}" class="btn btn-xs btn-success">{% bootstrap_icon 'transfer' %} Warp to Planet</a>
                         {% endif %}
                     </td>
                 </tr>
