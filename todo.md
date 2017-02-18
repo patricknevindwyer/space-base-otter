@@ -11,8 +11,9 @@
  - [x] page or search for planet list instead of a full list
  - [x] sort ship travel list
  - [ ] add user support
- - [ ] users have money
- - [ ] ships belong to users
+  - [ ] add password support
+  - [ ] users have money
+  - [ ] ships belong to users
  - [ ] add fuel consumption
  - [ ] add fuel purchasing
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
@@ -29,7 +30,7 @@
    - [ ] upgrade engine
    - [ ] upgrade electronics
    - [ ] add passanger capacity
-   - [ ] upgrade passengers to low/medium/high/luxury capacity
+   - [ ] upgrade passenger rooms to low/medium/high/luxury capacity
    - [ ] special addition: driller (mine asteroids)
    - [ ] special addition: colony ship (bulk transport colonists)
  - [ ] tactical play view
