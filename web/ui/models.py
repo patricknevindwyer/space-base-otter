@@ -297,6 +297,8 @@ class Ship(models.Model):
                     "fuel_burned_percent": 0
                 }
             )
+        plist.sort(key=lambda s: s["distance"])
+
         return plist
 
     def distance_to(self, planet):

@@ -8,7 +8,7 @@
  - [x] calculate real distance
  - [x] limit planet movement to planets within range
  - [x] generate large # of planets
- - [ ] page or search for planet list instead of a full list
+ - [x] page or search for planet list instead of a full list
  - [ ] sort ship travel list
  - [ ] add user support
  - [ ] users have money
