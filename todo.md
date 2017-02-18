@@ -10,8 +10,8 @@
  - [x] generate large # of planets
  - [x] page or search for planet list instead of a full list
  - [x] sort ship travel list
- - [ ] add user support
-  - [ ] add password support
+ - [x] add user support
+  - [x] add password support
   - [ ] users have money
   - [ ] ships belong to users
  - [ ] add fuel consumption
