@@ -15,6 +15,20 @@
                 <li><a href="{% url 'ships' %}">Ships</a></li>
                 <li><a href="{% url 'planets' %}">Planets</a></li>
             </ul>
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{ user.username }}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'account-profile' %}">Profile</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-info pull-right btn-sm navbar-btn">Login</a>
+            {% endif %}
         </div><!--/.nav-collapse -->
     </div>
 </nav>

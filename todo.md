@@ -9,7 +9,7 @@
  - [x] limit planet movement to planets within range
  - [x] generate large # of planets
  - [x] page or search for planet list instead of a full list
- - [ ] sort ship travel list
+ - [x] sort ship travel list
  - [ ] add user support
  - [ ] users have money
  - [ ] ships belong to users
