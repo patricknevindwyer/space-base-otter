@@ -17,3 +17,13 @@ def profile(request):
     :return:
     """
     return render(request, "accounts/profile.html", context=fill_context({}))
+
+def gift_credits(request):
+    """
+    Gift 100,000 credits to the user.
+
+    :param request:
+    :return:
+    """
+    request.user.profile.add_credits(100000)
+    return redirect(reverse("account-profile"))

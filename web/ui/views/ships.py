@@ -99,7 +99,7 @@ def buy(request, ship_id):
     return redirect(reverse("ship", args=(ship_id,)))
 
 
-
+@ transaction.atomic
 def travel_to_planet(request, ship_id, planet_id):
     """
     Make a ship travel to a new planet.
@@ -112,5 +112,8 @@ def travel_to_planet(request, ship_id, planet_id):
     ship = get_object_or_404(Ship, pk=ship_id)
     planet = get_object_or_404(Planet, pk=planet_id)
 
+    distance = ship.distance_to(planet)
     ship.travel_to(planet)
+    ship.burn_fuel_for_distance(distance)
+
     return redirect(reverse("ship", args=(ship_id,)))

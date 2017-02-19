@@ -21,6 +21,9 @@
                     <dd>{% bootstrap_icon 'yen' %} {{ user.profile.assets_ships|intcomma }}</dd>
                 </dl>
             </div>
+            <div class="panel-footer">
+                <a href="{% url 'account-gift' %}" class="btn btn-xs btn-success">Gift 100,000 {% bootstrap_icon 'yen' %}</a>
+            </div>
         </div>
     </div>
 </div>

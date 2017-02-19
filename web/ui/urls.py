@@ -23,6 +23,7 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
 
     url(r'^accounts/profile/?$', account.profile, name="account-profile"),
+    url(r'^accounts/profile/gift/?$', account.gift_credits, name="account-gift"),
 
     url(r'^planets/$', planets.list, name="planets"),
     url(r'^planets/create/random/?$', planets.create_random, name="planets-create-random"),

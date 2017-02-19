@@ -15,7 +15,7 @@
             {% for planet in planets %}
                 <tr>
                     <td><a href="{% url 'planet' planet.id %}">{{ planet.name }}</a></td>
-                    <td>{{ planet.distance|floatformat:2 }}</td>
+                    <td>{{ planet.distance|floatformat:2 }} LY</td>
                     <td>{{ planet.fuel_burned_percent|floatformat:0 }}%</td>
                     <td>
                         {% if ship.planet.id != planet.id %}

@@ -15,8 +15,9 @@
  - [x] users have money
  - [x] users can buy ships
  - [x] ships belong to users
- - [ ] add fuel consumption
+ - [x] add fuel consumption
  - [ ] add fuel purchasing
+ - [ ] show last visited planet
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
  - [ ] add cargo support
  - [ ] buy cargo
@@ -25,6 +26,7 @@
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
+ - [ ] homepage view of state of game
  - [ ] modular ships
    - [ ] shipyards on some planets
    - [ ] ship templates to buy

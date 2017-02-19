@@ -51,6 +51,13 @@ class Profile(models.Model):
 
         return v
 
+    def add_credits(self, creds):
+        self.credits += creds
+        self.save()
+
+    def subtract_credits(self, creds):
+        self.credits -= creds
+        self.save()
 
 @receiver(user_logged_in)
 def user_post_login(sender, user, request, **kwargs):
@@ -378,4 +385,15 @@ class Ship(models.Model):
         :return:
         """
         self.planet = planet
+        self.save()
+
+    def burn_fuel_for_distance(self, dist):
+        """
+        Burn enough fuel to travel a particular distance.
+
+        :param dist:
+        :return:
+        """
+        perc_burn = dist * 1.0 / self.max_range * 100.0
+        self.fuel_level = self.fuel_level - perc_burn
         self.save()
