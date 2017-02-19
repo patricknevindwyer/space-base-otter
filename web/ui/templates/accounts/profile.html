@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 
 {% load bootstrap3 %}
+{% load humanize %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-6">
         <h3>Hi {{ user.username }}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4>Finances <small>Money and Assets</small></h4></div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Credits</dt>
+                    <dd>{% bootstrap_icon 'yen' %} {{ user.profile.credits|intcomma }}</dd>
+                </dl>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}

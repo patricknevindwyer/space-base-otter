@@ -12,7 +12,7 @@
  - [x] sort ship travel list
  - [x] add user support
   - [x] add password support
- - [ ] users have money
+ - [x] users have money
  - [ ] users can buy ships
  - [ ] ships belong to users
  - [ ] add fuel consumption

@@ -227,6 +227,9 @@ class ShipManager(models.Manager):
         ship_fuel_level = 100.0
         ship_cargo_cap = 200
 
+        # ship value?
+        ship_value = random.randint(10000,100000)
+
         # what about an image for this ship?
         ship_image = random.sample(SHIP_IMAGES, 1)[0]
 
@@ -237,7 +240,8 @@ class ShipManager(models.Manager):
             max_range = ship_range,
             fuel_level = ship_fuel_level,
             cargo_capacity = ship_cargo_cap,
-            image_name = ship_image
+            image_name = ship_image,
+            value=ship_value
         )
 
         return obj
@@ -250,6 +254,12 @@ class Ship(models.Model):
     objects = ShipManager()
 
     name = models.CharField(max_length=255, null=False, blank=False)
+
+    # who owns this ship?
+    owner = models.ForeignKey(Profile, null=True, blank=True)
+
+    # how much does this ship worth?
+    value = models.IntegerField(default=10000)
 
     # what type of ship was this?
     model = models.CharField(max_length=255, null=False, blank=False)
