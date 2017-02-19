@@ -58,8 +58,12 @@ class Profile(models.Model):
         self.credits += creds
         self.save()
 
-    def subtract_credits(self, creds):
+    def subtract_credits(self, creds, go_negative=False):
         self.credits -= creds
+
+        if self.credits < 0 and not go_negative:
+            self.credits = 0
+
         self.save()
 
 @receiver(user_logged_in)
@@ -92,6 +96,15 @@ class PlanetManager(models.Manager):
     """
     Query, build, and otherwise manipulate Planets.
     """
+
+    def pick_random(self):
+        """
+        Pick a random plane that we already have available.
+
+        :return:
+        """
+        id = random.sample(self.only("id").all(), 1)
+        return id[0]
 
     def create_random(self):
         """
@@ -247,8 +260,9 @@ class ShipManager(models.Manager):
         # what's the model of this ship
         ship_model = "%s %s" % (shipyard, shiptype)
 
-        # home planet?
+        # starting planet
         ship_planet = Planet.objects.first()
+        ship_home_planet = Planet.objects.pick_random()
 
         ship_range = random.randint(200, 500)
         ship_fuel_level = 100.0
@@ -265,6 +279,7 @@ class ShipManager(models.Manager):
             name = ship_name,
             model = ship_model,
             planet = ship_planet,
+            home_planet = ship_home_planet,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
             cargo_capacity = ship_cargo_cap,
@@ -295,6 +310,9 @@ class Ship(models.Model):
     # a ship is at a planet
     planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="orbiters")
 
+    # a ship also has a home planet
+    home_planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="registrants")
+
     # some basic settings that we'll improve upon later
 
     # how far can we go on a full tank?
@@ -315,6 +333,7 @@ class Ship(models.Model):
 
         :return:
         """
+        print "max range(%f) * fuel level(%f) / 100.0" % (self.max_range, self.fuel_level)
         return self.max_range * (self.fuel_level / 100.0)
 
     def current_cargo_load(self):
@@ -341,6 +360,10 @@ class Ship(models.Model):
 
         # figure out how far we can go
         max_range = self.current_range()
+
+        # bail out if we're reaaaaaally low on fuel
+        if max_range < 1:
+            return plist
 
         # preselect a set of planets in the box that our max range describes
         min_x = self.planet.x_coordinate - max_range
@@ -393,6 +416,17 @@ class Ship(models.Model):
         """
         self.planet = planet
         self.save()
+
+    def is_home_planet_in_range(self):
+        """
+        Is our home planet within travel distance?
+
+        :return:
+        """
+        return self.current_range() > self.distance_to(self.home_planet)
+
+    def is_home(self):
+        return self.planet == self.home_planet
 
     def burn_fuel_for_distance(self, dist):
         """

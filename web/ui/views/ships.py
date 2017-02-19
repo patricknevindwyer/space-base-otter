@@ -119,6 +119,33 @@ def travel_to_planet(request, ship_id, planet_id):
     return redirect(reverse("ship", args=(ship_id,)))
 
 
+@transaction.atomic
+def travel_to_home_planet(request, ship_id):
+    """
+    Traveling to your home planet burns all of your fuel, and costs $ == distance. If
+    the player doesn't have enough money, it drops to 0.
+
+    :param request:
+    :param ship_id:
+    :return:
+    """
+    ship = get_object_or_404(Ship, pk=ship_id)
+
+    home_distance = ship.distance_to(ship.home_planet)
+
+    # travel
+    ship.travel_to(ship.home_planet)
+
+    # fuel
+    ship.fuel_level = 0.0
+    ship.save()
+
+    # money
+    request.user.profile.subtract_credits(home_distance)
+
+    return redirect(reverse("ship", args=(ship_id,)))
+
+
 def refuel(request, ship_id):
     """
     Refuel as much of the ship as possible.

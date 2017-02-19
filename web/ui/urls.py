@@ -40,5 +40,6 @@ urlpatterns = [
     url(r'^ship/(?P<ship_id>[0-9]+)/refuel/?$', ships.refuel, name="ship-refuel"),
     url(r'^ship/(?P<ship_id>[0-9]+)/remove/?$', ships.remove, name="ship-remove"),
     url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/(?P<planet_id>[0-9]+)/?$', ships.travel_to_planet, name="ship-travel-to-planet"),
+    url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/home/?$', ships.travel_to_home_planet, name="ship-travel-to-home-planet"),
 
 ]

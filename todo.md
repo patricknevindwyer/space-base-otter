@@ -18,6 +18,10 @@
  - [x] add fuel consumption
  - [x] add fuel purchasing
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
+  - [x] first home planet is random and sets the starting point
+  - [x] can make current planet home planet
+  - [x] travel to home planet (cost = distance)
+  - [ ] planets show registrants
  - [ ] add cargo support
  - [ ] buy cargo
  - [ ] sell cargo
@@ -27,6 +31,7 @@
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
  - [ ] homepage view of state of game
+ - [ ] when a ship is home, it gets bonuses?
  - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
  - [ ] modular ships
    - [ ] shipyards on some planets
