@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^ships/$', ships.list, name="ships"),
     url(r'^ships/create/random/?$', ships.create_random, name="ships-create-random"),
     url(r'^ship/(?P<ship_id>[0-9]+)/?$', ships.detail, name="ship"),
+    url(r'^ship/(?P<ship_id>[0-9]+)/buy/?$', ships.buy, name="ship-buy"),
     url(r'^ship/(?P<ship_id>[0-9]+)/remove/?$', ships.remove, name="ship-remove"),
     url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/(?P<planet_id>[0-9]+)/?$', ships.travel_to_planet, name="ship-travel-to-planet"),
 

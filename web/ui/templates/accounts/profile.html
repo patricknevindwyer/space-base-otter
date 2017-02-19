@@ -17,10 +17,18 @@
                 <dl class="dl-horizontal">
                     <dt>Credits</dt>
                     <dd>{% bootstrap_icon 'yen' %} {{ user.profile.credits|intcomma }}</dd>
+                    <dt>Ships</dt>
+                    <dd>{% bootstrap_icon 'yen' %} {{ user.profile.assets_ships|intcomma }}</dd>
                 </dl>
             </div>
         </div>
-
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {% for ship in user.profile.ships.all %}
+            {% include 'ships/p_ship_tactical.html' %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

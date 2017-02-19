@@ -1,5 +1,6 @@
 {% load bootstrap3 %}
 {% load staticfiles %}
+{% load humanize %}
 
 <div class="row">
     <div class="col-md-2">
@@ -24,12 +25,19 @@
             </dd>
             <dt>Range</dt>
             <dd>{{ ship.current_range }}</dd>
+            <dt>Value</dt>
+            <dd>{% bootstrap_icon "yen" %} {{ ship.value|intcomma }}</dd>
+            {% if ship.owner %}
+            <dt>Owner</dt>
+            <dd>{{ ship.owner.user.username }}</dd>
+            {% endif %}
         </dl>
     </div>
     <div class="col-md-2">
-        <div class="btn-group">
-            <a href="{% url 'ship' ship.id %}" class="btn btn-success btn-xs">{% bootstrap_icon 'fullscreen' %}  Open</a>
-            <a href="{% url 'ship-remove' ship.id %}" class="btn btn-danger btn-xs">{% bootstrap_icon 'remove-sign' %}</a>
+        <div class="list-group">
+            <a href="{% url 'ship' ship.id %}" class="list-group-item btn btn-xs">{% bootstrap_icon 'fullscreen' %}  Open</a>
+            <a href="{% url 'ship-remove' ship.id %}" class="list-group-item btn btn-xs">{% bootstrap_icon 'remove-sign' %} Destroy</a>
+            <a href="{% url 'ship-buy' ship.id %}" class="list-group-item btn btn-xs">{% bootstrap_icon 'yen' %} Buy</a>
         </div>
     </div>
 </div>

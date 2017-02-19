@@ -38,6 +38,19 @@ class Profile(models.Model):
     # by default our users will start with 100,000 credits
     credits = models.IntegerField(default=100000)
 
+    # tallies of user assets
+    def assets_ships(self):
+        """
+        Just do a quick tally of ship values.
+
+        :return:
+        """
+        v = 0
+        for ship in self.ships.all():
+            v += ship.value
+
+        return v
+
 
 @receiver(user_logged_in)
 def user_post_login(sender, user, request, **kwargs):
@@ -223,12 +236,13 @@ class ShipManager(models.Manager):
         # home planet?
         ship_planet = Planet.objects.first()
 
-        ship_range = 1000
+        ship_range = random.randint(200, 500)
         ship_fuel_level = 100.0
-        ship_cargo_cap = 200
+        ship_cargo_cap = random.randint(50, 500)
 
         # ship value?
-        ship_value = random.randint(10000,100000)
+        ship_markup = random.uniform(0.2, 1.5)
+        ship_value = int(ship_range * ship_cargo_cap * ship_markup)
 
         # what about an image for this ship?
         ship_image = random.sample(SHIP_IMAGES, 1)[0]
@@ -256,7 +270,7 @@ class Ship(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
 
     # who owns this ship?
-    owner = models.ForeignKey(Profile, null=True, blank=True)
+    owner = models.ForeignKey(Profile, null=True, blank=True, related_name="ships")
 
     # how much does this ship worth?
     value = models.IntegerField(default=10000)
@@ -339,8 +353,8 @@ class Ship(models.Model):
                 {
                     "name": planet.name,
                     "id": planet.id,
-                    "distance": self.distance_to(planet),
-                    "fuel_burned_percent": 0
+                    "distance": real_dist,
+                    "fuel_burned_percent": real_dist / max_range * 100.0
                 }
             )
         plist.sort(key=lambda s: s["distance"])

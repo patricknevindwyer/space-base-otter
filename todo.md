@@ -13,15 +13,16 @@
  - [x] add user support
   - [x] add password support
  - [x] users have money
- - [ ] users can buy ships
- - [ ] ships belong to users
+ - [x] users can buy ships
+ - [x] ships belong to users
  - [ ] add fuel consumption
  - [ ] add fuel purchasing
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
  - [ ] add cargo support
  - [ ] buy cargo
  - [ ] sell cargo
- - [ ] set cargo purchase price 
+ - [ ] set cargo purchase price
+ - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
  - [ ] modular ships
