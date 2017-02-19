@@ -12,8 +12,9 @@
  - [x] sort ship travel list
  - [x] add user support
   - [x] add password support
-  - [ ] users have money
-  - [ ] ships belong to users
+ - [ ] users have money
+ - [ ] users can buy ships
+ - [ ] ships belong to users
  - [ ] add fuel consumption
  - [ ] add fuel purchasing
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)

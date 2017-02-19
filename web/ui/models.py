@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.models import User
+from django.dispatch import receiver
 
 import random
 import string
@@ -25,6 +28,39 @@ SHIP_TYPES = [line.strip() for line in open("ui/resources/shiptypes.txt", "r").r
 
 # SHIP Images
 SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
+
+###
+# User Profile
+###
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+
+    # by default our users will start with 100,000 credits
+    credits = models.IntegerField(default=100000)
+
+
+@receiver(user_logged_in)
+def user_post_login(sender, user, request, **kwargs):
+    """
+    Do anything we need post login.
+
+    :param sender:
+    :param user:
+    :param request:
+    :param kwargs:
+    :return:
+    """
+    print "% models.py::user_post_login"
+
+    # make sure we have a profile for this user
+    if not  hasattr(user, "profile"):
+        print "%% creating a profile for %s" % (user.username,)
+        profile = Profile.objects.create(
+            user=user
+        )
+        profile.save()
+
+
 
 ###
 # PLANETS
