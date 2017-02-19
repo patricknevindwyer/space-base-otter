@@ -23,7 +23,8 @@ urlpatterns = [
     url('^', include('django.contrib.auth.urls')),
 
     url(r'^accounts/profile/?$', account.profile, name="account-profile"),
-    url(r'^accounts/profile/gift/?$', account.gift_credits, name="account-gift"),
+    url(r'^accounts/profile/credits/give/(?P<creds>[0-9]+)/?$', account.give_credits, name="credits-give"),
+    url(r'^accounts/profile/credits/take/(?P<creds>[0-9]+)/?$', account.take_credits, name="credits-take"),
 
     url(r'^planets/$', planets.list, name="planets"),
     url(r'^planets/create/random/?$', planets.create_random, name="planets-create-random"),
@@ -36,6 +37,7 @@ urlpatterns = [
     url(r'^ships/create/random/?$', ships.create_random, name="ships-create-random"),
     url(r'^ship/(?P<ship_id>[0-9]+)/?$', ships.detail, name="ship"),
     url(r'^ship/(?P<ship_id>[0-9]+)/buy/?$', ships.buy, name="ship-buy"),
+    url(r'^ship/(?P<ship_id>[0-9]+)/refuel/?$', ships.refuel, name="ship-refuel"),
     url(r'^ship/(?P<ship_id>[0-9]+)/remove/?$', ships.remove, name="ship-remove"),
     url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/(?P<planet_id>[0-9]+)/?$', ships.travel_to_planet, name="ship-travel-to-planet"),
 

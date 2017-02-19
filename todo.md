@@ -16,17 +16,18 @@
  - [x] users can buy ships
  - [x] ships belong to users
  - [x] add fuel consumption
- - [ ] add fuel purchasing
- - [ ] show last visited planet
+ - [x] add fuel purchasing
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
  - [ ] add cargo support
  - [ ] buy cargo
  - [ ] sell cargo
  - [ ] set cargo purchase price
+ - [ ] show last visited planet
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
  - [ ] homepage view of state of game
+ - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
  - [ ] modular ships
    - [ ] shipyards on some planets
    - [ ] ship templates to buy

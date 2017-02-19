@@ -22,7 +22,29 @@
                 </dl>
             </div>
             <div class="panel-footer">
-                <a href="{% url 'account-gift' %}" class="btn btn-xs btn-success">Gift 100,000 {% bootstrap_icon 'yen' %}</a>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">Give {% bootstrap_icon 'yen' %} <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'credits-give' 500 %}">{% bootstrap_icon 'yen' %} 500</a></li>
+                        <li><a href="{% url 'credits-give' 1000 %}">{% bootstrap_icon 'yen' %} 1,000</a></li>
+                        <li><a href="{% url 'credits-give' 10000 %}">{% bootstrap_icon 'yen' %} 10,000</a></li>
+                        <li><a href="{% url 'credits-give' 25000 %}">{% bootstrap_icon 'yen' %} 25,000</a></li>
+                        <li><a href="{% url 'credits-give' 100000 %}">{% bootstrap_icon 'yen' %} 100,000</a></li>
+                        <li><a href="{% url 'credits-give' 1000000 %}">{% bootstrap_icon 'yen' %} 1,000,000</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-danger dropdown-toggle" data-toggle="dropdown">Take {% bootstrap_icon 'yen' %} <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'credits-take' 500 %}">{% bootstrap_icon 'yen' %} 500</a></li>
+                        <li><a href="{% url 'credits-take' 1000 %}">{% bootstrap_icon 'yen' %} 1,000</a></li>
+                        <li><a href="{% url 'credits-take' 10000 %}">{% bootstrap_icon 'yen' %} 10,000</a></li>
+                        <li><a href="{% url 'credits-take' 25000 %}">{% bootstrap_icon 'yen' %} 25,000</a></li>
+                        <li><a href="{% url 'credits-take' 100000 %}">{% bootstrap_icon 'yen' %} 100,000</a></li>
+                        <li><a href="{% url 'credits-take' 1000000 %}">{% bootstrap_icon 'yen' %} 1,000,000</a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
     </div>

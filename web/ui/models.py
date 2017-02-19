@@ -29,6 +29,9 @@ SHIP_TYPES = [line.strip() for line in open("ui/resources/shiptypes.txt", "r").r
 # SHIP Images
 SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
 
+# Fuel base cost
+FUEL_UNIT_COST = 10
+
 ###
 # User Profile
 ###
@@ -182,6 +185,10 @@ class Planet(models.Model):
 
     # some display settings
     image_name = models.CharField(max_length=255, null=False, blank=False)
+
+    # rarity of fuel effects the overall refueling cost. This is some sane number
+    # basically [50% - 200%] of standard price
+    fuel_markup = models.FloatField(default=1.0)
 
     def imports(self):
         return self.goods.filter(is_import=True)
@@ -396,4 +403,63 @@ class Ship(models.Model):
         """
         perc_burn = dist * 1.0 / self.max_range * 100.0
         self.fuel_level = self.fuel_level - perc_burn
+        self.save()
+
+    def fuel_units(self):
+        """
+        what's our current break down of available/used fuel units?
+        :return:
+        """
+        available = self.fuel_level / 100 * self.max_range
+        used = self.max_range - available
+        return (used, available)
+
+    def can_fully_refuel(self):
+        """
+        Can we afford to fully refuel this ship?
+
+        :return:
+        """
+        return self.owner.credits > self.refuel_cost()
+
+    def refuel_cost(self):
+        """
+        What's the cost to refuel on our current planet? We need to take
+        into account the possibility of not having enough money to fully
+        refuel.
+
+        :return:
+        """
+
+        # how many units of fuel do we need
+        f_used, f_available = self.fuel_units()
+
+        # given the planet markup, what will our used fuel cost to
+        # replace?
+        cost = FUEL_UNIT_COST * self.planet.fuel_markup * f_used
+        return cost
+
+    def refuel(self):
+        """
+        Fully refuel.
+
+        :return:
+        """
+        self.fuel_level = 100.0
+        self.save()
+
+    def partially_refuel(self, creds):
+        """
+        Apply X creds towards refueling.
+
+        :param creds:
+        :return:
+        """
+        # figure out what % of our fuel level we can recoup for X credits
+        cost = self.refuel_cost()
+        f_used, f_available = self.fuel_units()
+
+        refuel_units = creds * 1.0 / cost * f_used
+        refuel_perc = refuel_units / self.max_range * 100.0
+        self.fuel_level += refuel_perc
         self.save()

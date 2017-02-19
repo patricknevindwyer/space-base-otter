@@ -99,7 +99,7 @@ def buy(request, ship_id):
     return redirect(reverse("ship", args=(ship_id,)))
 
 
-@ transaction.atomic
+@transaction.atomic
 def travel_to_planet(request, ship_id, planet_id):
     """
     Make a ship travel to a new planet.
@@ -116,4 +116,24 @@ def travel_to_planet(request, ship_id, planet_id):
     ship.travel_to(planet)
     ship.burn_fuel_for_distance(distance)
 
+    return redirect(reverse("ship", args=(ship_id,)))
+
+
+def refuel(request, ship_id):
+    """
+    Refuel as much of the ship as possible.
+
+    :param request:
+    :param ship_id:
+    :return:
+    """
+    ship = get_object_or_404(Ship, pk=ship_id)
+
+    if ship.can_fully_refuel():
+        request.user.profile.subtract_credits(ship.refuel_cost())
+        ship.refuel()
+    else:
+        creds = request.user.profile.credits
+        request.user.profile.subtract_credits(creds)
+        ship.partially_refuel(creds)
     return redirect(reverse("ship", args=(ship_id,)))
