@@ -8,6 +8,20 @@
         {% include "ships/p_ship_summary.html" with ship=ship %}
     </div>
     <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="btn-group">
+                    {% if ship.can_fully_refuel %}
+                    <a href="{% url 'ship-refuel' ship.id %}" class="btn btn-info">Refuel for {% bootstrap_icon 'yen' %}{{ ship.refuel_cost|floatformat:0 }}</a>
+                    {% else %}
+                    <a href="{% url 'ship-refuel' ship.id %}" class="btn btn-info">Partially refuel for {% bootstrap_icon 'yen' %}{{ user.profile.credits|floatformat:0 }}</a>
+                    {% endif %}
+                    <a href="{% url 'ship-marketplace' ship.id %}" class="btn btn-success">Marketplace</a>
+                </div>
+
+            </div>
+        </div>
+
         {% include "ships/p_ship_travel_list.html" with ship=ship planets=ship.planets_in_range %}
     </div>
 </div>

@@ -1,11 +1,59 @@
 {% extends 'base.html' %}
 
 {% load bootstrap3 %}
+{% load humanize %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-6">
         <h3>Hi {{ user.username }}</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4>Finances <small>Money and Assets</small></h4></div>
+            <div class="panel-body">
+                <dl class="dl-horizontal">
+                    <dt>Credits</dt>
+                    <dd>{% bootstrap_icon 'yen' %} {{ user.profile.credits|intcomma }}</dd>
+                    <dt>Ships</dt>
+                    <dd>{% bootstrap_icon 'yen' %} {{ user.profile.assets_ships|intcomma }}</dd>
+                </dl>
+            </div>
+            <div class="panel-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">Give {% bootstrap_icon 'yen' %} <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'credits-give' 500 %}">{% bootstrap_icon 'yen' %} 500</a></li>
+                        <li><a href="{% url 'credits-give' 1000 %}">{% bootstrap_icon 'yen' %} 1,000</a></li>
+                        <li><a href="{% url 'credits-give' 10000 %}">{% bootstrap_icon 'yen' %} 10,000</a></li>
+                        <li><a href="{% url 'credits-give' 25000 %}">{% bootstrap_icon 'yen' %} 25,000</a></li>
+                        <li><a href="{% url 'credits-give' 100000 %}">{% bootstrap_icon 'yen' %} 100,000</a></li>
+                        <li><a href="{% url 'credits-give' 1000000 %}">{% bootstrap_icon 'yen' %} 1,000,000</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-xs btn-danger dropdown-toggle" data-toggle="dropdown">Take {% bootstrap_icon 'yen' %} <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'credits-take' 500 %}">{% bootstrap_icon 'yen' %} 500</a></li>
+                        <li><a href="{% url 'credits-take' 1000 %}">{% bootstrap_icon 'yen' %} 1,000</a></li>
+                        <li><a href="{% url 'credits-take' 10000 %}">{% bootstrap_icon 'yen' %} 10,000</a></li>
+                        <li><a href="{% url 'credits-take' 25000 %}">{% bootstrap_icon 'yen' %} 25,000</a></li>
+                        <li><a href="{% url 'credits-take' 100000 %}">{% bootstrap_icon 'yen' %} 100,000</a></li>
+                        <li><a href="{% url 'credits-take' 1000000 %}">{% bootstrap_icon 'yen' %} 1,000,000</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {% for ship in user.profile.ships.all %}
+            {% include 'ships/p_ship_tactical.html' %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

@@ -17,3 +17,27 @@ def profile(request):
     :return:
     """
     return render(request, "accounts/profile.html", context=fill_context({}))
+
+
+def give_credits(request, creds):
+    """
+    Gift X credits to the user.
+
+    :param request:
+    :return:
+    """
+    request.user.profile.add_credits(int(creds))
+    return redirect(reverse("account-profile"))
+
+
+def take_credits(request, creds):
+    """
+    This is just a quick and dirty utility for manipulating user credits
+    when testing. Not designed to be atomic, or generally used.
+
+    :param request:
+    :param creds:
+    :return:
+    """
+    request.user.profile.subtract_credits(int(creds))
+    return redirect(reverse("account-profile"))

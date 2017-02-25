@@ -12,18 +12,32 @@
  - [x] sort ship travel list
  - [x] add user support
   - [x] add password support
-  - [ ] users have money
-  - [ ] ships belong to users
- - [ ] add fuel consumption
- - [ ] support good purchasing 
- - [ ] add fuel purchasing
- - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
+ - [x] users have money
+ - [x] users can buy ships
+ - [x] ships belong to users
+ - [x] add fuel consumption
+ - [x] add fuel purchasing
+ - [x] ships have home planets (can always travel home, burns all fuel and costs $)
+  - [x] first home planet is random and sets the starting point
+  - [x] can make current planet home planet
+  - [x] travel to home planet (cost = distance)
+  - [x] planets show registrants
  - [ ] add cargo support
+  - [ ] horizontal layout
  - [ ] buy cargo
+  - [ ] low/hi arrows around average price
  - [ ] sell cargo
- - [ ] set cargo purchase price 
+ - [ ] set cargo purchase price
+ - [ ] Buy ship from Registered Ship list
+  - [ ] buyers summary / registrated summary 
+  - [ ] ship yard view
+ - [ ] show last visited planet
+ - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
+ - [ ] homepage view of state of game
+ - [ ] when a ship is home, it gets bonuses?
+ - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
  - [ ] modular ships
    - [ ] shipyards on some planets
    - [ ] ship templates to buy
@@ -41,3 +55,6 @@
  - [x] buttons
    - [x] add new ship/planet
    - [x] delete ship/planet
+ - [ ] resources
+   - [ ] water
+   - [ ] food

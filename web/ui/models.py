@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.models import User
+from django.dispatch import receiver
 
 import random
 import string
@@ -26,6 +29,66 @@ SHIP_TYPES = [line.strip() for line in open("ui/resources/shiptypes.txt", "r").r
 # SHIP Images
 SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
 
+# Fuel base cost
+FUEL_UNIT_COST = 10
+
+###
+# User Profile
+###
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+
+    # by default our users will start with 100,000 credits
+    credits = models.IntegerField(default=100000)
+
+    # tallies of user assets
+    def assets_ships(self):
+        """
+        Just do a quick tally of ship values.
+
+        :return:
+        """
+        v = 0
+        for ship in self.ships.all():
+            v += ship.value
+
+        return v
+
+    def add_credits(self, creds):
+        self.credits += creds
+        self.save()
+
+    def subtract_credits(self, creds, go_negative=False):
+        self.credits -= creds
+
+        if self.credits < 0 and not go_negative:
+            self.credits = 0
+
+        self.save()
+
+@receiver(user_logged_in)
+def user_post_login(sender, user, request, **kwargs):
+    """
+    Do anything we need post login.
+
+    :param sender:
+    :param user:
+    :param request:
+    :param kwargs:
+    :return:
+    """
+    print "% models.py::user_post_login"
+
+    # make sure we have a profile for this user
+    if not  hasattr(user, "profile"):
+        print "%% creating a profile for %s" % (user.username,)
+        profile = Profile.objects.create(
+            user=user
+        )
+        profile.save()
+
+
+
 ###
 # PLANETS
 ###
@@ -33,6 +96,15 @@ class PlanetManager(models.Manager):
     """
     Query, build, and otherwise manipulate Planets.
     """
+
+    def pick_random(self):
+        """
+        Pick a random plane that we already have available.
+
+        :return:
+        """
+        id = random.sample(self.only("id").all(), 1)
+        return id[0]
 
     def create_random(self):
         """
@@ -127,6 +199,10 @@ class Planet(models.Model):
     # some display settings
     image_name = models.CharField(max_length=255, null=False, blank=False)
 
+    # rarity of fuel effects the overall refueling cost. This is some sane number
+    # basically [50% - 200%] of standard price
+    fuel_markup = models.FloatField(default=1.0)
+
     def imports(self):
         return self.goods.filter(is_import=True)
 
@@ -184,12 +260,17 @@ class ShipManager(models.Manager):
         # what's the model of this ship
         ship_model = "%s %s" % (shipyard, shiptype)
 
-        # home planet?
+        # starting planet
         ship_planet = Planet.objects.first()
+        ship_home_planet = Planet.objects.pick_random()
 
-        ship_range = 1000
+        ship_range = random.randint(200, 500)
         ship_fuel_level = 100.0
-        ship_cargo_cap = 200
+        ship_cargo_cap = random.randint(50, 500)
+
+        # ship value?
+        ship_markup = random.uniform(0.2, 1.5)
+        ship_value = int(ship_range * ship_cargo_cap * ship_markup)
 
         # what about an image for this ship?
         ship_image = random.sample(SHIP_IMAGES, 1)[0]
@@ -198,10 +279,12 @@ class ShipManager(models.Manager):
             name = ship_name,
             model = ship_model,
             planet = ship_planet,
+            home_planet = ship_home_planet,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
             cargo_capacity = ship_cargo_cap,
-            image_name = ship_image
+            image_name = ship_image,
+            value=ship_value
         )
 
         return obj
@@ -215,11 +298,20 @@ class Ship(models.Model):
 
     name = models.CharField(max_length=255, null=False, blank=False)
 
+    # who owns this ship?
+    owner = models.ForeignKey(Profile, null=True, blank=True, related_name="ships")
+
+    # how much does this ship worth?
+    value = models.IntegerField(default=10000)
+
     # what type of ship was this?
     model = models.CharField(max_length=255, null=False, blank=False)
 
     # a ship is at a planet
     planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="orbiters")
+
+    # a ship also has a home planet
+    home_planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="registrants")
 
     # some basic settings that we'll improve upon later
 
@@ -241,6 +333,7 @@ class Ship(models.Model):
 
         :return:
         """
+        print "max range(%f) * fuel level(%f) / 100.0" % (self.max_range, self.fuel_level)
         return self.max_range * (self.fuel_level / 100.0)
 
     def current_cargo_load(self):
@@ -268,6 +361,10 @@ class Ship(models.Model):
         # figure out how far we can go
         max_range = self.current_range()
 
+        # bail out if we're reaaaaaally low on fuel
+        if max_range < 1:
+            return plist
+
         # preselect a set of planets in the box that our max range describes
         min_x = self.planet.x_coordinate - max_range
         max_x = self.planet.x_coordinate + max_range
@@ -293,8 +390,8 @@ class Ship(models.Model):
                 {
                     "name": planet.name,
                     "id": planet.id,
-                    "distance": self.distance_to(planet),
-                    "fuel_burned_percent": 0
+                    "distance": real_dist,
+                    "fuel_burned_percent": real_dist / max_range * 100.0
                 }
             )
         plist.sort(key=lambda s: s["distance"])
@@ -318,4 +415,85 @@ class Ship(models.Model):
         :return:
         """
         self.planet = planet
+        self.save()
+
+    def is_home_planet_in_range(self):
+        """
+        Is our home planet within travel distance?
+
+        :return:
+        """
+        return self.current_range() > self.distance_to(self.home_planet)
+
+    def is_home(self):
+        return self.planet == self.home_planet
+
+    def burn_fuel_for_distance(self, dist):
+        """
+        Burn enough fuel to travel a particular distance.
+
+        :param dist:
+        :return:
+        """
+        perc_burn = dist * 1.0 / self.max_range * 100.0
+        self.fuel_level = self.fuel_level - perc_burn
+        self.save()
+
+    def fuel_units(self):
+        """
+        what's our current break down of available/used fuel units?
+        :return:
+        """
+        available = self.fuel_level / 100 * self.max_range
+        used = self.max_range - available
+        return (used, available)
+
+    def can_fully_refuel(self):
+        """
+        Can we afford to fully refuel this ship?
+
+        :return:
+        """
+        return self.owner.credits > self.refuel_cost()
+
+    def refuel_cost(self):
+        """
+        What's the cost to refuel on our current planet? We need to take
+        into account the possibility of not having enough money to fully
+        refuel.
+
+        :return:
+        """
+
+        # how many units of fuel do we need
+        f_used, f_available = self.fuel_units()
+
+        # given the planet markup, what will our used fuel cost to
+        # replace?
+        cost = FUEL_UNIT_COST * self.planet.fuel_markup * f_used
+        return cost
+
+    def refuel(self):
+        """
+        Fully refuel.
+
+        :return:
+        """
+        self.fuel_level = 100.0
+        self.save()
+
+    def partially_refuel(self, creds):
+        """
+        Apply X creds towards refueling.
+
+        :param creds:
+        :return:
+        """
+        # figure out what % of our fuel level we can recoup for X credits
+        cost = self.refuel_cost()
+        f_used, f_available = self.fuel_units()
+
+        refuel_units = creds * 1.0 / cost * f_used
+        refuel_perc = refuel_units / self.max_range * 100.0
+        self.fuel_level += refuel_perc
         self.save()

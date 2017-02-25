@@ -3,7 +3,7 @@
 <div class="row">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <h3>In Orbit</h3>
+            <h3>Registered Ships</h3>
         </div>
         <table class="table table-condensed table-striped table-hover">
             <thead>
@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for orbiter in planet.orbiters.all %}
+                {% for orbiter in ships.all %}
                 <tr>
                     {% if orbiter.is_home %}
                     <td>{% bootstrap_icon 'star' %}</td>

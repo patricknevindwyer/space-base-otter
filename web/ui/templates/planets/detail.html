@@ -9,6 +9,7 @@
     </div>
     <div class="col-md-5 col-md-offset-1">
         {% include "planets/p_planet_orbiters.html" with planet=planet %}
+        {% include "planets/p_registered_ships.html" with ships=planet.registrants %}
     </div>
 </div>
 {% endblock %}
