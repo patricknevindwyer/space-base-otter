@@ -58,3 +58,6 @@
  - [ ] resources
    - [ ] water
    - [ ] food
+ - [ ] Bad NPCs
+   - [ ] space monsters
+   - [ ] pirates

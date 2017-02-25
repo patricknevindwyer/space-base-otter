@@ -4,12 +4,10 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-5">
         {% include "ships/p_ship_goods.html" with ship=ship %}
     </div>
-</div>
-<div class="row">
-    <div class="col-md-10">
+    <div class="col-md-5 col-md-offset-1">
         {% include "planets/p_planet_goods.html" with planet=planet %}
     </div>
 </div>

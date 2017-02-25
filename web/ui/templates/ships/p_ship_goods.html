@@ -3,21 +3,18 @@
 {% load humanize %}
 <div class="row">
     <div class="panel panel-info">
-        <div class="panel-heading"><h4>{{ ship.name }}<small> {{ ship.model }}</small></h4></div>
+        <div class="panel-heading"><h4>Cargo <small>{{ ship.model }}</small></h4></div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-4">
-                    <h1>{% bootstrap_icon 'yen' %}{{ ship.owner.credits|intcomma }}</h1>
+                <div class="col-md-12" style="text-align:center">
+                    <h1 style="font-size:4em">{% bootstrap_icon 'yen' %}{{ ship.owner.credits|intcomma }}</h1>
                 </div>
-                <div class="col-md-6">
-                    <dl class="">
-                        <dt>Cargo</dt>
-                        <dd>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</div>
-                            </div>
-                        </dd>
-                    </dl>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.current_cargo_load }} / {{ ship.cargo_capacity }}</div>
+                    </div>
                 </div>
             </div>
         </div>

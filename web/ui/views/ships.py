@@ -61,9 +61,9 @@ def detail(request, ship_id):
         return redirect(reverse("ships"))
 
 
-def marketplace(request, ship_id):
+def travel(request, ship_id):
     """
-    Trading market place.
+    Travel options from a planet.
 
     :param request:
     :param ship_id:
@@ -74,7 +74,7 @@ def marketplace(request, ship_id):
 
     # only owners can get the details on a ship
     if request.user.profile == ship.owner:
-        return render(request, "ships/marketplace.html", context=fill_context({"ship": ship, "planet": planet}))
+        return render(request, "ships/travel.html", context=fill_context({"ship": ship, "planet": planet}))
     else:
         return redirect(reverse("ships"))
 

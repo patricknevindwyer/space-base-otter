@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from ui.views import index
-from ui.views import planets, ships, account
+from ui.views import planets, ships, account, marketplace
 
 urlpatterns = [
     url(r'^$', index.index),
@@ -39,8 +39,10 @@ urlpatterns = [
     url(r'^ship/(?P<ship_id>[0-9]+)/buy/?$', ships.buy, name="ship-buy"),
     url(r'^ship/(?P<ship_id>[0-9]+)/refuel/?$', ships.refuel, name="ship-refuel"),
     url(r'^ship/(?P<ship_id>[0-9]+)/remove/?$', ships.remove, name="ship-remove"),
-    url(r'^ship/(?P<ship_id>[0-9]+)/marketplace/?$', ships.marketplace, name="ship-marketplace"),
+    url(r'^ship/(?P<ship_id>[0-9]+)/travel/?$', ships.travel, name="ship-travel"),
     url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/(?P<planet_id>[0-9]+)/?$', ships.travel_to_planet, name="ship-travel-to-planet"),
     url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/home/?$', ships.travel_to_home_planet, name="ship-travel-to-home-planet"),
+
+    url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/?$', marketplace.goods, name="marketplace"),
 
 ]
