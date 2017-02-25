@@ -15,6 +15,7 @@
   - [ ] users have money
   - [ ] ships belong to users
  - [ ] add fuel consumption
+ - [ ] support good purchasing 
  - [ ] add fuel purchasing
  - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
  - [ ] add cargo support
@@ -40,6 +41,3 @@
  - [x] buttons
    - [x] add new ship/planet
    - [x] delete ship/planet
- - [ ] resources
-   - [ ] water
-   - [ ] food
