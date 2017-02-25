@@ -44,5 +44,7 @@ urlpatterns = [
     url(r'^ship/(?P<ship_id>[0-9]+)/travel_to/planet/home/?$', ships.travel_to_home_planet, name="ship-travel-to-home-planet"),
 
     url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/?$', marketplace.goods, name="marketplace"),
+    url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/export/(?P<good_id>[0-9]+)/quantity/(?P<quantity>[0-9]+)/?$', marketplace.export_good, name="marketplace-export"),
+    url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/import/(?P<good_id>[0-9]+)/quantity/(?P<quantity>[0-9]+)/?$', marketplace.import_good, name="marketplace-import"),
 
 ]

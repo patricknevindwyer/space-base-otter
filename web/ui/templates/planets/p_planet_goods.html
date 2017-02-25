@@ -29,9 +29,9 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">10</a></li>
-                                <li><a href="#">100</a></li>
+                                <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 1 %}">1</a></li>
+                                <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 10 %}">10</a></li>
+                                <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 100 %}">100</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">All</a></li>
                             </ul>
@@ -67,11 +67,11 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">10</a></li>
-                                <li><a href="#">100</a></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 1 %}">1</a></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 10 %}">10</a></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 100 %}">100</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Max</a></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id ship.cargo_free %}">Max</a></li>
                             </ul>
                         </div>
                     </td>
