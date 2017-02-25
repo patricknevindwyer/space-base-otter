@@ -17,15 +17,20 @@
  - [x] ships belong to users
  - [x] add fuel consumption
  - [x] add fuel purchasing
- - [ ] ships have home planets (can always travel home, burns all fuel and costs $)
+ - [x] ships have home planets (can always travel home, burns all fuel and costs $)
   - [x] first home planet is random and sets the starting point
   - [x] can make current planet home planet
   - [x] travel to home planet (cost = distance)
-  - [ ] planets show registrants
+  - [x] planets show registrants
  - [ ] add cargo support
+  - [ ] horizontal layout
  - [ ] buy cargo
+  - [ ] low/hi arrows around average price
  - [ ] sell cargo
  - [ ] set cargo purchase price
+ - [ ] Buy ship from Registered Ship list
+  - [ ] buyers summary / registrated summary 
+  - [ ] ship yard view
  - [ ] show last visited planet
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo

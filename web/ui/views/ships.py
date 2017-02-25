@@ -61,6 +61,24 @@ def detail(request, ship_id):
         return redirect(reverse("ships"))
 
 
+def marketplace(request, ship_id):
+    """
+    Trading market place.
+
+    :param request:
+    :param ship_id:
+    :return:
+    """
+    ship = get_object_or_404(Ship, pk=ship_id)
+    planet = ship.planet
+
+    # only owners can get the details on a ship
+    if request.user.profile == ship.owner:
+        return render(request, "ships/marketplace.html", context=fill_context({"ship": ship, "planet": planet}))
+    else:
+        return redirect(reverse("ships"))
+
+
 @transaction.atomic
 def buy(request, ship_id):
     """

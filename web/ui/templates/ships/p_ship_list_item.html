@@ -11,6 +11,8 @@
         <dl class="dl-horizontal">
             <dt>Orbiting</dt>
             <dd><a href="{% url 'planet' ship.planet.id %}">{{ ship.planet.name }}</a></dd>
+            <dt>Home Planet</dt>
+            <dd><a href="{% url 'planet' ship.home_planet.id %}">{{ ship.home_planet.name }}</a></dd>
             <dt>Cargo</dt>
             <dd>
                 <div class="progress">
