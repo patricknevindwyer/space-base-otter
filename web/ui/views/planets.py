@@ -87,4 +87,5 @@ def detail(request, planet_id):
     :return:
     """
     planet = get_object_or_404(Planet, pk=planet_id)
+
     return render(request, "planets/detail.html", context=fill_context({"planet": planet}))

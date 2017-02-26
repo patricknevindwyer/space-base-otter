@@ -38,13 +38,15 @@
   - [x] fuel and range
   - [x] travel dests
   - [x] warp home
-  - [ ] planet detail (separate screen - can we still show a header?)
+  - [x] planet detail (separate screen - can we still show a header?)
   - [ ] mark planet as home planet when in travel range
  - [ ] ship yard view
-  - [ ] what happens when we visit a planet with no ship?
- - [ ] Buy ship from Registered Ship list
+   - [ ] better ship generation
+   - [ ] what happens when we visit a planet with no ship?
+   - [ ] Buy ship from Registered Ship list
  - [ ] buyers summary / registrant summary 
  - [ ] show last visited planet
+ - [ ] Let users warp to one another?
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
@@ -54,6 +56,9 @@
  - [ ] homepage view of state of game
  - [ ] when a ship is home, it gets bonuses?
  - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
+ - [ ] Planet Fixes
+   - [ ] view planet marketplace without a ship
+   - [ ] visit a planet without a ship
  - [ ] modular ships
    - [ ] shipyards on some planets
    - [ ] ship templates to buy
