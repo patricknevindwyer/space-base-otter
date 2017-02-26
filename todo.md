@@ -39,6 +39,7 @@
   - [x] travel dests
   - [x] warp home
   - [ ] planet detail (separate screen - can we still show a header?)
+  - [ ] mark planet as home planet when in travel range
  - [ ] ship yard view
   - [ ] what happens when we visit a planet with no ship?
  - [ ] Buy ship from Registered Ship list
@@ -47,6 +48,7 @@
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
+ - [ ] ship detail view (history?)
  - [ ] Imports & Exports fixes
    - [ ] make sure market place isn't buying and selling the same good
  - [ ] homepage view of state of game
