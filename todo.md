@@ -28,19 +28,21 @@
   - [x] selective sell buttons
   - [x] sell max/all
   - [x] low/hi arrows around average price
-  - [ ] avg purchase price
+ - [x] avg purchase price on ship goods view
  - [ ] tactical header
   - [ ] refuel, marketplace, travel, shipyard
  - [x] sell cargo
- - [ ] set cargo purchase price
- - [ ] Buy ship from Registered Ship list
-  - [ ] buyers summary / registrated summary 
-  - [ ] ship yard view
+ - [x] set cargo purchase price
  - [ ] fixed travel view
+ - [ ] ship yard view
+ - [ ] Buy ship from Registered Ship list
+ - [ ] buyers summary / registrant summary 
  - [ ] show last visited planet
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
+ - [ ] Imports & Exports fixes
+   - [ ] make sure market place isn't buying and selling the same good
  - [ ] homepage view of state of game
  - [ ] when a ship is home, it gets bonuses?
  - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
