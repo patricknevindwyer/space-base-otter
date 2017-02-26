@@ -44,7 +44,9 @@
    - [ ] better ship generation
    - [ ] what happens when we visit a planet with no ship?
    - [ ] Buy ship from Registered Ship list
- - [ ] buyers summary / registrant summary 
+ - [ ] buyers summary / registrant summary
+ - [ ] Ship detail view
+   - [ ] better break down of a ships details for an owner
  - [ ] show last visited planet
  - [ ] Let users warp to one another?
  - [ ] show travel history (where have I been?)
