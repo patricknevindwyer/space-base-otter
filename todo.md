@@ -25,9 +25,9 @@
  - [x] add cargo support
   - [x] horizontal layout
  - [x] buy cargo
-  - [ ] selective sell buttons
-  - [ ] sell max/all
-  - [ ] low/hi arrows around average price
+  - [x] selective sell buttons
+  - [x] sell max/all
+  - [x] low/hi arrows around average price
   - [ ] avg purchase price
  - [ ] tactical header
   - [ ] refuel, marketplace, travel, shipyard

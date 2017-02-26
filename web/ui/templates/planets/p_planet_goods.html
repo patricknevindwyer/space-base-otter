@@ -41,7 +41,7 @@
                                     <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 10 %}">10</a></li>
                                     <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 100 %}">100</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">All</a></li>
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id ship|quantity_in_cargo:import %}">All</a></li>
                                 </ul>
                             </div>
                         </td>
