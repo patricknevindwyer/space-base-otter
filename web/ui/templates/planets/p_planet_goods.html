@@ -1,5 +1,7 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
+{% load sbo_ship_tags %}
+
 <div class="row">
     <div class="panel panel-info">
         <div class="panel-heading"><h4>Marketplace <small> {% bootstrap_icon 'globe' %} {{ planet.name }}</small></h4></div>
@@ -19,24 +21,33 @@
             </thead>
             <tbody>
                 {% for import in planet.imports.all %}
+
+                {% if ship|can_sell_at_profit:import %}
+                <tr class="success">
+                {% else %}
                 <tr>
+                {% endif %}
                     <td>{{ import.name }}</td>
                     <td>{{ import.price|floatformat:2 }}</td>
-                    <td>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-xs btn-success">Sell</button>
-                            <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 1 %}">1</a></li>
-                                <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 10 %}">10</a></li>
-                                <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 100 %}">100</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">All</a></li>
-                            </ul>
-                        </div>
-                    </td>
+                    {% if ship|has_cargo:import %}
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-xs btn-success">Sell</button>
+                                <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 1 %}">1</a></li>
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 10 %}">10</a></li>
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 100 %}">100</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">All</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    {% else %}
+                    <td/>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

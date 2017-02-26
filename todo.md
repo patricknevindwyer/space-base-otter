@@ -22,15 +22,21 @@
   - [x] can make current planet home planet
   - [x] travel to home planet (cost = distance)
   - [x] planets show registrants
- - [ ] add cargo support
-  - [ ] horizontal layout
- - [ ] buy cargo
+ - [x] add cargo support
+  - [x] horizontal layout
+ - [x] buy cargo
+  - [ ] selective sell buttons
+  - [ ] sell max/all
   - [ ] low/hi arrows around average price
- - [ ] sell cargo
+  - [ ] avg purchase price
+ - [ ] tactical header
+  - [ ] refuel, marketplace, travel, shipyard
+ - [x] sell cargo
  - [ ] set cargo purchase price
  - [ ] Buy ship from Registered Ship list
   - [ ] buyers summary / registrated summary 
   - [ ] ship yard view
+ - [ ] fixed travel view
  - [ ] show last visited planet
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo

@@ -256,6 +256,17 @@ class Cargo(models.Model):
     # what ship does this belong to?
     ship = models.ForeignKey("Ship", on_delete=models.CASCADE, related_name="cargo")
 
+    def average_price(self):
+        """
+        What's the average sale price per unit of cargo?
+
+        :return:
+        """
+        if self.quantity == 0:
+            return 0.0
+        else:
+            return self.total_value / self.quantity
+
     def buy(self, good, quantity):
         """
         We're buying more of something! Hooray! Let's do some house keeping.
@@ -387,6 +398,14 @@ class Ship(models.Model):
     # image for this ship?
     image_name = models.CharField(max_length=255, null=False, blank=False)
 
+    def get_cargo_from_good(self, good):
+        """
+        Given a good, get the equivalent ships cargo.
+        :param good:
+        :return:
+        """
+        return self.cargo.filter(name=good.name).first()
+
     def current_range(self):
         """
         How far could this ship go right now?
@@ -395,7 +414,6 @@ class Ship(models.Model):
         """
         print "max range(%f) * fuel level(%f) / 100.0" % (self.max_range, self.fuel_level)
         return self.max_range * (self.fuel_level / 100.0)
-
 
     def has_in_cargo(self, good):
         """
