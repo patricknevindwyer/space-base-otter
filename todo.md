@@ -29,12 +29,18 @@
   - [x] sell max/all
   - [x] low/hi arrows around average price
  - [x] avg purchase price on ship goods view
- - [ ] tactical header
-  - [ ] refuel, marketplace, travel, shipyard
+ - [x] tactical header
+  - [x] refuel, marketplace, travel, shipyard
  - [x] sell cargo
  - [x] set cargo purchase price
  - [ ] fixed travel view
+  - [x] home world
+  - [x] fuel and range
+  - [x] travel dests
+  - [x] warp home
+  - [ ] planet detail (separate screen - can we still show a header?)
  - [ ] ship yard view
+  - [ ] what happens when we visit a planet with no ship?
  - [ ] Buy ship from Registered Ship list
  - [ ] buyers summary / registrant summary 
  - [ ] show last visited planet

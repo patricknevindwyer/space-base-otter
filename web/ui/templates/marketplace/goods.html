@@ -3,6 +3,9 @@
 {% load bootstrap3 %}
 
 {% block content %}
+
+{% include "general/p_ship_on_planet_header.html" with active_page="marketplace" %}
+
 <div class="row">
     <div class="col-md-5">
         {% include "ships/p_ship_goods.html" with ship=ship %}

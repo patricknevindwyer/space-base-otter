@@ -134,7 +134,8 @@ def travel_to_planet(request, ship_id, planet_id):
     ship.travel_to(planet)
     ship.burn_fuel_for_distance(distance)
 
-    return redirect(reverse("ship", args=(ship_id,)))
+    messages.info(request, "Welcome to %s" % (planet.name,))
+    return redirect(reverse("ship-travel", args=(ship_id,)))
 
 
 @transaction.atomic
@@ -161,7 +162,7 @@ def travel_to_home_planet(request, ship_id):
     # money
     request.user.profile.subtract_credits(home_distance)
 
-    return redirect(reverse("ship", args=(ship_id,)))
+    return redirect(reverse("ship-travel", args=(ship_id,)))
 
 
 def refuel(request, ship_id):
@@ -181,4 +182,4 @@ def refuel(request, ship_id):
         creds = request.user.profile.credits
         request.user.profile.subtract_credits(creds)
         ship.partially_refuel(creds)
-    return redirect(reverse("ship", args=(ship_id,)))
+    return redirect(reverse("ship-travel", args=(ship_id,)))

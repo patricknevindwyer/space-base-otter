@@ -1,0 +1,31 @@
+{% load bootstrap3 %}
+{% load humanize %}
+{% load staticfiles %}
+<style>
+    .planet-inset {
+        background-image: url({% static 'ui/images/planets/'|add:planet.image_name %});
+        background-position: left center;
+        background-repeat: no-repeat;
+    }
+
+    .planet-title {
+        position: absolute;
+        color: black;
+        bottom: 35px;
+        right: 30px;
+        font-size: 1.75em;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="well planet-inset" style="text-align:center">
+
+            <a href="{% url 'ship-refuel' ship.id %}" class="btn btn-default btn-md">{% bootstrap_icon 'flash' %} Refuel</a>
+            <a href="{% url 'ship-travel' ship.id %}" class="btn btn-default btn-md" {% if active_page == "travel" %}disabled{% endif %}>{% bootstrap_icon 'globe' %} Travel</a>
+            <a href="{% url 'marketplace' ship.id planet.id %}" class="btn btn-default btn-md" {% if active_page == "marketplace" %}disabled{% endif %}>{% bootstrap_icon 'yen' %} Marketplace</a>
+            <a href="#" class="btn btn-default btn-md" {% if active_page == "shipyard" %}disabled{% endif %}>{% bootstrap_icon 'plane' %} Shipyard</a>
+
+            <span class="planet-title">{{ planet.name }} {% bootstrap_icon 'globe' %}</span>
+        </div>
+    </div>
+</div>
