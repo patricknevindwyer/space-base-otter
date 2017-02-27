@@ -2,41 +2,43 @@
 {% load bootstrap3 %}
 {% load humanize %}
 <div class="row">
-    <div class="panel panel-info">
-        <div class="panel-heading"><h4>Cargo <small>{{ ship.model }}</small></h4></div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-12" style="text-align:center">
-                    <h1 style="font-size:4em">{% bootstrap_icon 'yen' %}{{ ship.owner.credits|intcomma }}</h1>
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4>Cargo <small>{{ ship.model }}</small></h4></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center">
+                        <h1 style="font-size:4em">{% bootstrap_icon 'yen' %}{{ ship.owner.credits|intcomma }}</h1>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.cargo_used }} / {{ ship.cargo_capacity }}</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.cargo_used }} / {{ ship.cargo_capacity }}</div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <table class="table table-condensed table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Good</th>
+                        <th>Quantity</th>
+                        <th>{% bootstrap_icon 'yen' %}</th>
+                        <th/>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cargo in ship.cargo.all %}
+                    <tr>
+                        <td>{{ cargo.name }}</td>
+                        <td>{{ cargo.quantity }}</td>
+                        <td>{{ cargo.average_price|floatformat:2 }}</td>
+                        <td/>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <table class="table table-condensed table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Good</th>
-                    <th>Quantity</th>
-                    <th>{% bootstrap_icon 'yen' %}</th>
-                    <th/>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cargo in ship.cargo.all %}
-                <tr>
-                    <td>{{ cargo.name }}</td>
-                    <td>{{ cargo.quantity }}</td>
-                    <td>{{ cargo.average_price|floatformat:2 }}</td>
-                    <td/>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </div>
 </div>

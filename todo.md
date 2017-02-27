@@ -39,7 +39,7 @@
   - [x] travel dests
   - [x] warp home
   - [x] planet detail (separate screen - can we still show a header?)
-  - [ ] mark planet as home planet when in travel range
+  - [x] mark planet as home planet when in travel range
  - [ ] ship yard view
    - [ ] better ship generation
    - [ ] what happens when we visit a planet with no ship?
