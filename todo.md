@@ -1,4 +1,10 @@
 # TODO
+ 
+ - [ ] starting a new install is confusing
+   - [ ] what to run to seed DB
+   - [ ] where to navigate at start
+   - [ ] better intro to game (no ship, some money)
+   - [ ] need better way to show our resources all the time
 
  - [x] link ship to planet
  - [x] planet list item needs # of orbiters
@@ -44,6 +50,8 @@
    - [ ] better ship generation
    - [ ] what happens when we visit a planet with no ship?
    - [ ] Buy ship from Registered Ship list
+ - [ ] what's the new user flow
+ - [ ] refuel button needs to show cost
  - [ ] buyers summary / registrant summary
  - [ ] Ship detail view
    - [ ] better break down of a ships details for an owner
@@ -55,6 +63,8 @@
  - [ ] ship detail view (history?)
  - [ ] Imports & Exports fixes
    - [ ] make sure market place isn't buying and selling the same good
+   - [ ] allow dumping of cargo
+   - [ ] search nearby planets for imports/exports
  - [ ] homepage view of state of game
  - [ ] when a ship is home, it gets bonuses?
  - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
@@ -62,6 +72,12 @@
    - [ ] view planet marketplace without a ship
    - [ ] visit a planet without a ship
  - [ ] modular ships
+   - [ ] ships have infrastructure limits and bases (i.e. 100 cargo base, 2 expansion docks)
+   - [ ] ships have electronic/compute limits and bases (i.e. 3 electronics slots)
+   - [ ] infrastructure cane be used for cargo, fuel, or people
+   - [ ] electronic
+   - [ ] specialized infrastructure units can hold more, but are restricted (we need tags for goods)
+   - [ ] navigation
    - [ ] shipyards on some planets
    - [ ] ship templates to buy
    - [ ] upgrade / add capacity
