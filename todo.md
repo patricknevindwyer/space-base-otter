@@ -55,6 +55,6 @@
  - [x] buttons
    - [x] add new ship/planet
    - [x] delete ship/planet
- - [ ] resources
-   - [ ] water
-   - [ ] food
+ - [x] resources
+   - [x] water
+   - [x] food
