@@ -1,22 +1,12 @@
 {% load staticfiles %}
 {% load bootstrap3 %}
+{% load sbo_ship_tags %}
+
 <div class="row">
     <div class="panel panel-info">
-        <div class="panel-heading"><h2>{{ planet.name }}<small> {% bootstrap_icon 'globe' %}</small></h2></div>
+        <div class="panel-heading"><h4>Marketplace <small> {% bootstrap_icon 'globe' %} {{ planet.name }}</small></h4></div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{% static 'ui/images/planets/'|add:planet.image_name %}" style="width:200px;height:200px">
-                </div>
-                <div class="col-md-4">
-                    <dl class="dl-horizontal">
-                        <dt>X Coordinate</dt>
-                        <dd>{{ planet.x_coordinate }}</dd>
-                        <dt>Y Coordinate</dt>
-                        <dd>{{ planet.y_coordinate }}</dd>
-                    </dl>
-                </div>
-            </div>
+            This planet is looking to buy:
         </div>
         <table class="table table-condensed table-striped table-hover">
             <thead>
@@ -31,14 +21,40 @@
             </thead>
             <tbody>
                 {% for import in planet.imports.all %}
+
+                {% if ship|can_sell_at_profit:import %}
+                <tr class="success">
+                {% else %}
                 <tr>
+                {% endif %}
                     <td>{{ import.name }}</td>
                     <td>{{ import.price|floatformat:2 }}</td>
+                    {% if ship|has_cargo:import %}
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-xs btn-success">Sell</button>
+                                <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 1 %}">1</a></li>
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 10 %}">10</a></li>
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 100 %}">100</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="{% url 'marketplace-import' ship.id planet.id import.id ship|quantity_in_cargo:import %}">All</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    {% else %}
                     <td/>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <div class="panel-body">
+            For sale on this planet:
+        </div>
         <table class="table table-condensed table-striped table-hover">
             <thead>
                 <tr>
@@ -55,7 +71,21 @@
                 <tr>
                     <td>{{ export.name }}</td>
                     <td>{{ export.price|floatformat:2 }}</td>
-                    <td/>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-xs btn-success">Buy</button>
+                            <button type="button" class="btn btn-xs btn-success dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 1 %}">1</a></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 10 %}">10</a></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 100 %}">100</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="{% url 'marketplace-export' ship.id planet.id export.id ship.cargo_free %}">Max</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

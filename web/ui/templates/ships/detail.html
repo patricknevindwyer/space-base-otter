@@ -16,7 +16,7 @@
                     {% else %}
                     <a href="{% url 'ship-refuel' ship.id %}" class="btn btn-info">Partially refuel for {% bootstrap_icon 'yen' %}{{ user.profile.credits|floatformat:0 }}</a>
                     {% endif %}
-                    <a href="{% url 'ship-marketplace' ship.id %}" class="btn btn-success">Marketplace</a>
+                    <a href="{% url 'marketplace' ship.id ship.planet.id %}" class="btn btn-success">Marketplace</a>
                 </div>
 
             </div>

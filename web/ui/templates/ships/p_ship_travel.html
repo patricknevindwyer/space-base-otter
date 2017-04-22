@@ -1,13 +1,22 @@
 {% load staticfiles %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+<style>
+    .ship-inset {
+        background-image: url({% static 'ui/images/ships/'|add:ship.image_name %});
+        background-position: -90px center;
+        background-repeat: no-repeat;
+        background-size: 200px 200px
+    }
+
+</style>
+
 <div class="row">
     <div class="panel panel-info">
-        <div class="panel-heading"><h2><a href="{% url 'ship-travel' ship.id %}">{{ ship.name }}</a><small> {{ ship.model }}</small></h2></div>
+        <div class="panel-heading"><h4><a href="{% url 'ship' ship.id %}">Ship</a><small> {{ ship.model }}</small></h4></div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{% static 'ui/images/ships/'|add:ship.image_name %}" style="width:200px;height:200px">
-                </div>
-                <div class="col-md-6">
+            <div class="row ship-inset">
+                <div class="col-md-10 col-md-offset-2">
                     <dl class="">
                         <dt>Orbiting</dt>
                         <dd>{{ ship.planet.name }}</dd>
@@ -21,13 +30,11 @@
                         <dt>Fuel</dt>
                         <dd>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ ship.fuel_level }}%"></div>
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.fuel_level }}%">{{ ship.fuel_level|floatformat:0 }} %</div>
                             </div>
                         </dd>
                         <dt>Range</dt>
-                        <dd>{{ ship.current_range }}</dd>
-                        <dt>Home Planet</dt>
-                        <dd><a href="{% url 'planet' ship.home_planet.id %}">{{ ship.home_planet.name }}</a></dd>
+                        <dd>{{ ship.current_range|floatformat:2 }} <abbr title="Light Years">LY</abbr></dd>
                     </dl>
                 </div>
             </div>

@@ -233,6 +233,77 @@ class Good(models.Model):
     price = models.FloatField(null=False, blank=False)
 
 ###
+# CARGO
+###
+class Cargo(models.Model):
+    """
+    A unit of cargo carried by a ship. When new cargo is purchased, this
+    object is updated with the total price purchased/sold, so we can keep
+    a cost average for the good. When this good quantity hits zero, it
+    should be removed from a ship.
+
+    Cargo are compared to good via the **name** field.
+    """
+
+    name = models.CharField(max_length=255, null=False, blank=False)
+
+    # how many do we have?
+    quantity = models.IntegerField(default=0, null=False)
+
+    # what is the total value of the good?
+    total_value = models.FloatField(null=False, blank=False, default=0.0)
+
+    # what ship does this belong to?
+    ship = models.ForeignKey("Ship", on_delete=models.CASCADE, related_name="cargo")
+
+    def average_price(self):
+        """
+        What's the average sale price per unit of cargo?
+
+        :return:
+        """
+        if self.quantity == 0:
+            return 0.0
+        else:
+            return self.total_value / self.quantity
+
+    def buy(self, good, quantity):
+        """
+        We're buying more of something! Hooray! Let's do some house keeping.
+
+        :param good:
+        :param quantity:
+        :return:
+        """
+        self.quantity += quantity
+
+        # how much have we paid, in total, for all of this?
+        self.total_value += (quantity * good.price)
+
+        self.save()
+
+    def sell(self, good, quantity):
+        """
+        We're selling something off. Update the quantity and average total value.
+
+        :param good:
+        :param quantity:
+        :return:
+        """
+
+        # keep track of our average
+        avg_price = self.total_value / self.quantity
+
+        # update cargo
+        self.quantity -= quantity
+
+        # update total value with avg price
+        self.total_value = self.quantity * avg_price
+
+        self.save()
+
+
+###
 # SHIPS
 ###
 def get_default_ship_location():
@@ -327,6 +398,14 @@ class Ship(models.Model):
     # image for this ship?
     image_name = models.CharField(max_length=255, null=False, blank=False)
 
+    def get_cargo_from_good(self, good):
+        """
+        Given a good, get the equivalent ships cargo.
+        :param good:
+        :return:
+        """
+        return self.cargo.filter(name=good.name).first()
+
     def current_range(self):
         """
         How far could this ship go right now?
@@ -336,12 +415,54 @@ class Ship(models.Model):
         print "max range(%f) * fuel level(%f) / 100.0" % (self.max_range, self.fuel_level)
         return self.max_range * (self.fuel_level / 100.0)
 
-    def current_cargo_load(self):
+    def has_in_cargo(self, good):
         """
-        What's the capacity impact of our current cargo?
+        Does the ship have any of this good in cargo?
+
         :return:
         """
-        return 0
+        cargo = self.cargo.filter(name=good.name).first()
+
+        if cargo is None:
+            return False
+        elif cargo.quantity == 0:
+            return False
+        else:
+            return True
+
+    def quantity_in_cargo(self, good):
+        """
+        How much of this good do we have in cargo?
+
+        :return:
+        """
+        cargo = self.cargo.filter(name=good.name).first()
+
+        if cargo is None:
+            return 0
+        else:
+            return cargo.quantity
+
+    def cargo_used(self):
+        """
+        What's the size of our currently used cargo?
+        :return:
+        """
+
+        # add up all of our cargo
+        cargo_count = 0
+
+        for c in self.cargo.only("quantity").all():
+            cargo_count += c.quantity
+        return cargo_count
+
+    def cargo_free(self):
+        """
+        What's the free space in our cargo bay?
+
+        :return:
+        """
+        return self.cargo_capacity - self.cargo_used()
 
     def cargo_load_percent(self):
         """
@@ -349,7 +470,71 @@ class Ship(models.Model):
 
         :return:
         """
-        return self.current_cargo_load() / self.cargo_capacity * 100.0
+        return self.cargo_used() * 1.0 / self.cargo_capacity * 100.0
+
+    def sell_cargo(self, good, quantity):
+        """
+        Let's sell some things. We need to:
+
+            1. Determine if we have any of this good
+            2. If we do, make sure we have enough to sell
+            3. Subtract from cargo
+            4. If cargo type is empty, delete it
+
+        :param good:
+        :param quantity:
+        :return:
+        """
+        cargo = self.cargo.filter(name=good.name).first()
+
+        # do we even have this?
+        if cargo is None:
+            return
+
+        # do we have enough to sell
+        if quantity > cargo.quantity:
+            return
+
+        # great, let's sell
+        cargo.sell(good, quantity)
+
+        # is this cargo empty?
+        if cargo.quantity == 0:
+            cargo.delete()
+
+    def buy_cargo(self, good, quantity):
+        """
+        Let's buy some goods. We need to:
+
+            1. Determine if we already have some of this good
+            2. Determine if we have space for this good
+            3. If we don't have this good, add it to our cargo
+            4. Use the cargo buy method to update the cargo
+
+        :param good:
+        :param quantity:
+        :return:
+        """
+
+        # do we have space?
+        if quantity > self.cargo_free():
+            return
+
+        # grab it if we've got it
+        cargo = self.cargo.filter(name = good.name).first()
+
+        # doesn't exist? Let's add it
+        if cargo is None:
+            cargo = Cargo.objects.create(
+                ship = self,
+                name = good.name
+            )
+            cargo.save()
+
+        # great, now let's buy
+        cargo.buy(good, quantity)
+
+        # neat. done.
 
     def planets_in_range(self):
         """
