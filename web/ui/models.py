@@ -14,7 +14,7 @@ import math
 # Resource settings we use
 
 # LOAD THE GOODS!
-GOODS = json.loads(open("ui/resources/goods.json", "r").read())
+GOODS = json.load(open("ui/resources/goods.json", "r"))
 
 # What are our planet images?
 planet_range = range(1,8) + range(10, 21)
@@ -31,6 +31,9 @@ SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.
 
 # Fuel base cost
 FUEL_UNIT_COST = 10
+
+# What are our upgrade qualities?
+UPGRADES = json.load(open("ui/resources/upgrades.json", "r"))
 
 ###
 # User Profile
@@ -309,6 +312,7 @@ class Cargo(models.Model):
 def get_default_ship_location():
     return Planet.objects.first()
 
+
 class ShipManager(models.Manager):
     """
     Work with ships.
@@ -361,6 +365,115 @@ class ShipManager(models.Manager):
         return obj
 
 
+class ShipUpgradeManager(models.Manager):
+    """
+    Manage how we generate new ship upgrades, using the UPGRADES data.
+    """
+
+    def create_cargo_upgrades(self):
+        """
+        Create a set of cargo goods, based upon rarity, cost, grade, etc.
+            
+            0. Given a grade of good, and a component...        
+            1. Determine if the component exist at the given grade
+            2. Calculate the *size* modification
+            3. Calculate the *capacity* requirement
+            4. Calculate the *cost*
+        
+        The result of this method will be 0 or more Cargo components.
+        
+        :return: 
+        """
+        upgrades = []
+
+        # let's iterate over our components
+        for component in UPGRADES["components"]["cargo"]:
+
+            # let's iterate over our grades
+            for grade in UPGRADES["grades"]:
+
+                # is this available?
+                candidate = random.random()
+
+                if candidate <= grade["availability"]:
+
+                    # we carry this good!
+                    upgrade = self._create_cargo_upgrade(component, grade)
+                    upgrades.append(upgrade)
+
+        return upgrades
+
+    def _create_cargo_upgrade(self, component, grade):
+        """
+        Combine the component and grade to create a new upgrade.
+        
+        :param component: 
+        :param grade: 
+        :return: 
+        """
+        upgrade = self.create(
+            size=component["base_size"] * grade["size_modifier"],
+            target="cargo",
+            ship=None,
+            cost=component["base_cost"] * grade["cost_modifier"],
+            name=component["name"] + ", " + grade["name"] + " grade",
+            quality=grade["name"],
+            capacity=component["capacity"],
+            description="Cargo: %s, Grade: %s" % (component["description"], grade["description"])
+        )
+        return upgrade
+
+    def create_cargo_upgrade(self):
+        """
+        Create a single cargo upgrade to restock or expand the availability at a shipyard. We
+        randomly select component type and upgrade until we get a candidate match.
+         
+        :return: 
+        """
+
+        while True:
+            component = random.choice(UPGRADES["components"]["cargo"])
+            grade = random.choice(UPGRADES["grades"])
+            candidate = random.random()
+
+            if candidate <= grade["availability"]:
+
+                # we got one!
+                return self._create_cargo_upgrade(component, grade)
+
+
+class ShipUpgrade(models.Model):
+    """
+    Upgrades to the ship.
+    
+    """
+    objects = ShipUpgradeManager()
+
+    # how much does this change our ship
+    size = models.IntegerField(null=False, blank=False, default=10)
+
+    # what on our ship does this change?
+    target = models.CharField(max_length=100, null=False, blank=False, default="cargo")
+
+    # which ship is this upgrade on?
+    ship = models.ForeignKey("Ship", blank=True, null=True, related_name="upgrades")
+
+    # what did this upgrade cost
+    cost = models.IntegerField(null=False, blank=False, default=100000)
+
+    # what do we call this?
+    name = models.CharField(max_length=255, null=False, blank=False)
+
+    # what quality is this upgrade?
+    quality = models.CharField(max_length=10, null=False, blank=False)
+
+    # how much cargo capacity does this take up?
+    capacity = models.IntegerField(null=False, blank=False, default=10)
+
+    # do we have a description?
+    description = models.TextField(null=True, blank=True)
+
+
 class Ship(models.Model):
     """
     A base model class for ships
@@ -395,8 +508,36 @@ class Ship(models.Model):
     # how much cargo space do we have?
     cargo_capacity = models.IntegerField(null=False, blank=False, default=50)
 
+    # how much of our upgrade space has already been consumed?
+    upgrade_capacity = models.IntegerField(null=False, blank=False, default=0)
+
+    # what's our maximum upgrade capacity? we can expand this with ShipUpgrades. this capacity
+    # can be used for multiple things: expanded cargo, expanded range
+    upgrade_capactiy_max = models.IntegerField(null=False, blank=False, default=50)
+
     # image for this ship?
     image_name = models.CharField(max_length=255, null=False, blank=False)
+
+    def upgrade(self, ship_upgrade):
+        """
+        Apply an upgrade to our ship, copy the object, and bind it to our ship object.
+        
+        :param ship_upgrade: 
+        :return: 
+        """
+        pass
+
+    def can_use_upgarde(self, ship_upgrade):
+        """
+        Can we apply this upgrade? We check:
+        
+          - max capacity
+          - cost
+          
+        :param ship_upgrade: 
+        :return: 
+        """
+        pass
 
     def get_cargo_from_good(self, good):
         """

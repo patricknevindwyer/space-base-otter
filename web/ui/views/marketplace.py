@@ -125,7 +125,7 @@ def export_good(request, ship_id, planet_id, good_id, quantity):
 
     # can we afford this?
     if cost > request.user.profile.credits:
-        message.error(request, "You can't afford that")
+        messages.error(request, "You can't afford that")
         return redirect(reverse("marketplace", args=(ship_id, planet_id)))
 
     # let's buy something!

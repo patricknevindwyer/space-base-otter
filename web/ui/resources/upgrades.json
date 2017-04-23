@@ -1,0 +1,97 @@
+{
+  "grades": [
+    {
+      "name": "Basic",
+      "id": "basic",
+      "description": "Standard parts, right from the factory.",
+      "availability": 1.0,
+      "size_modifier": 1,
+      "cost_modifier": 1
+    },
+    {
+      "name": "Alpha",
+      "id": "alpha",
+      "description": "Factory parts, customized to you.",
+      "availability": 0.75,
+      "size_modifier": 2,
+      "cost_modifier": 10
+    },
+    {
+      "name": "Beta",
+      "id": "beta",
+      "description": "Customized at the factory, produced in limited quantities.",
+      "availability": 0.5,
+      "size_modifier": 4,
+      "cost_modifier": 100
+    },
+    {
+      "name": "Delta",
+      "id": "delta",
+      "description": "High end parts, hand made to fit your ship.",
+      "availability": 0.1,
+      "size_modifier": 8,
+      "cost_modifier": 1000
+    },
+    {
+      "name": "Omega",
+      "id": "omega",
+      "description": "Specialized components from the Research and Development labs.",
+      "availability": 0.03,
+      "size_modifier": 16,
+      "cost_modifier": 10000
+    },
+    {
+      "name": "Ancient",
+      "id": "ancient",
+      "description": "Mysterious parts salvaged from a derelict ship belonging to a long dead civilization.",
+      "availability": 0.01,
+      "size_modifier": 64,
+      "cost_modifier": 100000
+    },
+    {
+      "name": "Grorian",
+      "id": "grorian",
+      "description": "Smuggled from the stellar generation-class shipyards of the Grorian Empire, the finest parts in the known galaxy.",
+      "availability": 0.001,
+      "size_modifier": 256,
+      "cost_modifier": 1000000
+    }
+  ],
+  "components": {
+    "cargo": [
+      {
+        "name": "Expanded Cargo (Small)",
+        "id": "cargo_1",
+        "description": "A modest, but functional, cargo expansion.",
+        "base_size": 10,
+        "capacity": 10,
+        "base_cost": 5000
+      },
+      {
+        "name": "Expanded Cargo (Medium)",
+        "id": "cargo_2",
+        "description": "More cargo space, for the enterprising ships captain.",
+        "base_size": 25,
+        "capacity": 25,
+        "base_cost": 12000
+      },
+      {
+        "name": "Expanded Cargo (Large)",
+        "id": "cargo_3",
+        "description": "A large cargo hold, perfect for the burgeoning importer/exporter.",
+        "base_size": 50,
+        "capacity": 50,
+        "base_cost": 22000
+      },
+      {
+        "name": "Expanded Cargo (Mega)",
+        "id": "cargo_4",
+        "description": "Cargo space everywhere.",
+        "base_size": 100,
+        "capacity": 100,
+        "base_cost": 40000
+      }
+    ],
+    "range": []
+  }
+}

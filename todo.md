@@ -5,47 +5,13 @@
    - [ ] where to navigate at start
    - [ ] better intro to game (no ship, some money)
    - [ ] need better way to show our resources all the time
-
- - [x] link ship to planet
- - [x] planet list item needs # of orbiters
- - [x] progress bar for fuel level
- - [x] progress bar for cargo capacity
- - [x] move between planets
- - [x] calculate real distance
- - [x] limit planet movement to planets within range
- - [x] generate large # of planets
- - [x] page or search for planet list instead of a full list
- - [x] sort ship travel list
- - [x] add user support
-  - [x] add password support
- - [x] users have money
- - [x] users can buy ships
- - [x] ships belong to users
- - [x] add fuel consumption
- - [x] add fuel purchasing
- - [x] ships have home planets (can always travel home, burns all fuel and costs $)
-  - [x] first home planet is random and sets the starting point
-  - [x] can make current planet home planet
-  - [x] travel to home planet (cost = distance)
-  - [x] planets show registrants
- - [x] add cargo support
-  - [x] horizontal layout
- - [x] buy cargo
-  - [x] selective sell buttons
-  - [x] sell max/all
-  - [x] low/hi arrows around average price
- - [x] avg purchase price on ship goods view
- - [x] tactical header
-  - [x] refuel, marketplace, travel, shipyard
- - [x] sell cargo
- - [x] set cargo purchase price
- - [ ] fixed travel view
-  - [x] home world
-  - [x] fuel and range
-  - [x] travel dests
-  - [x] warp home
-  - [x] planet detail (separate screen - can we still show a header?)
-  - [x] mark planet as home planet when in travel range
+ - [ ] imports/sell rows should highlight yellow/warn when it's a bad deal
+ - [ ] buy(max) should buy as much as possible, not throw an error
+ - [ ] buy (#) should parenthetically show $ for buying that amount 
+ - [ ] admin screen
+  - [ ] seed universe
+ - [ ] what to do when you're out of money, and can't sell anything?
+ - [ ] don't import and export the same things
  - [ ] ship yard view
    - [ ] better ship generation
    - [ ] what happens when we visit a planet with no ship?
@@ -91,9 +57,6 @@
    - [ ] ship summary
    - [ ] planet goods summary
    - [ ] travel summary
- - [x] buttons
-   - [x] add new ship/planet
-   - [x] delete ship/planet
  - [ ] resources
    - [ ] water
    - [ ] food
