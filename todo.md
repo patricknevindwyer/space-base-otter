@@ -1,5 +1,20 @@
 # TODO
- 
+ - [ ] WORKING ON ShipUpgrades and how they apply to ships
+   - [x] create ship yards
+   - [ ] populate shipyard view
+    - [ ] show upgrades
+    - [ ] show ships
+   - [ ] seed upgrades in shipyard
+   - [ ] seed ships in shipyard
+   - [ ] create sets of ships based on existing base hold space and upgradability 
+   - [ ] Buy upgrades
+   - [ ] install upgrades
+   - [ ] show upgrades installed on a ship
+   - [ ] select active ship
+   - [ ] sell ships?
+   - [ ] lookup the ID of the shipyard for a planet in a better way - right now we do planet.shipyards.all.0.id
+    - [ ] multiple yards on a planet?
+    - [ ] primary yard on a planet?
  - [ ] starting a new install is confusing
    - [ ] what to run to seed DB
    - [ ] where to navigate at start
