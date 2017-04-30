@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from ui.views import index
-from ui.views import planets, ships, account, marketplace
+from ui.views import planets, ships, account, marketplace, shipyards
 
 urlpatterns = [
     url(r'^$', index.index),
@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^planet/(?P<planet_id>[0-9]+)/?$', planets.detail, name="planet"),
     url(r'^planet/(?P<planet_id>[0-9]+)/remove/?$', planets.remove, name="planet-remove"),
     url(r'^planet/destroy/all/?$', planets.destroy_all, name="planets-destroy-all"),
+    url(r'^planet/destroy/unoccupied/?$', planets.destroy_unoccupied, name="planets-destroy-unoccupied"),
 
     url(r'^ships/$', ships.list, name="ships"),
     url(r'^ships/create/random/?$', ships.create_random, name="ships-create-random"),
@@ -46,5 +47,7 @@ urlpatterns = [
     url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/?$', marketplace.goods, name="marketplace"),
     url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/export/(?P<good_id>[0-9]+)/quantity/(?P<quantity>[0-9]+)/?$', marketplace.export_good, name="marketplace-export"),
     url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/import/(?P<good_id>[0-9]+)/quantity/(?P<quantity>[0-9]+)/?$', marketplace.import_good, name="marketplace-import"),
+
+    url(r'^shipyard/ship/(?P<ship_id>[0-9]+)/shipyard/(?P<shipyard_id>[0-9]+)/?$', shipyards.yard, name="shipyard"),
 
 ]

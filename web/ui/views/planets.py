@@ -78,6 +78,17 @@ def remove(request, planet_id):
     return redirect(reverse("planets"))
 
 
+def destroy_unoccupied(request):
+    """
+    Delete any planets not currently hosting a player.
+    
+    :param request: 
+    :return: 
+    """
+    Planet.objects.filter(orbiters=None, registrants=None).delete()
+    return redirect(reverse("planets"))
+
+
 def detail(request, planet_id):
     """
     Detail of a planet.

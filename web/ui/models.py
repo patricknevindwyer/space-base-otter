@@ -21,9 +21,11 @@ planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
 # Shipyards
-SHIPYARDS = [line.strip() for line in open("ui/resources/shipyards.txt", "r").readlines()]
+# TODO: refactor to shipyards.json for creating shipyard
+SHIPYARDS = json.load(open("ui/resources/shipyards.json", "r"))
 
 # Ship types
+# TODO: refactor to shiptypes.json for the possible variants of ships
 SHIP_TYPES = [line.strip() for line in open("ui/resources/shiptypes.txt", "r").readlines()]
 
 # SHIP Images
@@ -109,7 +111,7 @@ class PlanetManager(models.Manager):
         id = random.sample(self.only("id").all(), 1)
         return id[0]
 
-    def create_random(self):
+    def create_random(self, has_shipyard=True):
         """
         Create and place a random Planet.
 
@@ -164,6 +166,9 @@ class PlanetManager(models.Manager):
                     price = random.uniform(im["price"]["export"]["min"], im["price"]["export"]["max"]) * im["price"]["base"]
                 )
 
+        # do we have a shipyard?
+        if has_shipyard:
+            yard = ShipYard.objects.create_random_on_planet(obj)
 
         return obj
 
@@ -326,14 +331,15 @@ class ShipManager(models.Manager):
         """
 
         # pick our yard and type
-        shipyard = random.sample(SHIPYARDS, 1)[0]
+        #shipyard = random.sample(SHIPYARDS, 1)[0]
         shiptype = random.sample(SHIP_TYPES, 1)[0]
 
         # what do we name this ship
         ship_name = shiptype
 
         # what's the model of this ship
-        ship_model = "%s %s" % (shipyard, shiptype)
+        #ship_model = "%s %s" % (shipyard, shiptype)
+        ship_model = shiptype
 
         # starting planet
         ship_planet = Planet.objects.first()
@@ -442,6 +448,135 @@ class ShipUpgradeManager(models.Manager):
                 return self._create_cargo_upgrade(component, grade)
 
 
+class ShipYardManager(models.Manager):
+
+    def create_random_on_planet(self, planet):
+        """
+        Generate a new ship yard.
+        
+        We use:
+        
+         - SHIPYARDS::names - Data for generating ship yard names
+        
+        :return: 
+        """
+        yard = self.create(
+            name=self._create_name(),
+            planet=planet
+        )
+        yard.save()
+        return yard
+
+    def _create_name(self):
+        """
+        Use the data in SHIPYARDS::names. We have prefixes, suffixes, and
+        names. For each of prefixes and suffixes we:
+        
+         - Walk through the list of prefix/suffix in order, and generate a candidate
+           random normal. If that candidate < the prefix/suffix _probability_, then
+           we use that prefix/suffix.
+           
+         - Randomly choose values from the SHIPYARDS::names::names
+         
+        :return: 
+        """
+
+        name_count = random.choice([1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3])
+
+
+        # prefix
+        name_prefix = ""
+
+        for prefix in SHIPYARDS["names"]["prefixes"]:
+
+            # should we use this value?
+            candidate = random.random()
+
+            if candidate < prefix["probability"]:
+                name_prefix = prefix["prefix"]
+                break
+
+        # suffix
+        name_suffix = ""
+
+        for suffix in SHIPYARDS["names"]["suffixes"]:
+
+            # should we use this value?
+            candidate = random.random()
+
+            if candidate < suffix["probability"]:
+                name_suffix = suffix["suffix"]
+                break
+
+        # choice of name components
+        base_name = random.sample(SHIPYARDS["names"]["names"], name_count)
+
+        return " ".join([name_prefix] + base_name + [name_suffix])
+
+
+class ShipYard(models.Model):
+    """
+    Some planets have ship yards. Ship yards hold upgrades and ships for purchase.
+    """
+    objects = ShipYardManager()
+
+    # descriptive name of the shipyard
+    name = models.CharField(max_length=255, blank=False, null=False)
+
+    # what planet does this belong on?
+    planet = models.ForeignKey(Planet, related_name="shipyards")
+
+    def seed_upgrades(self):
+        """
+        Setup the upgrades available at a ShipYard.
+        
+        :return: 
+        """
+        pass
+
+    def restock_upgrades(self, quantity=1):
+        """
+        Restock the supply of upgrades.
+        
+        :return: 
+        """
+        pass
+
+    def seed_ships(self):
+        """
+        What ships are available for purchase?
+        
+        :return: 
+        """
+        pass
+
+    def restock_ships(self):
+        """
+        What ships are availale for purchase?
+        
+        :return: 
+        """
+        pass
+
+    def purchase_upgrade(self, upgrade):
+        """
+        Process the given upgrade as purchased.
+        
+        :param upgrade: 
+        :return: 
+        """
+        pass
+
+    def purchase_ship(self, ship):
+        """
+        Process the given ship as purchased.
+        
+        :param ship: 
+        :return: 
+        """
+        pass
+
+
 class ShipUpgrade(models.Model):
     """
     Upgrades to the ship.
@@ -518,7 +653,7 @@ class Ship(models.Model):
     # image for this ship?
     image_name = models.CharField(max_length=255, null=False, blank=False)
 
-    def upgrade(self, ship_upgrade):
+    def install_upgrade(self, ship_upgrade):
         """
         Apply an upgrade to our ship, copy the object, and bind it to our ship object.
         
@@ -527,11 +662,11 @@ class Ship(models.Model):
         """
         pass
 
-    def can_use_upgarde(self, ship_upgrade):
+    def can_install_upgarde(self, ship_upgrade):
         """
         Can we apply this upgrade? We check:
         
-          - max capacity
+          - max upgrade capacity
           - cost
           
         :param ship_upgrade: 
