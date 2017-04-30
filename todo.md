@@ -1,4 +1,5 @@
 # TODO
+
  - [ ] WORKING ON ShipUpgrades and how they apply to ships
    - [x] create ship yards
    - [ ] update/rename the shipyards/p_shipyard.html to keep with naming conventions
@@ -39,8 +40,16 @@
  - [ ] buyers summary / registrant summary
  - [ ] Ship detail view
    - [ ] better break down of a ships details for an owner
+ - [ ] add cargo support
+  - [ ] horizontal layout
+ - [ ] buy cargo
+  - [ ] low/hi arrows around average price
+ - [ ] sell cargo
+ - [ ] set cargo purchase price
+ - [ ] Buy ship from Registered Ship list
+  - [ ] buyers summary / registrated summary 
+  - [ ] ship yard view
  - [ ] show last visited planet
- - [ ] Let users warp to one another?
  - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
@@ -52,9 +61,6 @@
  - [ ] homepage view of state of game
  - [ ] when a ship is home, it gets bonuses?
  - [ ] we need to always show how many credits we have. mabye a sticky header with #ships and #credits
- - [ ] Planet Fixes
-   - [ ] view planet marketplace without a ship
-   - [ ] visit a planet without a ship
  - [ ] modular ships
    - [ ] ships have infrastructure limits and bases (i.e. 100 cargo base, 2 expansion docks)
    - [ ] ships have electronic/compute limits and bases (i.e. 3 electronics slots)
