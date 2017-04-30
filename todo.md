@@ -1,12 +1,15 @@
 # TODO
  - [ ] WORKING ON ShipUpgrades and how they apply to ships
    - [x] create ship yards
+   - [ ] update/rename the shipyards/p_shipyard.html to keep with naming conventions
+    - [ ] break it into sub views for upgrades vs ships?
+   - [ ] seed upgrades in shipyard
+   - [ ] seed ships in shipyard
    - [ ] populate shipyard view
     - [ ] show upgrades
     - [ ] show ships
-   - [ ] seed upgrades in shipyard
-   - [ ] seed ships in shipyard
    - [ ] create sets of ships based on existing base hold space and upgradability 
+    - [ ] update ship generator
    - [ ] Buy upgrades
    - [ ] install upgrades
    - [ ] show upgrades installed on a ship
