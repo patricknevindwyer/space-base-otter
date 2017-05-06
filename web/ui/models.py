@@ -27,6 +27,7 @@ SHIPYARDS = json.load(open("ui/resources/shipyards.json", "r"))
 # Ship types
 # TODO: refactor to shiptypes.json for the possible variants of ships
 SHIP_TYPES = [line.strip() for line in open("ui/resources/shiptypes.txt", "r").readlines()]
+SHIP_TEMPLATES = json.load(open("ui/resources/shiptypes.json", "r"))
 
 # SHIP Images
 SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
@@ -323,6 +324,105 @@ class ShipManager(models.Manager):
     Work with ships.
     """
 
+    def __choose_ship_stats(self):
+        """
+        Use our stats in the shiptypes.json to build the
+        basic features of a ship. We return a dict that
+        can be used to seed a ship object.
+        
+        We use a quasi-monte-carlo method here:
+            
+            1. Randomly choose a ship type
+            2. Randomly choose candidate number C
+            3. If C is <= random ship availability, continue with ship
+            4. goto 1
+        
+        when we have a ship template from 3, we then random choose
+        values from the:
+            
+            - range
+            - cargo
+            - upgrade
+        
+        And use the shiptypes entries for each of the `sizes` to
+        calculate the size of each value, as well as the overall
+        cost of the ship.
+        
+        :return: 
+        """
+
+        # find a good ship template
+        have_template = False
+        template = None
+
+        while not have_template:
+
+            template_candidate = random.choice(SHIP_TEMPLATES["ships"])
+            mc_candidate = random.uniform()
+
+            if mc_candidate <= template_candidate["availability"]:
+                have_template = True
+                tmeplate = template_candidate
+
+        # do some basic selections from our possible settings
+        range_data = SHIP_TEMPLATES["sizes"][random.choice(template["range"])]
+        cargo_data = SHIP_TEMPLATES["sizes"][random.choice(template["cargo"])]
+        upgrade_data = SHIP_TEMPLATES["sizes"][random.choice(template["upgrade"])]
+
+        # do some cost coversions and build our template
+        price_factor = range_data["cost"] + cargo_data["cost"] + upgrade_data["cost"]
+
+        return {
+            "name": template["name"],
+            "description": template["description"],
+            "max_range": range_data["size"],
+            "cargo_capacity": cargo_data["size"],
+            "upgrade_capacity": upgrade_data["size"],
+            "cost": ( 2 ** price_factor) * 250
+        }
+
+    def seed_ship_at_shipyard(self, shipyard):
+        """
+        Generate a ship at the shipyard.
+        
+        :param shipyard: 
+        :return: 
+        """
+
+        # what planet is this?
+        planet = shipyard.planet
+
+        # get our template
+        ship_template = self.__choose_ship_stats()
+
+        # set up all of the various variables we'll use in
+        # model construction
+        ship_name = ship_template["name"]
+        ship_model = ship_template["name"]
+        ship_planet = planet
+        ship_home_planet = planet
+        ship_range = ship_template["max_range"]
+        ship_fuel_level = 100.0
+        ship_cargo_capacity = ship_template["cargo_capacity"]
+        ship_upgrade_capacity = ship_template["upgrade_capactiy_max"]
+        ship_image = random.sample(SHIP_IMAGES, 1)[0]
+        ship_value = ship_template["cost"]
+
+        ship = self.create(
+            name = ship_name,
+            model = ship_model,
+            planet = ship_planet,
+            home_planet = ship_home_planet,
+            max_range = ship_range,
+            fuel_level = ship_fuel_level,
+            cargo_capacity = ship_cargo_capacity,
+            upgrade_capacity = ship_upgrade_capacity,
+            image_name = ship_image,
+            value = ship_value
+        )
+
+        return ship
+
     def create_random(self):
         """
         Generate a random ship.
@@ -345,9 +445,14 @@ class ShipManager(models.Manager):
         ship_planet = Planet.objects.first()
         ship_home_planet = Planet.objects.pick_random()
 
+        # cargo capacity
         ship_range = random.randint(200, 500)
+
+        # range / fuel capacity
         ship_fuel_level = 100.0
         ship_cargo_cap = random.randint(50, 500)
+
+        # upgrade capacity
 
         # ship value?
         ship_markup = random.uniform(0.2, 1.5)
@@ -567,15 +672,18 @@ class ShipYard(models.Model):
         """
         pass
 
-    def seed_ships(self):
+    def seed_ships(self, quantity=1):
         """
         What ships are available for purchase?
         
         :return: 
         """
-        pass
 
-    def restock_ships(self):
+        for x in range(quantity):
+            Ship.objects.seed_ship_at_shipyard(self)
+
+
+    def restock_ships(self, quantity=1):
         """
         What ships are availale for purchase?
         
@@ -671,12 +779,8 @@ class Ship(models.Model):
     # how much cargo space do we have?
     cargo_capacity = models.IntegerField(null=False, blank=False, default=50)
 
-    # how much of our upgrade space has already been consumed?
+    # how much of our upgrade space do we have?
     upgrade_capacity = models.IntegerField(null=False, blank=False, default=0)
-
-    # what's our maximum upgrade capacity? we can expand this with ShipUpgrades. this capacity
-    # can be used for multiple things: expanded cargo, expanded range
-    upgrade_capactiy_max = models.IntegerField(null=False, blank=False, default=50)
 
     # image for this ship?
     image_name = models.CharField(max_length=255, null=False, blank=False)

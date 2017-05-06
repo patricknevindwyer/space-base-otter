@@ -1,0 +1,84 @@
+{
+  "ships": [
+    {
+      "name": "Darter",
+      "description": "",
+      "range": ["s", "m", "l"],
+      "cargo": ["s"],
+      "upgrade": ["n"],
+      "availability": 0.95
+    },
+    {
+      "name": "Scout",
+      "description": "",
+      "range": ["x", "l", "xl"],
+      "cargo": ["s"],
+      "upgrade": ["n"],
+      "availability": 0.6
+    },
+    {
+      "name": "Survey",
+      "description": "",
+      "range": ["m", "l"],
+      "cargo": ["s", "m"],
+      "upgrade": ["s", "m"],
+      "availability": 0.8
+    },
+    {
+      "name": "Courier",
+      "description": "",
+      "range": ["s", "m", "l"],
+      "cargo": ["s", "m", "l"],
+      "upgrade": ["m", "l"],
+      "availability": 0.9
+    },
+    {
+      "name": "Colony",
+      "description": "",
+      "range": ["l", "xl", "xxl"],
+      "cargo": ["m", "l", "xl"],
+      "upgrade": ["s", "m"],
+      "availability": 0.05
+    },
+    {
+      "name": "Resupplier",
+      "description": "",
+      "range": ["m", "l", "xl", "xxl"],
+      "cargo": ["l", "xl", "xxl"],
+      "upgrade": ["m", "l"],
+      "availability": 0.4
+    },
+    {
+      "name": "Expander",
+      "description": "",
+      "range": ["m", "l", "xl"],
+      "cargo": ["m", "l"],
+      "upgrade": ["l", "xl", "xxl"],
+      "availability": 0.2
+    },
+    {
+      "name": "Capital Ship",
+      "description": "",
+      "range": ["l", "xl", "xxl"],
+      "cargo": ["s", "m", "l"],
+      "upgrade": ["m", "l", "xl"],
+      "availability": 0.01
+    },
+    {
+      "name": "World Ship",
+      "description": "",
+      "range": ["l", "xl", "xxl"],
+      "cargo": ["l", "xl", "xxl"],
+      "upgrade": ["xl", "xxl"],
+      "availability": 0.001
+    }
+  ],
+  "sizes": {
+    "n":   { "cost": 0, "size":    0},
+    "s":   { "cost": 1, "size":   50},
+    "m":   { "cost": 2, "size":  100},
+    "l":   { "cost": 4, "size":  250},
+    "xl":  { "cost": 6, "size":  500},
+    "xxl": { "cost": 8, "size": 1000}
+  }
+}

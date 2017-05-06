@@ -5,21 +5,28 @@
    - [x] update/rename the shipyards/p_shipyard.html to keep with naming conventions
     - [x] break it into sub views for upgrades vs ships?
    - [x] seed upgrades in shipyard
+   - [x] create sets of ships based on existing base hold space and upgradability
+   - [ ] funny ship names
+   - [x] normalize cargo_capacity vs (upgrade_capacity + upgrade_capacity_max)
+    - [x] update ship generator
    - [ ] seed ships in shipyard
    - [ ] populate shipyard view
     - [ ] show upgrades
     - [ ] show ships
    - [ ] add a p_ship_upgrades view instead of p_ship_goods in yard.html
-   - [ ] create sets of ships based on existing base hold space and upgradability 
-    - [ ] update ship generator
    - [ ] Buy upgrades
    - [ ] install upgrades
    - [ ] show upgrades installed on a ship
+   - [ ] buy ships
+   - [ ] name ships
    - [ ] select active ship
    - [ ] sell ships?
+   
    - [ ] lookup the ID of the shipyard for a planet in a better way - right now we do planet.shipyards.all.0.id
     - [ ] multiple yards on a planet?
     - [ ] primary yard on a planet?
+ - [ ] add an admin view or use the existing admin view
+  - [ ] add button to seed all shipyards
  - [ ] starting a new install is confusing
    - [ ] what to run to seed DB
    - [ ] where to navigate at start
