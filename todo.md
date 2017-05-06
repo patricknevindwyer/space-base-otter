@@ -2,8 +2,8 @@
 
  - [ ] WORKING ON ShipUpgrades and how they apply to ships
    - [x] create ship yards
-   - [ ] update/rename the shipyards/p_shipyard.html to keep with naming conventions
-    - [ ] break it into sub views for upgrades vs ships?
+   - [x] update/rename the shipyards/p_shipyard.html to keep with naming conventions
+    - [x] break it into sub views for upgrades vs ships?
    - [ ] seed upgrades in shipyard
    - [ ] seed ships in shipyard
    - [ ] populate shipyard view

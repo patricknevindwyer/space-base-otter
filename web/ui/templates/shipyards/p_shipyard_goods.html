@@ -1,0 +1,14 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load sbo_ship_tags %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4>{{ shipyard.name_display }} <small> {% bootstrap_icon 'plane' %} ShipYard</small></h4></div>
+            {% include 'shipyards/p_shipyard_upgrades.html' with shipyard=shipyard planet=planet ship=ship %}
+            {% include 'shipyards/p_shipyard_ships.html' with shipyard=shipyard planet=planet ship=ship %}
+
+        </div>
+    </div>
+</div>

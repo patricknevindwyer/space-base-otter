@@ -526,6 +526,14 @@ class ShipYard(models.Model):
     # what planet does this belong on?
     planet = models.ForeignKey(Planet, related_name="shipyards")
 
+    def name_display(self):
+        """
+        Turn the name into a better format for display.
+        
+        :return: 
+        """
+        return " ".join([word.capitalize() for word in self.name.split(" ")])
+
     def seed_upgrades(self):
         """
         Setup the upgrades available at a ShipYard.
