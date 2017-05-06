@@ -4,11 +4,12 @@
    - [x] create ship yards
    - [x] update/rename the shipyards/p_shipyard.html to keep with naming conventions
     - [x] break it into sub views for upgrades vs ships?
-   - [ ] seed upgrades in shipyard
+   - [x] seed upgrades in shipyard
    - [ ] seed ships in shipyard
    - [ ] populate shipyard view
     - [ ] show upgrades
     - [ ] show ships
+   - [ ] add a p_ship_upgrades view instead of p_ship_goods in yard.html
    - [ ] create sets of ships based on existing base hold space and upgradability 
     - [ ] update ship generator
    - [ ] Buy upgrades

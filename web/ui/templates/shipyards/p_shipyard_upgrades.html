@@ -1,18 +1,30 @@
+{% load humanize %}
+{% load bootstrap3 %}
 <div class="panel-body">
     Upgrades available at this ShipYard
 </div>
 <table class="table table-condensed table-striped table-hover">
     <thead>
         <tr>
-            <th colspan="3" style="text-align:center">Upgrades</th>
+            <th colspan="5" style="text-align:center">Upgrades</th>
         </tr>
         <tr>
             <th>Upgrade</th>
-            <th>Price</th>
+            <th>Size</th>
+            <th>Capacity</th>
+            <th>Cost</th>
             <th/>
         </tr>
     </thead>
     <tbody>
-
+        {% for upgrade in shipyard.upgrades_by_cost.all %}
+            <tr>
+                <td>{{ upgrade.name }}</td>
+                <td style="text-align:left">{{ upgrade.size|intcomma }}</td>
+                <td style="text-align:center">{{ upgrade.capacity }}</td>
+                <td style="text-align:right">{% bootstrap_icon 'yen' %}{{ upgrade.cost|intcomma }}</td>
+                <td/>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>

@@ -33,3 +33,21 @@ def yard(request, ship_id, shipyard_id):
 
     return render(request, "shipyards/yard.html", context=fill_context({"ship": ship, "planet": planet, "shipyard": shipyard}))
 
+
+def seed_upgrades(request, ship_id, shipyard_id):
+    """
+    Seed a shipyard with goods.
+    
+    :param request: 
+    :param ship_id: 
+    :param shipyard_id: 
+    :return: 
+    """
+
+    ship = get_object_or_404(Ship, pk=ship_id)
+    shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
+    planet = shipyard.planet
+
+    shipyard.seed_upgrades()
+
+    return redirect("shipyard", args=(ship_id, shipyard_id))

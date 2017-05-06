@@ -534,13 +534,30 @@ class ShipYard(models.Model):
         """
         return " ".join([word.capitalize() for word in self.name.split(" ")])
 
+    def upgrades_by_cost(self):
+        """
+        Sort the upgrades by ascending cost, and return the queryset.
+        
+        :return: 
+        """
+        return self.upgrades.order_by("cost")
+
     def seed_upgrades(self):
         """
         Setup the upgrades available at a ShipYard.
         
         :return: 
         """
-        pass
+
+        # get our upgrades
+        upgrades = ShipUpgrade.objects.create_cargo_upgrades()
+
+        # add them to our shipyard
+        for upgrade in upgrades:
+            upgrade.shipyard = self
+            upgrade.save()
+
+        print "Seeded shipyard [%s] with %d upgrades" % (self.name, len(upgrades))
 
     def restock_upgrades(self, quantity=1):
         """
@@ -615,6 +632,9 @@ class ShipUpgrade(models.Model):
 
     # do we have a description?
     description = models.TextField(null=True, blank=True)
+
+    # which shipyard is this upgrade stocked at?
+    shipyard = models.ForeignKey("ShipYard", blank=True, null=True, related_name="upgrades")
 
 
 class Ship(models.Model):

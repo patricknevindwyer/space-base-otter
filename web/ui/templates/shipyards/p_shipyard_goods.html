@@ -9,6 +9,9 @@
             {% include 'shipyards/p_shipyard_upgrades.html' with shipyard=shipyard planet=planet ship=ship %}
             {% include 'shipyards/p_shipyard_ships.html' with shipyard=shipyard planet=planet ship=ship %}
 
+            <div class="panel-footer">
+                <a class="btn btn-xs btn-warning" href="{% url 'shipyard-seed-upgrades' ship.id shipyard.id %}">Seed Upgrades</a>
+            </div>
         </div>
     </div>
 </div>

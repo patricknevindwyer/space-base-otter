@@ -49,5 +49,6 @@ urlpatterns = [
     url(r'^marketplace/ship/(?P<ship_id>[0-9]+)/planet/(?P<planet_id>[0-9]+)/import/(?P<good_id>[0-9]+)/quantity/(?P<quantity>[0-9]+)/?$', marketplace.import_good, name="marketplace-import"),
 
     url(r'^shipyard/ship/(?P<ship_id>[0-9]+)/shipyard/(?P<shipyard_id>[0-9]+)/?$', shipyards.yard, name="shipyard"),
+    url(r'^shipyard/ship/(?P<ship_id>[0-9]+)/shipyard/(?P<shipyard_id>[0-9]+)/upgrades/seed/?$', shipyards.seed_upgrades, name="shipyard-seed-upgrades"),
 
 ]
