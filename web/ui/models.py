@@ -744,7 +744,7 @@ class ShipUpgrade(models.Model):
     # what quality is this upgrade?
     quality = models.CharField(max_length=10, null=False, blank=False)
 
-    # how much cargo capacity does this take up?
+    # how much upgrade capacity does this take up?
     capacity = models.IntegerField(null=False, blank=False, default=10)
 
     # do we have a description?
@@ -796,6 +796,31 @@ class Ship(models.Model):
 
     # what yard, if any, is this ship at?
     shipyard = models.ForeignKey("ShipYard", null=True, blank=True, related_name="ships")
+
+    def upgrade_capacity_used(self):
+        """
+        Determine how much of our upgrade capacity is already used.
+        
+        :return: 
+        """
+        used = self.upgrades.only("capacity").aggregate(models.Sum("capacity"))["capacity__sum"]
+        if used is None:
+            used = 0
+        return used
+
+    def upgrade_load_percent(self):
+        """
+        Return a 100 shifted percent value of currently used upgrade capacity.
+        
+        :return: 
+        """
+        numer = self.upgrade_capacity_used()
+        denom = self.upgrade_capacity
+
+        if denom == 0:
+            return 0
+        else:
+            return (numer * 1.0) / denom * 100.0
 
     def install_upgrade(self, ship_upgrade):
         """

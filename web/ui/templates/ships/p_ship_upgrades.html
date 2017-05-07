@@ -1,0 +1,52 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load humanize %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4>Upgrades <small>{{ ship.model }}</small></h4></div>
+            {% if ship.upgrade_capacity == 0 %}
+            <div class="panel-body">
+                <p class="text-danger text-center">This ship cannot be upgraded</p>
+            </div>
+            {% else %}
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12" style="text-align:center">
+                        <h1 style="font-size:4em">{% bootstrap_icon 'yen' %}{{ ship.owner.credits|intcomma }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.upgrade_load_percent }}%">{{ ship.upgrade_capacity_used }} / {{ ship.upgrade_capacity }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-condensed table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Upgrade</th>
+                        <th>Capacity</th>
+                        <th>Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for upgrade in ship.upgrades.all %}
+                    <tr>
+                        <td>{{ upgrade.name }}</td>
+                        <td>{{ upgrade.capacity }}</td>
+                        <td>{{ upgrade.size }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" style="text-align:center">No upgrades installed</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>

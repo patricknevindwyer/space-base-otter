@@ -13,7 +13,7 @@
    - [x] populate shipyard view
     - [x] show upgrades
     - [x] show ships
-   - [ ] add a p_ship_upgrades view instead of p_ship_goods in yard.html
+   - [x] add a p_ship_upgrades view instead of p_ship_goods in yard.html
    - [ ] Buy upgrades
    - [ ] seed upgrades and ships at planet creation time
    - [ ] install upgrades
