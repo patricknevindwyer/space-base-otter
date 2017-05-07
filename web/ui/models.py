@@ -358,11 +358,11 @@ class ShipManager(models.Manager):
         while not have_template:
 
             template_candidate = random.choice(SHIP_TEMPLATES["ships"])
-            mc_candidate = random.uniform()
+            mc_candidate = random.random()
 
             if mc_candidate <= template_candidate["availability"]:
                 have_template = True
-                tmeplate = template_candidate
+                template = template_candidate
 
         # do some basic selections from our possible settings
         range_data = SHIP_TEMPLATES["sizes"][random.choice(template["range"])]
@@ -375,7 +375,7 @@ class ShipManager(models.Manager):
         return {
             "name": template["name"],
             "description": template["description"],
-            "max_range": range_data["size"],
+            "max_range": range_data["size"] * 5,
             "cargo_capacity": cargo_data["size"],
             "upgrade_capacity": upgrade_data["size"],
             "cost": ( 2 ** price_factor) * 250
@@ -404,7 +404,7 @@ class ShipManager(models.Manager):
         ship_range = ship_template["max_range"]
         ship_fuel_level = 100.0
         ship_cargo_capacity = ship_template["cargo_capacity"]
-        ship_upgrade_capacity = ship_template["upgrade_capactiy_max"]
+        ship_upgrade_capacity = ship_template["upgrade_capacity"]
         ship_image = random.sample(SHIP_IMAGES, 1)[0]
         ship_value = ship_template["cost"]
 
@@ -418,7 +418,8 @@ class ShipManager(models.Manager):
             cargo_capacity = ship_cargo_capacity,
             upgrade_capacity = ship_upgrade_capacity,
             image_name = ship_image,
-            value = ship_value
+            value = ship_value,
+            shipyard = shipyard
         )
 
         return ship
@@ -647,6 +648,14 @@ class ShipYard(models.Model):
         """
         return self.upgrades.order_by("cost")
 
+    def ships_by_cost(self):
+        """
+        Sort the available ships at this yard by cost, and return the queryset.
+        
+        :return: 
+        """
+        return self.ships.order_by("value")
+
     def seed_upgrades(self):
         """
         Setup the upgrades available at a ShipYard.
@@ -784,6 +793,9 @@ class Ship(models.Model):
 
     # image for this ship?
     image_name = models.CharField(max_length=255, null=False, blank=False)
+
+    # what yard, if any, is this ship at?
+    shipyard = models.ForeignKey("ShipYard", null=True, blank=True, related_name="ships")
 
     def install_upgrade(self, ship_upgrade):
         """

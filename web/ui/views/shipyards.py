@@ -31,6 +31,7 @@ def yard(request, ship_id, shipyard_id):
     if request.user.profile != ship.owner:
         return redirect(reverse("ships"))
 
+    print "There are %d ships at the yard" % (shipyard.ships.count(),)
     return render(request, "shipyards/yard.html", context=fill_context({"ship": ship, "planet": planet, "shipyard": shipyard}))
 
 
@@ -46,8 +47,23 @@ def seed_upgrades(request, ship_id, shipyard_id):
 
     ship = get_object_or_404(Ship, pk=ship_id)
     shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
-    planet = shipyard.planet
 
     shipyard.seed_upgrades()
 
-    return redirect("shipyard", args=(ship_id, shipyard_id))
+    return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))
+
+
+def seed_ships(request, ship_id, shipyard_id):
+    """
+    Seed a ship yard with ships.
+    
+    :param request: 
+    :param ship_id: 
+    :param shipyard_id: 
+    :return: 
+    """
+    shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
+
+    shipyard.seed_ships(3)
+
+    return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))

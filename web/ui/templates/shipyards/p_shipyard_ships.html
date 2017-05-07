@@ -1,17 +1,37 @@
+{% load humanize %}
+{% load bootstrap3 %}
 <div class="panel-body">
     Ships for sale at this Shipyard
 </div>
 <table class="table table-condensed table-striped table-hover">
     <thead>
         <tr>
-            <th colspan="3" style="text-align:center">Ships</th>
+            <th colspan="6" style="text-align:center">Ships</th>
         </tr>
         <tr>
-            <th>Good</th>
-            <th>Price</th>
+            <th colspan="2"></th>
+            <th colspan="2" style="text-align:center">Space</th>
+            <th colspan="2"></th>
+        </tr>
+        <tr>
+            <th>Model</th>
+            <th style="text-align:center">Range</th>
+            <th style="text-align:center">Cargo</th>
+            <th style="text-align:center">Upgrade</th>
+            <th style="text-align:right">Price</th>
             <th/>
         </tr>
     </thead>
     <tbody>
+        {% for ship in shipyard.ships_by_cost.all %}
+            <tr>
+                <td>{{ ship.model }}</td>
+                <td style="text-align:center">{{ ship.max_range|intcomma }}</td>
+                <td style="text-align:center">{{ ship.cargo_capacity|intcomma }}</td>
+                <td style="text-align:center">{{ ship.upgrade_capacity|intcomma }}</td>
+                <td style="text-align:right">{% bootstrap_icon 'yen' %}{{ ship.value|intcomma }}</td>
+                <td/>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>

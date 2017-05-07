@@ -50,5 +50,6 @@ urlpatterns = [
 
     url(r'^shipyard/ship/(?P<ship_id>[0-9]+)/shipyard/(?P<shipyard_id>[0-9]+)/?$', shipyards.yard, name="shipyard"),
     url(r'^shipyard/ship/(?P<ship_id>[0-9]+)/shipyard/(?P<shipyard_id>[0-9]+)/upgrades/seed/?$', shipyards.seed_upgrades, name="shipyard-seed-upgrades"),
+    url(r'^shipyard/ship/(?P<ship_id>[0-9]+)/shipyard/(?P<shipyard_id>[0-9]+)/ships/seed/?$', shipyards.seed_ships, name="shipyard-seed-ships"),
 
 ]

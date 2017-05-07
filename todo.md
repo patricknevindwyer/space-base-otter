@@ -9,19 +9,23 @@
    - [ ] funny ship names
    - [x] normalize cargo_capacity vs (upgrade_capacity + upgrade_capacity_max)
     - [x] update ship generator
-   - [ ] seed ships in shipyard
-   - [ ] populate shipyard view
-    - [ ] show upgrades
-    - [ ] show ships
+   - [x] seed ships in shipyard
+   - [x] populate shipyard view
+    - [x] show upgrades
+    - [x] show ships
    - [ ] add a p_ship_upgrades view instead of p_ship_goods in yard.html
    - [ ] Buy upgrades
+   - [ ] seed upgrades and ships at planet creation time
    - [ ] install upgrades
+   - [ ] better methods on ship for
+    - [ ] current capacity / max capacity (with upgrades)
+    - [ ] current range / fuel / etc (with upgrades)
    - [ ] show upgrades installed on a ship
    - [ ] buy ships
    - [ ] name ships
    - [ ] select active ship
    - [ ] sell ships?
-   
+   - [ ] remove old ship generator from ShipManager
    - [ ] lookup the ID of the shipyard for a planet in a better way - right now we do planet.shipyards.all.0.id
     - [ ] multiple yards on a planet?
     - [ ] primary yard on a planet?

@@ -11,7 +11,7 @@
     {
       "name": "Scout",
       "description": "",
-      "range": ["x", "l", "xl"],
+      "range": ["m", "l", "xl"],
       "cargo": ["s"],
       "upgrade": ["n"],
       "availability": 0.6
