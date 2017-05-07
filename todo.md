@@ -14,7 +14,10 @@
     - [x] show upgrades
     - [x] show ships
    - [x] add a p_ship_upgrades view instead of p_ship_goods in yard.html
-   - [ ] Buy upgrades
+   - [x] Buy upgrades
+     - [x] modify ship attributes
+     - [x] spend money in buy process in shipyard view
+   - [ ] only allow buy on affordable items
    - [ ] seed upgrades and ships at planet creation time
    - [ ] install upgrades
    - [ ] better methods on ship for

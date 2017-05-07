@@ -673,13 +673,21 @@ class ShipYard(models.Model):
 
         print "Seeded shipyard [%s] with %d upgrades" % (self.name, len(upgrades))
 
-    def restock_upgrades(self, quantity=1):
+    def restock_upgrades(self, quantity=None):
         """
-        Restock the supply of upgrades.
+        Restock the supply of upgrades. If the incoming
+        quantity is None, we'll randomly add 1d6 items.
         
         :return: 
         """
-        pass
+
+        if quantity is None:
+            quantity = random.choice([1,2,3,4,5,6])
+
+        for x in range(quantity):
+            upgrade = ShipUpgrade.objects.create_cargo_upgrade()
+            upgrade.shipyard = self
+            upgrade.save()
 
     def seed_ships(self, quantity=1):
         """
@@ -753,6 +761,24 @@ class ShipUpgrade(models.Model):
     # which shipyard is this upgrade stocked at?
     shipyard = models.ForeignKey("ShipYard", blank=True, null=True, related_name="upgrades")
 
+    def buy(self):
+        """
+        We've been purchased!
+        
+        We need to remove our self from the shipyard. We'll also tell the yard to restock
+        an item(s).
+        
+        :return: 
+        """
+        yard = self.shipyard
+
+        # we're no longer for purchase!
+        self.shipyard = None
+        self.save()
+
+        # let our shipyard know
+        yard.restock_upgrades()
+
 
 class Ship(models.Model):
     """
@@ -808,6 +834,14 @@ class Ship(models.Model):
             used = 0
         return used
 
+    def upgrade_capacity_free(self):
+        """
+        How much upgrade capacity do we have left?
+        
+        :return: 
+        """
+        return self.upgrade_capacity - self.upgrade_capacity_used()
+
     def upgrade_load_percent(self):
         """
         Return a 100 shifted percent value of currently used upgrade capacity.
@@ -822,26 +856,74 @@ class Ship(models.Model):
         else:
             return (numer * 1.0) / denom * 100.0
 
+    def buy_upgrade(self, ship_upgrade):
+        """
+        A few things we need to do when buying an upgrade:
+        
+            1. Can we install it?
+            2. Install it
+            3. Use ShipUpgrade::buy to complete the transaction
+            
+        :param upgrade: 
+        :return: 
+        """
+
+        # enough space for it?
+        if not self.can_install_upgarde(ship_upgrade):
+            return
+
+        # ok - let's do this.
+
+        #  - install
+        self.install_upgrade(ship_upgrade)
+
+        #  - buy it
+        ship_upgrade.buy()
+
+        # we're good.
+
+
     def install_upgrade(self, ship_upgrade):
         """
         Apply an upgrade to our ship, copy the object, and bind it to our ship object.
-        
+            
+            1. set ship of ship_upgrade
+            2. update proper component value of ship. From ShipUpgrade:
+            
+                # how much does this change our ship
+                size = models.IntegerField(null=False, blank=False, default=10)
+                
+                # what on our ship does this change?
+                target = models.CharField(max_length=100, null=False, blank=False, default="cargo")
+
+            
         :param ship_upgrade: 
         :return: 
         """
-        pass
+
+        # it's ours!
+        ship_upgrade.ship = self
+        ship_upgrade.save()
+
+        # let's do some install
+        if ship_upgrade.target == "cargo":
+            self.cargo_capacity += ship_upgrade.size
+            self.save()
 
     def can_install_upgarde(self, ship_upgrade):
         """
         Can we apply this upgrade? We check:
         
           - max upgrade capacity
-          - cost
           
         :param ship_upgrade: 
         :return: 
         """
-        pass
+
+        if ship_upgrade.capacity > self.upgrade_capacity_free():
+            return False
+
+        return True
 
     def get_cargo_from_good(self, good):
         """

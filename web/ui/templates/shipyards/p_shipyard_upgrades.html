@@ -12,7 +12,7 @@
             <th>Upgrade</th>
             <th>Size</th>
             <th>Capacity</th>
-            <th>Cost</th>
+            <th style="text-align:right">Cost</th>
             <th/>
         </tr>
     </thead>
@@ -23,7 +23,7 @@
                 <td style="text-align:left">{{ upgrade.size|intcomma }}</td>
                 <td style="text-align:center">{{ upgrade.capacity }}</td>
                 <td style="text-align:right">{% bootstrap_icon 'yen' %}{{ upgrade.cost|intcomma }}</td>
-                <td/>
+                <td><a href="{% url 'shipyard-buy-upgrade' ship.id shipyard.id upgrade.id %}" class="btn btn-xs btn-success">Buy</a></td>
             </tr>
         {% endfor %}
     </tbody>
