@@ -34,7 +34,7 @@
                     </tr>
                     <tr>
                         <th>Upgrade</th>
-                        <th>Capacity</th>
+                        <th class="text-center">Used Capacity</th>
                         <th>Size</th>
                     </tr>
                 </thead>
@@ -42,8 +42,8 @@
                     {% for upgrade in ship.upgrades.all %}
                     <tr>
                         <td>{{ upgrade.name }}</td>
-                        <td>{{ upgrade.capacity }}</td>
-                        <td>{{ upgrade.size }}</td>
+                        <td class="text-center">{{ upgrade.capacity }}</td>
+                        <td>{{ upgrade.size|intcomma }}</td>
                     </tr>
                     {% empty %}
                     <tr>
