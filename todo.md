@@ -5,7 +5,9 @@
    - [x] only allow buy on affordable items
    - [x] ship summary of improvement effects
    - [x] header for shipyard/marketplace/travel
-   - [ ] use inactive text formatting for unaffordable
+   - [x] use inactive text formatting for unaffordable
+    - [x] upgrades
+    - [x] marketplace
    - [ ] use special marks for high quality items?
    - [ ] use unicode symbols for grades
    - [ ] explain grades and goods in text blurb, explain capacity vs size

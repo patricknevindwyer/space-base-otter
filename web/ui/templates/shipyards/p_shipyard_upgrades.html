@@ -19,7 +19,7 @@
     </thead>
     <tbody>
         {% for upgrade in shipyard.upgrades_by_cost.all %}
-            <tr>
+            <tr {% if ship|can_buy_upgrade:upgrade %}{% else %}class="text-muted"{% endif %}>
                 <td>{{ upgrade.name }}</td>
                 <td style="text-align:left">{{ upgrade.size|intcomma }}</td>
                 <td style="text-align:center">{{ upgrade.capacity }}</td>

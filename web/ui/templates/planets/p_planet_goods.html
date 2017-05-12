@@ -25,6 +25,8 @@
 
                     {% if ship|can_sell_at_profit:import %}
                     <tr class="success">
+                    {% elif not ship|has_cargo:import %}
+                    <tr class="text-muted">
                     {% else %}
                     <tr>
                     {% endif %}
