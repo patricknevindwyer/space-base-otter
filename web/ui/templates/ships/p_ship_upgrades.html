@@ -16,17 +16,22 @@
                         <h1 style="font-size:4em">{% bootstrap_icon 'yen' %}{{ ship.owner.credits|intcomma }}</h1>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="col-md-12 text-center" style="font-size:1.5em">Upgrade Capacity</div>
+                    <div class="col-md-12 text-center" style="font-size:1.75em">Upgrade Capacity</div>
                     <div class="col-md-12">
                         <div class="progress">
                             <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.upgrade_load_percent }}%">{{ ship.upgrade_capacity_used }} / {{ ship.upgrade_capacity }}</div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <table class="table table-condensed table-striped table-hover">
                 <thead>
+                    <tr>
+                        <th colspan="3" class="text-center">Installed Upgrades</th>
+                    </tr>
                     <tr>
                         <th>Upgrade</th>
                         <th>Capacity</th>
@@ -47,6 +52,23 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Cargo</h4>
+                            </div>
+                            <div class="panel-body">
+                                 <p class="" style="font-size:2em">+{{ ship.upgrade_size_cargo }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% endif %}
         </div>
     </div>

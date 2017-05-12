@@ -823,6 +823,17 @@ class Ship(models.Model):
     # what yard, if any, is this ship at?
     shipyard = models.ForeignKey("ShipYard", null=True, blank=True, related_name="ships")
 
+    def upgrade_size_cargo(self):
+        """
+        How much bigger is our cargo with installed upgrades.
+        
+        :return: 
+        """
+        size = self.upgrades.only("size").filter(target="cargo").aggregate(models.Sum("size"))["size__sum"]
+        if size is None:
+            size = 0
+        return size
+
     def upgrade_capacity_used(self):
         """
         Determine how much of our upgrade capacity is already used.
