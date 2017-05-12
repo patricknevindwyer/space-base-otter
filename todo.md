@@ -1,33 +1,25 @@
 # TODO
 
  - [ ] WORKING ON ShipUpgrades and how they apply to ships
-   - [x] create ship yards
-   - [x] update/rename the shipyards/p_shipyard.html to keep with naming conventions
-    - [x] break it into sub views for upgrades vs ships?
-   - [x] seed upgrades in shipyard
-   - [x] create sets of ships based on existing base hold space and upgradability
-   - [ ] funny ship names
-   - [x] normalize cargo_capacity vs (upgrade_capacity + upgrade_capacity_max)
-    - [x] update ship generator
-   - [x] seed ships in shipyard
-   - [x] populate shipyard view
-    - [x] show upgrades
-    - [x] show ships
-   - [x] add a p_ship_upgrades view instead of p_ship_goods in yard.html
-   - [x] Buy upgrades
-     - [x] modify ship attributes
-     - [x] spend money in buy process in shipyard view
+   - [ ] funny ship names?
    - [ ] only allow buy on affordable items
+    - [ ] ship summary of improvement effects
+    - [x] header for shipyard/marketplace/travel
+    - [ ] use inactive text formatting for unaffordable
+    - [ ] use special marks for high quality items?
    - [ ] seed upgrades and ships at planet creation time
-   - [ ] install upgrades
    - [ ] better methods on ship for
     - [ ] current capacity / max capacity (with upgrades)
     - [ ] current range / fuel / etc (with upgrades)
-   - [ ] show upgrades installed on a ship
+   - [x] show upgrades installed on a ship
+   - [ ] ship tactical view
+    - [ ] upgrades installed
+    - [ ] current cargo
+    - [ ] name ships
    - [ ] buy ships
-   - [ ] name ships
    - [ ] select active ship
    - [ ] sell ships?
+   - [ ] range upgrades
    - [ ] remove old ship generator from ShipManager
    - [ ] lookup the ID of the shipyard for a planet in a better way - right now we do planet.shipyards.all.0.id
     - [ ] multiple yards on a planet?
