@@ -8,8 +8,8 @@
    - [x] use inactive text formatting for unaffordable
     - [x] upgrades
     - [x] marketplace
-   - [ ] use special marks for high quality items?
-   - [ ] use unicode symbols for grades
+   - [-] use special marks for high quality items?
+   - [x] use unicode symbols for grades
    - [ ] explain grades and goods in text blurb, explain capacity vs size
    - [ ] explain ships and ships qualities in text blurb
    - [ ] seed upgrades and ships at planet creation time

@@ -508,7 +508,8 @@ class ShipUpgradeManager(models.Manager):
                 candidate = random.random()
 
                 if candidate <= grade["availability"]:
-
+                    print json.dumps(component)
+                    print json.dumps(grade)
                     # we carry this good!
                     upgrade = self._create_cargo_upgrade(component, grade)
                     upgrades.append(upgrade)
