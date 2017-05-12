@@ -880,7 +880,7 @@ class Ship(models.Model):
         """
 
         # enough space for it?
-        if not self.can_install_upgarde(ship_upgrade):
+        if not self.can_install_upgrade(ship_upgrade):
             return
 
         # ok - let's do this.
@@ -921,7 +921,7 @@ class Ship(models.Model):
             self.cargo_capacity += ship_upgrade.size
             self.save()
 
-    def can_install_upgarde(self, ship_upgrade):
+    def can_install_upgrade(self, ship_upgrade):
         """
         Can we apply this upgrade? We check:
         

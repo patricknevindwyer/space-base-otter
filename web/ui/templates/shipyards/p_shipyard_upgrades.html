@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load bootstrap3 %}
+{% load sbo_ship_tags %}
 <div class="panel-body">
     Upgrades available at this ShipYard
 </div>
@@ -23,7 +24,11 @@
                 <td style="text-align:left">{{ upgrade.size|intcomma }}</td>
                 <td style="text-align:center">{{ upgrade.capacity }}</td>
                 <td style="text-align:right">{% bootstrap_icon 'yen' %}{{ upgrade.cost|intcomma }}</td>
-                <td><a href="{% url 'shipyard-buy-upgrade' ship.id shipyard.id upgrade.id %}" class="btn btn-xs btn-success">Buy</a></td>
+                {% if ship|can_buy_upgrade:upgrade %}
+                    <td><a href="{% url 'shipyard-buy-upgrade' ship.id shipyard.id upgrade.id %}" class="btn btn-xs btn-success">Buy</a></td>
+                {% else %}
+                    <td/>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>

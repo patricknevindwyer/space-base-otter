@@ -71,7 +71,7 @@ def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):
         return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))
 
     # can we install it?
-    if not ship.can_install_upgarde(upgrade):
+    if not ship.can_install_upgrade(upgrade):
         messages.error(request, "You can't install that upgrade")
         return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))
 

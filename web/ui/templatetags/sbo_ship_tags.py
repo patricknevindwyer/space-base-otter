@@ -43,3 +43,16 @@ def can_sell_at_profit(ship, good):
         return False
 
     return cargo.average_price() < good.price
+
+
+@register.filter
+def can_buy_upgrade(ship, upgrade):
+    """
+    Can the ship owner afford and fit the given
+    upgrade?
+    
+    :param ship: 
+    :param upgrade: 
+    :return: 
+    """
+    return ship.can_install_upgrade(upgrade) and upgrade.cost <= ship.owner.credits

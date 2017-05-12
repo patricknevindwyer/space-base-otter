@@ -2,11 +2,14 @@
 
  - [ ] WORKING ON ShipUpgrades and how they apply to ships
    - [ ] funny ship names?
-   - [ ] only allow buy on affordable items
+   - [x] only allow buy on affordable items
    - [x] ship summary of improvement effects
    - [x] header for shipyard/marketplace/travel
    - [ ] use inactive text formatting for unaffordable
    - [ ] use special marks for high quality items?
+   - [ ] use unicode symbols for grades
+   - [ ] explain grades and goods in text blurb, explain capacity vs size
+   - [ ] explain ships and ships qualities in text blurb
    - [ ] seed upgrades and ships at planet creation time
    - [ ] better methods on ship for
     - [ ] current capacity / max capacity (with upgrades)
