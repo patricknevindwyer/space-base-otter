@@ -17,15 +17,22 @@
     }
 
     .location-header {
-        font-size: 5em;
-        margin-top:-70px;
+        font-size: 6em;
+        margin-top:-90px;
         margin-bottom:-20px;
         letter-spacing: 0.5em;
     }
+    .div_text_shadow
+{
+color: rgb(255, 255, 255);
+
+
+text-shadow: 1px 1px 0 rgb(200,200,200), -1px -1px 0 rgb(200,200,200), 1px -1px 0 rgb(200,200,200), -1px 1px 0 rgb(200,200,200);
+}
 </style>
 
 <div class="row">
-    <div class="col-md-12 text-center location-header">{{ active_page }}</div>
+    <div class="col-md-12 text-center location-header div_text_shadow" >{{ active_page }}</div>
 </div>
 
 <div class="row">
