@@ -12,8 +12,8 @@
    - [x] use unicode symbols for grades
  - [x] explain grades and goods in text blurb, explain capacity vs size
  - [ ] explain ships and ships qualities in text blurb
- - [ ] some planets have no shipyards
- - [ ] better header font  
+ - [x] some planets have no shipyards
+ - [x] better header font  
  - [ ] seed upgrades and ships at planet creation time
    - [ ] better methods on ship for
     - [ ] current capacity / max capacity (with upgrades)

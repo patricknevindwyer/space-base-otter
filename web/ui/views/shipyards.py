@@ -81,6 +81,7 @@ def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):
     # don't forget to spend money
     request.user.profile.subtract_credits(upgrade.cost)
 
+    messages.success(request, "%s bought and installed!" % (upgrade.name, ))
     # back to the shipyard with you
     return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))
 
