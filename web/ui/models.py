@@ -482,6 +482,18 @@ class ShipUpgradeManager(models.Manager):
     Manage how we generate new ship upgrades, using the UPGRADES data.
     """
 
+    def upgrade_quality_blurb(self):
+        """
+        Build a text blurb describing our upgrades.
+        
+        :return: 
+        """
+        blurb = "<ul>"
+        for upgrade in UPGRADES["grades"]:
+            blurb += "<li> <strong>%s</strong> - <em>Also known as %s grade.</em> %s</li>" % (upgrade["name"], upgrade["id"], upgrade["description"])
+        blurb += "</ul>"
+        return blurb
+
     def create_cargo_upgrades(self):
         """
         Create a set of cargo goods, based upon rarity, cost, grade, etc.

@@ -32,7 +32,7 @@ def yard(request, ship_id, shipyard_id):
         return redirect(reverse("ships"))
 
     print "There are %d ships at the yard" % (shipyard.ships.count(),)
-    return render(request, "shipyards/yard.html", context=fill_context({"ship": ship, "planet": planet, "shipyard": shipyard}))
+    return render(request, "shipyards/yard.html", context=fill_context({"ship": ship, "planet": planet, "shipyard": shipyard, "upgrade_blurb": ShipUpgrade.objects.upgrade_quality_blurb()}))
 
 
 def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):

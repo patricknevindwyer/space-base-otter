@@ -1,6 +1,6 @@
 # TODO
 
- - [ ] WORKING ON ShipUpgrades and how they apply to ships
+ - [x] WORKING ON ShipUpgrades and how they apply to ships
    - [ ] funny ship names?
    - [x] only allow buy on affordable items
    - [x] ship summary of improvement effects
@@ -10,9 +10,11 @@
     - [x] marketplace
    - [-] use special marks for high quality items?
    - [x] use unicode symbols for grades
-   - [ ] explain grades and goods in text blurb, explain capacity vs size
-   - [ ] explain ships and ships qualities in text blurb
-   - [ ] seed upgrades and ships at planet creation time
+ - [x] explain grades and goods in text blurb, explain capacity vs size
+ - [ ] explain ships and ships qualities in text blurb
+ - [ ] some planets have no shipyards
+ - [ ] better header font  
+ - [ ] seed upgrades and ships at planet creation time
    - [ ] better methods on ship for
     - [ ] current capacity / max capacity (with upgrades)
     - [ ] current range / fuel / etc (with upgrades)
@@ -38,7 +40,8 @@
    - [ ] need better way to show our resources all the time
  - [ ] imports/sell rows should highlight yellow/warn when it's a bad deal
  - [ ] buy(max) should buy as much as possible, not throw an error
- - [ ] buy (#) should parenthetically show $ for buying that amount 
+ - [ ] buy (#) should parenthetically show $ for buying that amount
+ - [ ] make algorithm for progressively adding planets
  - [ ] admin screen
   - [ ] seed universe
  - [ ] what to do when you're out of money, and can't sell anything?

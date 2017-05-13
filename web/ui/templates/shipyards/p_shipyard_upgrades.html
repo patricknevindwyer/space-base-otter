@@ -2,7 +2,20 @@
 {% load bootstrap3 %}
 {% load sbo_ship_tags %}
 <div class="panel-body">
-    Upgrades available at this ShipYard
+    <p>Upgrades available at this ShipYard.</p>
+
+    <button class="btn btn-xs btn-info" type="button" data-toggle="collapse" data-target="#upgrade-details">{% bootstrap_icon "info-sign" %} Upgrade Info</button>
+    <div class="collapse" id="upgrade-details">
+        <div class="well">
+            Expanded Cargo upgrades allow you to install more cargo
+            carrying capacity. The better the upgrade, the more efficient the expander - basic upgrades are
+            cheap, but you'll sacrifice a lot of upgrade capacity for not much extra cargo space. Better upgrades
+            are more expensive, but you can get amazing amounts of cargo space for only a small amount of upgrade
+            capacity.
+            <br/>
+            {{ upgrade_blurb|safe }}
+        </div>
+    </div>
 </div>
 <table class="table table-condensed table-striped table-hover">
     <thead>
