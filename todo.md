@@ -1,6 +1,4 @@
 # TODO
- - shipyard helper
-  - generate missing yards
  - ship view
   - goods
   - upgrades
@@ -30,7 +28,7 @@
   - player galaxy map in player tactical view
  - backend services architecture
   - universe expansion algorithm
-  
+ - new header: http://codepen.io/birjolaxew/pen/Fdbws/
   
  - [x] WORKING ON ShipUpgrades and how they apply to ships
    - [ ] funny ship names?

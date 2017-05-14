@@ -74,6 +74,10 @@ def travel(request, ship_id):
 
     # only owners can get the details on a ship
     if request.user.profile == ship.owner:
+
+        if planet.shipyards.count() == 0:
+            planet.add_shipyard()
+
         return render(request, "ships/travel.html", context=fill_context({"ship": ship, "planet": planet}))
     else:
         return redirect(reverse("ships"))

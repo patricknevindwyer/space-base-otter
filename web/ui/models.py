@@ -193,6 +193,7 @@ class PlanetManager(models.Manager):
 
         return "%s %d-%s" % (planet_prefix, planet_number, planet_orbit)
 
+
 class Planet(models.Model):
     """
     Describe a planet.
@@ -217,6 +218,14 @@ class Planet(models.Model):
 
     def exports(self):
         return self.goods.filter(is_export=True)
+
+    def add_shipyard(self):
+        """
+        Create a shipyard on our planet.
+        
+        :return: 
+        """
+        ShipYard.objects.create_random_on_planet(self)
 
 
 ###
@@ -584,6 +593,13 @@ class ShipYardManager(models.Manager):
             planet=planet
         )
         yard.save()
+
+        # seed upgrades
+        yard.seed_upgrades()
+
+        # seed ships
+        yard.seed_ships(3)
+
         return yard
 
     def _create_name(self):
