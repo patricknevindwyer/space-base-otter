@@ -1,8 +1,5 @@
 # TODO
  - ship view
-  - goods
-  - upgrades
-  - travel history
   - buy/sell history
  - player tactical view
   - ships

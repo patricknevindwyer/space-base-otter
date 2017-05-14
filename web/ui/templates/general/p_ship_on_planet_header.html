@@ -40,6 +40,7 @@ text-shadow: 1px 1px 0 rgb(200,200,200), -1px -1px 0 rgb(200,200,200), 1px -1px 
     <div class="col-md-12">
         <div class="well planet-inset" style="text-align:center">
 
+            <a href="{% url 'ship' ship.id %}" class="btn btn-default btn-md" {% if active_page == "ship" %}disabled{% endif %}>{% bootstrap_icon 'plane' %} Ship</a>
             <a href="{% url 'ship-refuel' ship.id %}" class="btn btn-default btn-md">{% bootstrap_icon 'flash' %} Refuel</a>
             <a href="{% url 'ship-travel' ship.id %}" class="btn btn-default btn-md" {% if active_page == "travel" %}disabled{% endif %}>{% bootstrap_icon 'globe' %} Travel</a>
             <a href="{% url 'marketplace' ship.id planet.id %}" class="btn btn-default btn-md" {% if active_page == "marketplace" %}disabled{% endif %}>{% bootstrap_icon 'yen' %} Marketplace</a>

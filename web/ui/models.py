@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.contrib.postgres.fields import JSONField
 
 import random
 import string
@@ -571,7 +572,6 @@ class ShipUpgradeManager(models.Manager):
             candidate = random.random()
 
             if candidate <= grade["availability"]:
-
                 # we got one!
                 return self._create_cargo_upgrade(component, grade)
 
@@ -773,7 +773,7 @@ class ShipUpgrade(models.Model):
     ship = models.ForeignKey("Ship", blank=True, null=True, related_name="upgrades")
 
     # what did this upgrade cost
-    cost = models.IntegerField(null=False, blank=False, default=100000)
+    cost = models.BigIntegerField(null=False, blank=False, default=100000)
 
     # what do we call this?
     name = models.CharField(max_length=255, null=False, blank=False)
@@ -807,6 +807,28 @@ class ShipUpgrade(models.Model):
 
         # let our shipyard know
         yard.restock_upgrades()
+
+
+def default_ship_computer():
+    """
+    Build the default ships computer structure.
+    
+    Fields:
+        
+        limits.travel.history: ships memory for past travel
+        travel.history: fifo, head oriented list of most recent travel `limits.history.travel` defines max length
+    :return: 
+    """
+    return {
+        "limits": {
+            "travel": {
+                "history": 5
+            }
+        },
+        "travel": {
+            "history": []
+        }
+    }
 
 
 class Ship(models.Model):
@@ -851,6 +873,9 @@ class Ship(models.Model):
 
     # what yard, if any, is this ship at?
     shipyard = models.ForeignKey("ShipYard", null=True, blank=True, related_name="ships")
+
+    # ships computer, tracks features of the ship
+    computer = JSONField(null=False, blank=False, default=default_ship_computer)
 
     def upgrade_size_cargo(self):
         """
@@ -1161,11 +1186,25 @@ class Ship(models.Model):
 
     def travel_to(self, planet):
         """
-        Update the ship for travel to a planet.
+        Update the ship for travel to a planet. We're going to save our travel history
+        as we go.
+        
 
         :param planet:
         :return:
         """
+
+        # update our travel history
+        last_planet = {
+            "name": self.planet.name,
+            "id": self.planet.id,
+            "x_coordinate": self.planet.x_coordinate,
+            "y_coordinate": self.planet.y_coordinate
+        }
+        self.computer["travel"]["history"].insert(0,last_planet)
+        self.computer["travel"]["history"] = self.computer["travel"]["history"][:self.computer["limits"]["travel"]["history"]]
+
+        # travel
         self.planet = planet
         self.save()
 

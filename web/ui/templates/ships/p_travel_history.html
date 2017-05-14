@@ -1,0 +1,28 @@
+{% load humanize %}
+{% load bootstrap3 %}
+<div class="panel panel-default">
+    <div class="panel-heading"><h1 class="panel-title">Travel History</h1></div>
+    <div class="panel-body">
+        Where has this ship traveled recently.
+    </div>
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Planet</th>
+                <th style="text-align:center">Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for planet in ship.computer.travel.history %}
+                <tr>
+                    <td>{{ planet.name }}</td>
+                    <td style="text-align:center">{{ planet.x_coordinate }}, {{ planet.y_coordinate }} </td>
+                </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2" class="text-center">No travel history available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

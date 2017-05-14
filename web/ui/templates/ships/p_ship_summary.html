@@ -1,57 +1,59 @@
 {% load staticfiles %}
 <div class="row">
-    <div class="panel panel-info">
-        <div class="panel-heading"><h2>{{ ship.name }}<small> {{ ship.model }}</small></h2></div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="{% static 'ui/images/ships/'|add:ship.image_name %}" style="width:200px;height:200px">
-                </div>
-                <div class="col-md-6">
-                    <dl class="">
-                        <dt>Orbiting</dt>
-                        <dd><a href="{% url 'planet' ship.planet.id %}">{{ ship.planet.name }}</a></dd>
-                        <dt>Cargo</dt>
-                        <dd>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.cargo_used }} / {{ ship.cargo_capacity }}</div>
-                            </div>
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h1 class="panel-title">{{ ship.name }}<small> {{ ship.model }}</small></h1></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{% static 'ui/images/ships/'|add:ship.image_name %}" style="width:200px;height:200px">
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="">
+                            <dt>Orbiting</dt>
+                            <dd><a href="{% url 'planet' ship.planet.id %}">{{ ship.planet.name }}</a></dd>
+                            <dt>Cargo</dt>
+                            <dd>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active" style="min-width: 6em; width: {{ ship.cargo_load_percent }}%">{{ ship.cargo_used }} / {{ ship.cargo_capacity }}</div>
+                                </div>
 
-                        </dd>
-                        <dt>Fuel</dt>
-                        <dd>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ ship.fuel_level }}%"></div>
-                            </div>
-                        </dd>
-                        <dt>Range</dt>
-                        <dd>{{ ship.current_range|floatformat:2 }} LY</dd>
-                        <dt>Max Range</dt>
-                        <dd>{{ ship.max_range|floatformat:2 }} LY</dd>
-                    </dl>
+                            </dd>
+                            <dt>Fuel</dt>
+                            <dd>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ ship.fuel_level }}%"></div>
+                                </div>
+                            </dd>
+                            <dt>Range</dt>
+                            <dd>{{ ship.current_range|floatformat:2 }} LY</dd>
+                            <dt>Max Range</dt>
+                            <dd>{{ ship.max_range|floatformat:2 }} LY</dd>
+                        </dl>
+                    </div>
                 </div>
             </div>
+            <table class="table table-condensed table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="text-align:center">Cargo</th>
+                    </tr>
+                    <tr>
+                        <th>Good</th>
+                        <th>Quantity</th>
+                        <th/>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cargo in ship.cargo.all %}
+                    <tr>
+                        <td>{{ cargo.name }}</td>
+                        <td>{{ cargo.quantity }}</td>
+                        <td/>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        <table class="table table-condensed table-striped table-hover">
-            <thead>
-                <tr>
-                    <th colspan="3" style="text-align:center">Cargo</th>
-                </tr>
-                <tr>
-                    <th>Good</th>
-                    <th>Quantity</th>
-                    <th/>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cargo in ship.cargo.all %}
-                <tr>
-                    <td>{{ cargo.name }}</td>
-                    <td>{{ cargo.quantity }}</td>
-                    <td/>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
     </div>
 </div>
