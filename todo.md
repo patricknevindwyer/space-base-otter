@@ -1,5 +1,37 @@
 # TODO
-
+ - shipyard helper
+  - generate missing yards
+ - ship view
+  - goods
+  - upgrades
+  - travel history
+  - buy/sell history
+ - player tactical view
+  - ships
+  - locations
+  - explored planets
+  - buy/sell counts total
+  - badges
+ - buy ships
+  - switch ships
+  - rename ships
+ - travel time
+  - 1 sec wall time per LY
+  - configurable speed
+  - ship in open space
+  - polling api for ship update
+  - notification when ship reaches planet
+ - badge system
+  - configurable and extensible
+  - css based badges
+ - map
+  - ship local map
+  - travel history (up to configurable limit)
+  - player galaxy map in player tactical view
+ - backend services architecture
+  - universe expansion algorithm
+  
+  
  - [x] WORKING ON ShipUpgrades and how they apply to ships
    - [ ] funny ship names?
    - [x] only allow buy on affordable items
