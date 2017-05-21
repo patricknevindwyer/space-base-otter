@@ -20,7 +20,7 @@ from ui.views import planets, ships, account, marketplace, shipyards
 urlpatterns = [
     url(r'^$', index.index),
 
-    url('^', include('django.contrib.auth.urls')),
+    url('^accounts/', include('django.contrib.auth.urls')),
 
     url(r'^accounts/profile/?$', account.profile, name="account-profile"),
     url(r'^accounts/profile/credits/give/(?P<creds>[0-9]+)/?$', account.give_credits, name="credits-give"),

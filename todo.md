@@ -7,6 +7,8 @@
   - explored planets
   - buy/sell counts total
   - badges
+  - make $ panel for tactical display
+  - make an upgrade view with no money
  - buy ships
   - switch ships
   - rename ships

@@ -9,7 +9,9 @@ from django.urls import reverse
 from django.contrib import messages
 from django.db import transaction
 
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def list(request):
     """
     The current set of ships.
@@ -21,6 +23,7 @@ def list(request):
     return render(request, "ships/list.html", context=fill_context({"ships": all_ships}))
 
 
+@login_required
 def create_random(request):
     """
 
@@ -31,6 +34,7 @@ def create_random(request):
     return redirect(reverse("ships"))
 
 
+@login_required
 def remove(request, ship_id):
     """
     Remove a ship.
@@ -44,6 +48,7 @@ def remove(request, ship_id):
     return redirect(reverse("ships"))
 
 
+@login_required
 def detail(request, ship_id):
     """
     Detail of a ships.
@@ -62,6 +67,7 @@ def detail(request, ship_id):
         return redirect(reverse("ships"))
 
 
+@login_required
 def travel(request, ship_id):
     """
     Travel options from a planet.
@@ -85,6 +91,7 @@ def travel(request, ship_id):
 
 
 @transaction.atomic
+@login_required
 def buy(request, ship_id):
     """
     Try and buy this ship.
@@ -123,6 +130,7 @@ def buy(request, ship_id):
 
 
 @transaction.atomic
+@login_required
 def travel_to_planet(request, ship_id, planet_id):
     """
     Make a ship travel to a new planet.
@@ -144,6 +152,7 @@ def travel_to_planet(request, ship_id, planet_id):
 
 
 @transaction.atomic
+@login_required
 def travel_to_home_planet(request, ship_id):
     """
     Traveling to your home planet burns all of your fuel, and costs $ == distance. If
@@ -170,6 +179,7 @@ def travel_to_home_planet(request, ship_id):
     return redirect(reverse("ship-travel", args=(ship_id,)))
 
 
+@login_required
 def refuel(request, ship_id):
     """
     Refuel as much of the ship as possible.
