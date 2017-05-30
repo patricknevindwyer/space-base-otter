@@ -1,0 +1,14 @@
+{% load humanize %}
+{% load bootstrap3 %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-8 text-right">
+                    Available Credits: <span class="text-success" style="font-weight:bold;font-size:1.5em">{% bootstrap_icon 'yen' %}{{ user.credits|intcomma }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

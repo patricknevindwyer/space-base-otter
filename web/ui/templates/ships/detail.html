@@ -6,16 +6,17 @@
 
 
 {% include "general/p_ship_on_planet_header.html" with active_page="ship" %}
-
+{% include "general/p_user_header.html" with user=ship.owner %}
 <div class="row">
     <div class="col-md-6">
 
-        {% include "ships/p_ship_summary.html" with ship=ship %}
+        {% include "ships/p_ship_specs.html" with ship=ship %}
 
         {% include "ships/p_ship_upgrades.html" with ship=ship %}
     </div>
     <div class="col-md-6">
         {% include "ships/p_travel_history.html" with ship=ship %}
+        {% include "ships/p_ship_goods.html" with ship=ship %}
         {% include "ships/p_cargo_history.html" with ship=ship %}
     </div>
 </div>

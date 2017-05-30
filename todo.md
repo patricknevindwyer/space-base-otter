@@ -1,12 +1,13 @@
 # TODO
- - ship view
-  - better break down of:
-   - cargo space
-   - capacity for upgrades
-   - ships computer
-  - move money out of upgrades view
-   - make an upgrade view with no money
-  - add time stamp or explicit ordering to travel history
+ #- ship view
+  #- better break down of:
+   #- cargo space and usage
+   #- capacity for upgrades
+   #- money header
+   #- ships computer
+  #- move money out of upgrades view
+   #- make an upgrade view with no money
+  #- add time stamp or explicit ordering to travel history
  - player tactical view
   - ships
   - locations
