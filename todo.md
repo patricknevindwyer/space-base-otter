@@ -1,6 +1,12 @@
 # TODO
  - ship view
-  - buy/sell history
+  - better break down of:
+   - cargo space
+   - capacity for upgrades
+   - ships computer
+  - move money out of upgrades view
+   - make an upgrade view with no money
+  - add time stamp or explicit ordering to travel history
  - player tactical view
   - ships
   - locations
@@ -8,7 +14,8 @@
   - buy/sell counts total
   - badges
   - make $ panel for tactical display
-  - make an upgrade view with no money
+ - ?(done)player credits needs to be a biginteger
+ - load balance multiple web tier with nginx ( https://github.com/jwilder/nginx-proxy )
  - buy ships
   - switch ships
   - rename ships
@@ -18,6 +25,10 @@
   - ship in open space
   - polling api for ship update
   - notification when ship reaches planet
+ - how do we introduce goals or conflict into the game?
+ - NPCs
+ - scout grade ships need to be able to jump to distant planets somehow and create new space lanes
+  - need to bridge disconnected graphs of planets
  - badge system
   - configurable and extensible
   - css based badges
@@ -25,6 +36,7 @@
   - ship local map
   - travel history (up to configurable limit)
   - player galaxy map in player tactical view
+  - track planets we've visited
  - backend services architecture
   - universe expansion algorithm
  - new header: http://codepen.io/birjolaxew/pen/Fdbws/

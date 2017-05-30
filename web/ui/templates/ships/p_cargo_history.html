@@ -1,0 +1,34 @@
+{% load humanize %}
+{% load bootstrap3 %}
+<div class="panel panel-default">
+    <div class="panel-heading"><h1 class="panel-title">Cargo History</h1></div>
+    <div class="panel-body">
+        Cargo bought and sold from this ship.
+    </div>
+    <table class="table table-condensed table-striped table-hover">
+        <thead>
+            <tr>
+                <th/>
+                <th class="text-center">Good</th>
+                <th class="text-right">Quantity</th>
+                <th class="text-right">Cost</th>
+                <th class="text-right">Planet</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trans in ship.computer.cargo.history %}
+            <tr>
+                <td>{{ trans.mode }}</td>
+                <td class="text-center">{{ trans.good }}</td>
+                <td class="text-right">{{ trans.quantity }}</td>
+                <td class="text-right">{% bootstrap_icon 'yen' %}{{ trans.cost|floatformat:2|intcomma }}</td>
+                <td class="text-right">{{ trans.planet.name }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No cargo history available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

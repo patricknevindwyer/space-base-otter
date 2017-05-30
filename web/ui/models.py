@@ -816,16 +816,49 @@ def default_ship_computer():
     Fields:
         
         limits.travel.history: ships memory for past travel
+        limits.cargo.history: ships memory for past cargo transactions
         travel.history: fifo, head oriented list of most recent travel `limits.history.travel` defines max length
+        cargo.history:: fifo, head oriented list of recent cargo manifest changes `limits.cargo.history` defines max length
+        
+    Field content descriptions:
+    
+        travel.history:
+            
+            {
+                "name": "Planet Name"
+                "id": <integer>Planet ID
+                "x_coordinate": <integer>
+                "y_coordinate": <integer>
+            }
+
+        cargo.history:
+
+            {
+                "mode": buy | sell,
+                "good": <string>,
+                "quantity": <integer>,
+                "planet": {
+                    "name": planet.name,
+                    "id": planet.id
+                },
+                "cost": <integer>
+            }
+
     :return: 
     """
     return {
         "limits": {
             "travel": {
                 "history": 5
+            },
+            "cargo":{
+                "history": 5
             }
         },
         "travel": {
+            "history": []
+        },
+        "cargo": {
             "history": []
         }
     }
@@ -1090,6 +1123,9 @@ class Ship(models.Model):
         # great, let's sell
         cargo.sell(good, quantity)
 
+        # neat. done. let's record this for posterity
+        self.record_cargo_sell(good, quantity, good.planet, good.price * quantity)
+
         # is this cargo empty?
         if cargo.quantity == 0:
             cargo.delete()
@@ -1126,7 +1162,8 @@ class Ship(models.Model):
         # great, now let's buy
         cargo.buy(good, quantity)
 
-        # neat. done.
+        # neat. done. let's record this for posterity
+        self.record_cargo_buy(good, quantity, good.planet, good.price * quantity)
 
     def planets_in_range(self):
         """
@@ -1183,6 +1220,55 @@ class Ship(models.Model):
         :return:
         """
         return math.sqrt(((self.planet.x_coordinate - planet.x_coordinate)**2) + ((self.planet.y_coordinate - planet.y_coordinate)**2))
+
+    def record_cargo_buy(self, good, quantity, planet, cost):
+        """
+        Add a record to our cargo log.
+        
+        :param good: 
+        :param quantity: 
+        :param planet: 
+        :param cost: 
+        :return: 
+        """
+        self._record_cargo("buy", good, quantity, planet, cost)
+
+    def record_cargo_sell(self, good, quantity, planet, cost):
+        """
+        Add a record to our cargo log.
+            
+        :param good: 
+        :param quantity: 
+        :param planet: 
+        :param cost: 
+        :return: 
+        """
+        self._record_cargo("sell", good, quantity, planet, cost)
+
+    def _record_cargo(self, mode, good, quantity, planet, cost):
+        """
+        Add a record to our cargo log, and trim it down if need be. 
+         
+        :param mode: 
+        :param good: 
+        :param quantity: 
+        :param plant: 
+        :param cost: 
+        :return: 
+        """
+        rec = {
+            "mode": mode,
+            "good": good.name,
+            "quantity": quantity,
+            "planet": {
+                "name": planet.name,
+                "id": planet.id
+            },
+            "cost": cost
+        }
+        self.computer["cargo"]["history"].insert(0, rec)
+        self.computer["cargo"]["history"] = self.computer["cargo"]["history"][:self.computer["limits"]["cargo"]["history"]]
+        self.save()
 
     def travel_to(self, planet):
         """
