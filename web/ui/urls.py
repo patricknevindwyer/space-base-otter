@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from ui.views import index
+from ui.views import index, learning
 from ui.views import planets, ships, account, marketplace, shipyards
 
 urlpatterns = [
     url(r'^$', index.index),
+
+    url(r'^learning/first/?$', learning.first, name="learning-first"),
 
     url('^accounts/', include('django.contrib.auth.urls')),
 
