@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load bootstrap3 %}
+{% load sbo_ship_tags %}
 <div class="panel-body">
     Ships for sale at this Shipyard
 </div>
@@ -30,7 +31,11 @@
                 <td style="text-align:center">{{ ship.cargo_capacity|intcomma }}</td>
                 <td style="text-align:center">{{ ship.upgrade_capacity|intcomma }}</td>
                 <td style="text-align:right">{% bootstrap_icon 'yen' %}{{ ship.value|intcomma }}</td>
-                <td/>
+                {% if user|can_buy_ship:ship %}
+                    <td><a href="{% url 'ship-buy' ship.id %}" class="btn btn-xs btn-success">Buy</a></td>
+                {% else %}
+                    <td/>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>

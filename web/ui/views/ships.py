@@ -125,6 +125,8 @@ def buy(request, ship_id):
     ship.owner = user.profile
     ship.save()
 
+    messages.info(request, "Congratulations, you bought a ship!")
+
     # jump to the ship details
     return redirect(reverse("ship", args=(ship_id,)))
 

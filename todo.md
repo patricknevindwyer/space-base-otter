@@ -1,25 +1,57 @@
 # TODO
- #- ship view
-  #- better break down of:
-   #- cargo space and usage
-   #- capacity for upgrades
-   #- money header
-   #- ships computer
-  #- move money out of upgrades view
-   #- make an upgrade view with no money
-  #- add time stamp or explicit ordering to travel history
- - player tactical view
-  - ships
-  - locations
+ - dump cargo
+ - track visited planets
+  - many to many relationship?
+    ship.visited_planets.filter(id=planet_id) for every planet in the travel list...
+  - mark planets in travel view as unvisited or visited
+  - unvisited by ship vs player
+ - track ship totals
+  - travel distance
+  - planet jumps
+  - total sell/buy Yen
+  - total sell buy count
+  - total yen/count per good
+  - planets visited
+ - track player totals
+  - travel distance
+  - planet jumps
+  - total sell/buy Yen
+  - total sell buy count
+  - total yen/count per good
+  - planets visited
+  - ships bought
+  - ships sold
+  - upgrades purchased 
+   - by level
+   - total
+ - travel planner (ships computer limited)
+  - gather all points within an area?
+  - limit this set by number of hops?
+  - do hop based planning?
+  
+ - player tactical view (Sean, this is for you)
+  - ships owned by the player
+   - locations of ships
+   - value of ships
   - explored planets
-  - buy/sell counts total
-  - badges
-  - make $ panel for tactical display
+   - which have the player's ships currently orbiting 
+  
+ - resource system where planets, nebulas, asteroids, stations generate resources
+ - buildings/machines can be bought and built to extract resources
+ - warehouse like buildings can be built to hold/store respurces
+ - some buildings use other resources found in warehouses to create derivative resources
+ - modify resources in game to fit into a creation framework
+ - buildings/factories can be owned by npc. planet, or user
+ - user can buy or build buildings
+ - resources from buildings can be transferred to ships to sell
+ - special ships can be used to shuttle goods from one planet to another, carrying more han usual
+   but only on a fixed route
+  
+ - badges
+  
  - ?(done)player credits needs to be a biginteger
  - load balance multiple web tier with nginx ( https://github.com/jwilder/nginx-proxy )
- - buy ships
-  - switch ships
-  - rename ships
+ - rename ships
  - travel time
   - 1 sec wall time per LY
   - configurable speed
@@ -42,31 +74,15 @@
   - universe expansion algorithm
  - new header: http://codepen.io/birjolaxew/pen/Fdbws/
   
- - [x] WORKING ON ShipUpgrades and how they apply to ships
-   - [ ] funny ship names?
-   - [x] only allow buy on affordable items
-   - [x] ship summary of improvement effects
-   - [x] header for shipyard/marketplace/travel
-   - [x] use inactive text formatting for unaffordable
-    - [x] upgrades
-    - [x] marketplace
-   - [-] use special marks for high quality items?
-   - [x] use unicode symbols for grades
- - [x] explain grades and goods in text blurb, explain capacity vs size
  - [ ] explain ships and ships qualities in text blurb
- - [x] some planets have no shipyards
- - [x] better header font  
  - [ ] seed upgrades and ships at planet creation time
    - [ ] better methods on ship for
     - [ ] current capacity / max capacity (with upgrades)
     - [ ] current range / fuel / etc (with upgrades)
-   - [x] show upgrades installed on a ship
    - [ ] ship tactical view
     - [ ] upgrades installed
     - [ ] current cargo
     - [ ] name ships
-   - [ ] buy ships
-   - [ ] select active ship
    - [ ] sell ships?
    - [ ] range upgrades
    - [ ] remove old ship generator from ShipManager
@@ -91,23 +107,12 @@
  - [ ] ship yard view
    - [ ] better ship generation
    - [ ] what happens when we visit a planet with no ship?
-   - [ ] Buy ship from Registered Ship list
  - [ ] what's the new user flow
  - [ ] refuel button needs to show cost
  - [ ] buyers summary / registrant summary
  - [ ] Ship detail view
    - [ ] better break down of a ships details for an owner
- - [ ] add cargo support
-  - [ ] horizontal layout
- - [ ] buy cargo
-  - [ ] low/hi arrows around average price
- - [ ] sell cargo
  - [ ] set cargo purchase price
- - [ ] Buy ship from Registered Ship list
-  - [ ] buyers summary / registrated summary 
-  - [ ] ship yard view
- - [ ] show last visited planet
- - [ ] show travel history (where have I been?)
  - [ ] show profit/loss for selling current cargo
  - [ ] images for cargo
  - [ ] ship detail view (history?)

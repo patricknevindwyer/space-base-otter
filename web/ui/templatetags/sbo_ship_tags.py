@@ -56,3 +56,15 @@ def can_buy_upgrade(ship, upgrade):
     :return: 
     """
     return ship.can_install_upgrade(upgrade) and upgrade.cost <= ship.owner.credits
+
+
+@register.filter
+def can_buy_ship(user, ship):
+    """
+    Determine if a user can buy a ship.
+
+    :param user:
+    :param ship:
+    :return:
+    """
+    return user.profile.credits >= ship.value
