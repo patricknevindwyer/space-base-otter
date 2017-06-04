@@ -1,4 +1,21 @@
 # TODO
+
+ - NPCs
+  - add NPC base class?
+  - profile can point to NPC or User
+  - NPCs are generated with a ship
+  - add redis
+  - create background containers that run N scripts
+   - command to scripts is run_queueing or run_processing #
+  - create background command to update NPCs
+   - every N seconds, requeue all NPCs for possible travel (npc_queueing)
+   - use background NPC tasks to process NPCs (npc_processing)
+  - NPCs refuel
+   - make refueling more self contained
+  - NPCs randomly travel
+   - make traveling more self contained
+  
+
  - dump cargo
  - track visited planets
   - many to many relationship?
