@@ -6,6 +6,7 @@ def first(request):
     number = sean_add (3.141592653, 9.5)
 
     # Problem 01 - Print string "Hi, I'm Sean."
+    _01_string = "Hi, I'm Sean"
 
     # Problem 02 - Print string "Hi, I'm ...." with the name in a variable
     #name = "Sean"
@@ -18,8 +19,11 @@ def first(request):
     
     # Problem 06 - Use a list of numbers to print "# is less than five", "# is five", or "# is greater than 5"
 
+    return render(request, "learning/first.html", context={
+        "number": number,
+        "_01": _01_string
+    })
 
-    return render(request, "learning/first.html", context={"number": number})
 
 def sean_add(a, b):
     c = a + b
