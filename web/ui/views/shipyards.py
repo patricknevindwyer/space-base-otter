@@ -2,7 +2,7 @@
 The market place handles goods transactions.
 """
 from ui.util import fill_context
-from ui.models import Ship, Planet, ShipYard, ShipUpgrade
+from ui.models import Ship, Location, ShipYard, ShipUpgrade
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse

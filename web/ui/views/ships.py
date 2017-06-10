@@ -2,7 +2,7 @@
 Control and view planets
 """
 from ui.util import fill_context
-from ui.models import Ship, Planet
+from ui.models import Ship, Location
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -143,7 +143,7 @@ def travel_to_planet(request, ship_id, planet_id):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = get_object_or_404(Planet, pk=planet_id)
+    planet = get_object_or_404(Location, pk=planet_id)
 
     distance = ship.distance_to(planet)
     ship.travel_to(planet)

@@ -2,6 +2,7 @@
 
  - more than planets
   - rename Planet to Location
+   - update references to Planet in other models
    - locations have types
       - nebulaes
       - planets

@@ -2,7 +2,7 @@
 The market place handles goods transactions.
 """
 from ui.util import fill_context
-from ui.models import Ship, Planet, Good
+from ui.models import Ship, Location, Good
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -19,7 +19,7 @@ def goods(request, ship_id, planet_id):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = get_object_or_404(Planet, pk=planet_id)
+    planet = get_object_or_404(Location, pk=planet_id)
 
     # are we actually at this planet?
     if ship.planet != planet:
@@ -45,7 +45,7 @@ def import_good(request, ship_id, planet_id, good_id, quantity):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = get_object_or_404(Planet, pk=planet_id)
+    planet = get_object_or_404(Location, pk=planet_id)
     good = get_object_or_404(Good, pk=good_id)
     quantity = int(quantity)
     price = good.price * quantity
@@ -96,7 +96,7 @@ def export_good(request, ship_id, planet_id, good_id, quantity):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = get_object_or_404(Planet, pk=planet_id)
+    planet = get_object_or_404(Location, pk=planet_id)
     good = get_object_or_404(Good, pk=good_id)
     quantity = int(quantity)
     cost = good.price * quantity

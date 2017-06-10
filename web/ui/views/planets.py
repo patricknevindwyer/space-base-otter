@@ -2,7 +2,7 @@
 Control and view planets
 """
 from ui.util import fill_context
-from ui.models import Planet
+from ui.models import Location
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -16,7 +16,7 @@ def list(request):
     :param request:
     :return:
     """
-    all_planets = Planet.objects.all()
+    all_planets = Location.objects.all()
 
     # build pagination
     planet_pager = Paginator(all_planets, 5)
@@ -40,7 +40,7 @@ def destroy_all(request):
     :param request:
     :return:
     """
-    Planet.objects.all().delete()
+    Location.objects.all().delete()
     return redirect(reverse("planets"))
 
 
@@ -50,7 +50,7 @@ def create_random(request):
     :param request:
     :return:
     """
-    p = Planet.objects.create_random()
+    p = Location.objects.create_random()
     return redirect(reverse("planets"))
 
 
@@ -61,7 +61,7 @@ def create_multiple(request, quantity):
     :return:
     """
     for i in range(int(quantity)):
-        p = Planet.objects.create_random()
+        p = Location.objects.create_random()
     return redirect(reverse("planets"))
 
 
@@ -73,7 +73,7 @@ def remove(request, planet_id):
     :param planet_id:
     :return:
     """
-    planet = get_object_or_404(Planet, pk=planet_id)
+    planet = get_object_or_404(Location, pk=planet_id)
     planet.delete()
     return redirect(reverse("planets"))
 
@@ -85,7 +85,7 @@ def destroy_unoccupied(request):
     :param request: 
     :return: 
     """
-    Planet.objects.filter(orbiters=None, registrants=None).delete()
+    Location.objects.filter(orbiters=None, registrants=None).delete()
     return redirect(reverse("planets"))
 
 
@@ -97,6 +97,6 @@ def detail(request, planet_id):
     :param planet_id:
     :return:
     """
-    planet = get_object_or_404(Planet, pk=planet_id)
+    planet = get_object_or_404(Location, pk=planet_id)
 
     return render(request, "planets/detail.html", context=fill_context({"planet": planet}))

@@ -21,6 +21,14 @@ GOODS = json.load(open("ui/resources/goods.json", "r"))
 planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
+LOCATION_CHOICES = (
+    ("planet", "Planet"),
+    ("star", "Star"),
+    ("moon", "Moon"),
+    ("asteroid", "Asterpid"),
+    ("nebula", "Nebula")
+)
+
 # Shipyards
 SHIPYARDS = json.load(open("ui/resources/shipyards.json", "r"))
 
@@ -70,6 +78,7 @@ class Profile(models.Model):
 
         self.save()
 
+
 @receiver(user_logged_in)
 def user_post_login(sender, user, request, **kwargs):
     """
@@ -92,18 +101,17 @@ def user_post_login(sender, user, request, **kwargs):
         profile.save()
 
 
-
 ###
 # PLANETS
 ###
-class PlanetManager(models.Manager):
+class LocationManager(models.Manager):
     """
     Query, build, and otherwise manipulate Planets.
     """
 
     def pick_random(self):
         """
-        Pick a random plane that we already have available.
+        Pick a random location that we already have available.
 
         :return:
         """
@@ -192,11 +200,20 @@ class PlanetManager(models.Manager):
         return "%s %d-%s" % (planet_prefix, planet_number, planet_orbit)
 
 
-class Planet(models.Model):
+def default_location_meta():
+    """
+    Default data for a location's metadata.
+
+    :return:
+    """
+    return {}
+
+
+class Location(models.Model):
     """
     Describe a planet.
     """
-    objects = PlanetManager()
+    objects = LocationManager()
 
     name = models.CharField(max_length=255, null=False, blank=False)
 
@@ -210,6 +227,11 @@ class Planet(models.Model):
     # rarity of fuel effects the overall refueling cost. This is some sane number
     # basically [50% - 200%] of standard price
     fuel_markup = models.FloatField(default=1.0)
+
+    # What kind of location is this?
+    location_type = models.CharField(max_length=255, null=False, blank=False, choices=LOCATION_CHOICES, default="planet")
+
+    location_meta = JSONField(null=False, blank=False, default=default_location_meta)
 
     def imports(self):
         return self.goods.filter(is_import=True)
@@ -237,7 +259,7 @@ class Good(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
 
     # what planet has these goods?
-    planet = models.ForeignKey(Planet, on_delete=models.CASCADE, related_name="goods")
+    planet = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="goods")
 
     # is this an import
     is_import = models.BooleanField(null=False)
@@ -323,7 +345,7 @@ class Cargo(models.Model):
 # SHIPS
 ###
 def get_default_ship_location():
-    return Planet.objects.first()
+    return Location.objects.first()
 
 
 class ShipManager(models.Manager):
@@ -604,7 +626,7 @@ class ShipYard(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False)
 
     # what planet does this belong on?
-    planet = models.ForeignKey(Planet, related_name="shipyards")
+    planet = models.ForeignKey(Location, related_name="shipyards")
 
     def name_display(self):
         """
@@ -827,10 +849,10 @@ class Ship(models.Model):
     model = models.CharField(max_length=255, null=False, blank=False)
 
     # a ship is at a planet
-    planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="orbiters")
+    planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="orbiters")
 
     # a ship also has a home planet
-    home_planet = models.ForeignKey(Planet, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="registrants")
+    home_planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="registrants")
 
     # some basic settings that we'll improve upon later
 
@@ -1130,7 +1152,7 @@ class Ship(models.Model):
         min_y = self.planet.y_coordinate - max_range
         max_y = self.planet.y_coordinate + max_range
 
-        close_enough = Planet.objects.filter(
+        close_enough = Location.objects.filter(
             x_coordinate__gte=min_x,
             x_coordinate__lte=max_x,
             y_coordinate__gte=min_y,

@@ -2,7 +2,7 @@
 Control and view planets
 """
 from ui.util import fill_context
-from ui.models import Ship, Planet
+from ui.models import Ship, Location
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
