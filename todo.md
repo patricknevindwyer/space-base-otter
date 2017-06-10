@@ -1,7 +1,7 @@
 # TODO
 
  - more than planets
-  - rename Planet to Location
+  - [x] rename Planet to Location
    - update references to Planet in other models
    - locations have types
       - nebulaes
@@ -9,6 +9,13 @@
       - moons
       - stars
       - asteroids
+  - update basic generator
+   - generate different types scattered all around
+   - find new images
+   - anywhere can have shipyard
+   - only planets, moons, and asteroids can have marketplaces
+   - different image assets based on location type
+   - different routes based on location type
   - generate galaxies differently
    - stars have planets
    - stars have asteroids
@@ -20,8 +27,6 @@
     - do we have this type of relationship? parent child?
     - sure, why not
   - travel between some parent and child relationships is free
-  - different image assets based on location type
-  - different routes based on location type
   
 
  - NPCs

@@ -17,10 +17,14 @@ import math
 # LOAD THE GOODS!
 GOODS = json.load(open("ui/resources/goods.json", "r"))
 
+# LOCATION CONTROLS
+
 # What are our planet images?
 planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
+
+# What kind of locations do we have?
 LOCATION_CHOICES = (
     ("planet", "Planet"),
     ("star", "Star"),
