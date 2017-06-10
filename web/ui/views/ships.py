@@ -30,7 +30,7 @@ def create_random(request):
     :param request:
     :return:
     """
-    p = Ship.objects.create_random()
+    print "! DEPRECATED - Ships.py::create_random is a deprecated methods"
     return redirect(reverse("ships"))
 
 

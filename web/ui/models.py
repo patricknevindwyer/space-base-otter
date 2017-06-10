@@ -22,12 +22,9 @@ planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
 # Shipyards
-# TODO: refactor to shipyards.json for creating shipyard
 SHIPYARDS = json.load(open("ui/resources/shipyards.json", "r"))
 
 # Ship types
-# TODO: refactor to shiptypes.json for the possible variants of ships
-SHIP_TYPES = [line.strip() for line in open("ui/resources/shiptypes.txt", "r").readlines()]
 SHIP_TEMPLATES = json.load(open("ui/resources/shiptypes.json", "r"))
 
 # SHIP Images
@@ -433,58 +430,6 @@ class ShipManager(models.Manager):
         )
 
         return ship
-
-    def create_random(self):
-        """
-        Generate a random ship.
-
-        :return:
-        """
-
-        # pick our yard and type
-        #shipyard = random.sample(SHIPYARDS, 1)[0]
-        shiptype = random.sample(SHIP_TYPES, 1)[0]
-
-        # what do we name this ship
-        ship_name = shiptype
-
-        # what's the model of this ship
-        #ship_model = "%s %s" % (shipyard, shiptype)
-        ship_model = shiptype
-
-        # starting planet
-        ship_planet = Planet.objects.first()
-        ship_home_planet = Planet.objects.pick_random()
-
-        # cargo capacity
-        ship_range = random.randint(200, 500)
-
-        # range / fuel capacity
-        ship_fuel_level = 100.0
-        ship_cargo_cap = random.randint(50, 500)
-
-        # upgrade capacity
-
-        # ship value?
-        ship_markup = random.uniform(0.2, 1.5)
-        ship_value = int(ship_range * ship_cargo_cap * ship_markup)
-
-        # what about an image for this ship?
-        ship_image = random.sample(SHIP_IMAGES, 1)[0]
-
-        obj = self.create(
-            name = ship_name,
-            model = ship_model,
-            planet = ship_planet,
-            home_planet = ship_home_planet,
-            max_range = ship_range,
-            fuel_level = ship_fuel_level,
-            cargo_capacity = ship_cargo_cap,
-            image_name = ship_image,
-            value=ship_value
-        )
-
-        return obj
 
 
 class ShipUpgradeManager(models.Manager):
