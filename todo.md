@@ -1,5 +1,26 @@
 # TODO
 
+ - more than planets
+  - rename Planet to Location
+   - locations have types
+      - nebulaes
+      - planets
+      - moons
+      - stars
+      - asteroids
+  - generate galaxies differently
+   - stars have planets
+   - stars have asteroids
+   - planets have moons
+   - root items can be:
+    - asteroids
+    - stars
+    - nebulas
+    - do we have this type of relationship? parent child?
+    - sure, why not
+  - travel between some parent and child relationships is free
+  
+
  - NPCs
   - add NPC base class?
   - profile can point to NPC or User
