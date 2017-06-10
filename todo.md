@@ -19,6 +19,8 @@
     - do we have this type of relationship? parent child?
     - sure, why not
   - travel between some parent and child relationships is free
+  - different image assets based on location type
+  - different routes based on location type
   
 
  - NPCs
