@@ -17,3 +17,7 @@ By MillionthVector (http://millionthvector.blogspot.de)
 ## Planets
 
 https://opengameart.org/content/20-planet-sprites
+
+## Asteroids
+
+https://opengameart.org/content/asteroids

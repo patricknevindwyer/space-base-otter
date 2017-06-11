@@ -30,6 +30,9 @@ NEBULA_IMAGES = [n for n in os.listdir("ui/static/ui/images/nebulas") if n.endsw
 # SHIP Images
 SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
 
+# Asteroid Images
+ASTEROID_IMAGES = [a for a in os.listdir("ui/static/ui/images/asteroids") if a.endswith("png")]
+
 
 ## Names
 
@@ -181,7 +184,18 @@ class LocationManager(models.Manager):
         elif location_type == "moon":
             pass
         elif location_type == "asteroid":
-            pass
+
+            # Asteroids use New-style Provisional Naming ( https://en.wikipedia.org/wiki/Provisional_designation_in_astronomy )
+            ast_year = random.randrange(2010, 10000)
+            ast_la = random.choice("ABCDEFGHJKLMNOPQRSTUVWXY")
+            ast_lb = random.choice("ABCDEFGHJKLMNO[QRSTUVWXYZ")
+            ast_cy = random.randrange(1,500)
+
+            location_name = "%d %s %s-%d" % (ast_year, ast_la, ast_lb, ast_cy)
+
+            # we also need to pick out an image
+            location_image = random.sample(ASTEROID_IMAGES, 1)[0]
+
         elif location_type == "nebula":
 
             # Nebulas are going with NGC names for now
