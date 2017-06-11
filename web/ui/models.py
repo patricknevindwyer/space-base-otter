@@ -24,6 +24,7 @@ planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
 STAR_IMAGES = [star for star in os.listdir("ui/static/ui/images/stars") if star.endswith("png")]
+NEBULA_IMAGES = [n for n in os.listdir("ui/static/ui/images/nebulas") if n.endswith("png")]
 
 # Star/Planet System name prefixes
 with open("ui/resources/planet_prefix.list", "r") as prefixes:
@@ -169,7 +170,13 @@ class LocationManager(models.Manager):
         elif location_type == "asteroid":
             pass
         elif location_type == "nebula":
-            pass
+
+            # Nebulas are going with NGC names for now
+            location_name = "NGC %d" % (random.randrange(10,10000))
+
+            # we also need to pick out an image
+            location_image = random.sample(NEBULA_IMAGES, 1)[0]
+
         elif location_type == "star":
 
             # pick a star name

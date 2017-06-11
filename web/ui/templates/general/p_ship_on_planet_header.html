@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <style>
     .planet-inset {
-        background-image: url({% static 'ui/images/planets/'|add:planet.image_name %});
+        background-image: url({% static planet.static_suffix %});
         background-position: left center;
         background-repeat: no-repeat;
     }
