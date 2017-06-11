@@ -12,19 +12,26 @@ import json
 import os
 import math
 
-# Resource settings we use
-
-# LOAD THE GOODS!
-GOODS = json.load(open("ui/resources/goods.json", "r"))
 
 # LOCATION CONTROLS
 
-# What are our planet images?
+## Images
+
+# Planets
 planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
+# Stars
 STAR_IMAGES = [star for star in os.listdir("ui/static/ui/images/stars") if star.endswith("png")]
+
+# Nebula
 NEBULA_IMAGES = [n for n in os.listdir("ui/static/ui/images/nebulas") if n.endswith("png")]
+
+# SHIP Images
+SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
+
+
+## Names
 
 # Star/Planet System name prefixes
 with open("ui/resources/planet_prefix.list", "r") as prefixes:
@@ -39,20 +46,26 @@ LOCATION_CHOICES = (
     ("nebula", "Nebula")
 )
 
+
+## Procedural Generation Settings
+
 # Shipyards
 SHIPYARDS = json.load(open("ui/resources/shipyards.json", "r"))
 
 # Ship types
 SHIP_TEMPLATES = json.load(open("ui/resources/shiptypes.json", "r"))
 
-# SHIP Images
-SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.endswith("png")]
+# LOAD THE GOODS!
+GOODS = json.load(open("ui/resources/goods.json", "r"))
+
+# What are our upgrade qualities?
+UPGRADES = json.load(open("ui/resources/upgrades.json", "r"))
+
+## Runtime Configuration
 
 # Fuel base cost
 FUEL_UNIT_COST = 10
 
-# What are our upgrade qualities?
-UPGRADES = json.load(open("ui/resources/upgrades.json", "r"))
 
 ###
 # User Profile
