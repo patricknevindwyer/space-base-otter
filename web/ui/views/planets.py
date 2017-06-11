@@ -85,7 +85,7 @@ def destroy_unoccupied(request):
     :param request: 
     :return: 
     """
-    Location.objects.filter(orbiters=None, registrants=None).delete()
+    Location.objects.delete_unoccupied()
     return redirect(reverse("planets"))
 
 

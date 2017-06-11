@@ -41,3 +41,14 @@ def take_credits(request, creds):
     """
     request.user.profile.subtract_credits(int(creds))
     return redirect(reverse("account-profile"))
+
+
+def seed_ship(request):
+    """
+    Give this user a ship.
+
+    :param request:
+    :return:
+    """
+    Ship.objects.seed_ship_for_profile(request.user.profile)
+    return redirect(reverse("account-profile"))

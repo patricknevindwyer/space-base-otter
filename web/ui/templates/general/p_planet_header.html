@@ -3,7 +3,7 @@
 {% load staticfiles %}
 <style>
     .planet-inset {
-        background-image: url({% static 'ui/images/planets/'|add:planet.image_name %});
+        background-image: url({% static planet.static_suffix %});
         background-position: left center;
         background-repeat: no-repeat;
     }
@@ -23,7 +23,7 @@
             <a href="{% url 'marketplace' ship.id planet.id %}" class="btn btn-default btn-md" {% if active_page == "marketplace" %}disabled{% endif %}>{% bootstrap_icon 'yen' %} Marketplace</a>
             <a href="#" class="btn btn-default btn-md" {% if active_page == "shipyard" %}disabled{% endif %}>{% bootstrap_icon 'plane' %} Shipyard</a>
 
-            <span class="planet-title">{{ planet.name }} {% bootstrap_icon 'globe' %}</span>
+            <span class="planet-title">{{ planet.location_type }} {{ planet.name }} {% bootstrap_icon 'globe' %}</span>
         </div>
     </div>
 </div>

@@ -25,6 +25,7 @@ urlpatterns = [
     url('^accounts/', include('django.contrib.auth.urls')),
 
     url(r'^accounts/profile/?$', account.profile, name="account-profile"),
+    url(r'^accounts/profile/seed/ship/?$', account.seed_ship, name="seed-ship-for-profile"),
     url(r'^accounts/profile/credits/give/(?P<creds>[0-9]+)/?$', account.give_credits, name="credits-give"),
     url(r'^accounts/profile/credits/take/(?P<creds>[0-9]+)/?$', account.take_credits, name="credits-take"),
 

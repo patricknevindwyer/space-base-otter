@@ -23,6 +23,11 @@ GOODS = json.load(open("ui/resources/goods.json", "r"))
 planet_range = range(1,8) + range(10, 21)
 PLANET_IMAGES = ["planet%d.png" % i for i in planet_range]
 
+STAR_IMAGES = [star for star in os.listdir("ui/static/ui/images/stars") if star.endswith("png")]
+
+# Star/Planet System name prefixes
+with open("ui/resources/planet_prefix.list", "r") as prefixes:
+    SYSTEM_PREFIXES = [prefix.strip() for prefix in prefixes.readlines()]
 
 # What kind of locations do we have?
 LOCATION_CHOICES = (
@@ -113,6 +118,14 @@ class LocationManager(models.Manager):
     Query, build, and otherwise manipulate Planets.
     """
 
+    def delete_unoccupied(self):
+        """
+        Delete any planets that don't have a player in orbit.
+
+        :return:
+        """
+        self.exclude(orbiters__owner__isnull=False).exclude(registrants__owner__isnull=False).delete()
+
     def pick_random(self):
         """
         Pick a random location that we already have available.
@@ -122,9 +135,11 @@ class LocationManager(models.Manager):
         id = random.sample(self.only("id").all(), 1)
         return id[0]
 
-    def create_random(self, has_shipyard=True):
+    def create_random(self, has_shipyard=True, has_marketplace=True):
         """
-        Create and place a random Planet.
+        Create and place a random Location. This Location generator is
+        not context sensitive to location type - it just scatters things
+        all about.
 
         :return:
         """
@@ -133,49 +148,80 @@ class LocationManager(models.Manager):
         x_co = random.randrange(-1000, 1000)
         y_co = random.randrange(-1000, 1000)
 
-        # now we need a name
-        planet_name = self.random_planet_name()
+        # what type of location are we?
+        location_type = random.sample(LOCATION_CHOICES, 1)[0][0]
 
-        # we also need to pick out an image
-        planet_image = random.sample(PLANET_IMAGES,1)[0]
+        print "%% LocationManager::create_random - generating a %s" % (location_type,)
+        # let's figure out what we are, shall we?
+        location_name = ""
+        location_image = ""
+
+        if location_type == "planet":
+
+            # now we need a name
+            location_name = self.random_planet_name()
+
+            # we also need to pick out an image
+            location_image = random.sample(PLANET_IMAGES,1)[0]
+
+        elif location_type == "moon":
+            pass
+        elif location_type == "asteroid":
+            pass
+        elif location_type == "nebula":
+            pass
+        elif location_type == "star":
+
+            # pick a star name
+            location_name = self.random_star_name()
+
+            # pick a star, any star
+            location_image = random.sample(STAR_IMAGES, 1)[0]
+        else:
+            print "! Generator Error [models::LocationManager::create_random] - No idea how to create a random [%s]" % (location_type,)
 
         # make our planet
         obj = self.create(
-            name = planet_name,
+            name = location_name,
+            location_type = location_type,
 
             x_coordinate = x_co,
             y_coordinate = y_co,
 
-            image_name = planet_image
+            image_name = location_image
         )
 
-        # let's add some imports
-        num_imports = random.randint(3, 6)
-        ims = random.sample(GOODS, num_imports)
-        for im in ims:
-            candidate = random.random()
-            if candidate >= im["liklihood"]["import"]:
-                p_import = Good.objects.create(
-                    planet = obj,
-                    name = im["good"],
-                    is_import = True,
-                    is_export = False,
-                    price = random.uniform(im["price"]["import"]["min"], im["price"]["import"]["max"]) * im["price"]["base"]
-                )
+        # only a few places actually have imports and exports, so we'll
+        # filter here
+        if location_type in ["planet", "moon", "asteroid"]:
 
-        # let's add some exports
-        num_imports = random.randint(3, 6)
-        ims = random.sample(GOODS, num_imports)
-        for im in ims:
-            candidate = random.random()
-            if candidate >= im["liklihood"]["export"]:
-                p_import = Good.objects.create(
-                    planet = obj,
-                    name = im["good"],
-                    is_import = False,
-                    is_export = True,
-                    price = random.uniform(im["price"]["export"]["min"], im["price"]["export"]["max"]) * im["price"]["base"]
-                )
+            # let's add some imports
+            num_imports = random.randint(3, 6)
+            ims = random.sample(GOODS, num_imports)
+            for im in ims:
+                candidate = random.random()
+                if candidate >= im["liklihood"]["import"]:
+                    p_import = Good.objects.create(
+                        planet = obj,
+                        name = im["good"],
+                        is_import = True,
+                        is_export = False,
+                        price = random.uniform(im["price"]["import"]["min"], im["price"]["import"]["max"]) * im["price"]["base"]
+                    )
+
+            # let's add some exports
+            num_imports = random.randint(3, 6)
+            ims = random.sample(GOODS, num_imports)
+            for im in ims:
+                candidate = random.random()
+                if candidate >= im["liklihood"]["export"]:
+                    p_import = Good.objects.create(
+                        planet = obj,
+                        name = im["good"],
+                        is_import = False,
+                        is_export = True,
+                        price = random.uniform(im["price"]["export"]["min"], im["price"]["export"]["max"]) * im["price"]["base"]
+                    )
 
         # do we have a shipyard?
         if has_shipyard:
@@ -191,9 +237,7 @@ class LocationManager(models.Manager):
         """
 
         # get a good prefix
-        planet_prefix = ""
-        with open("ui/resources/planet_prefix.list", "r") as prefixes:
-            planet_prefix = random.sample([prefix.strip() for prefix in prefixes.readlines()], 1)[0]
+        planet_prefix = random.sample(SYSTEM_PREFIXES, 1)[0]
 
         # pick a designator
         planet_number = random.randint(1000, 10000)
@@ -202,6 +246,21 @@ class LocationManager(models.Manager):
         planet_orbit = random.sample(string.ascii_uppercase, 1)[0]
 
         return "%s %d-%s" % (planet_prefix, planet_number, planet_orbit)
+
+    def random_star_name(self):
+        """
+        Generate a random name for a star. This shares generation ideas
+        with random_planet_name.
+
+        :return:
+        """
+        # get a good prefix
+        star_prefix = random.sample(SYSTEM_PREFIXES, 1)[0]
+
+        # pick a designator
+        star_number = random.randint(1000, 10000)
+
+        return "%s %s" % (star_prefix, star_number)
 
 
 def default_location_meta():
@@ -250,6 +309,14 @@ class Location(models.Model):
         :return: 
         """
         ShipYard.objects.create_random_on_planet(self)
+
+    def static_suffix(self):
+        """
+        What is the location of this in the static content?
+
+        :return:
+        """
+        return "ui/images/%ss/%s" % (self.location_type, self.image_name)
 
 
 ###
@@ -413,6 +480,48 @@ class ShipManager(models.Manager):
             "upgrade_capacity": upgrade_data["size"],
             "cost": ( 2 ** price_factor) * 250
         }
+
+    def seed_ship_for_profile(self, profile):
+        """
+        Generate a ship for the given profile (could be user or NPC).
+
+        :param profile:
+        :return:
+        """
+        # what planet is this?
+        planet = Location.objects.pick_random()
+
+        # get our template
+        ship_template = self.__choose_ship_stats()
+
+        # set up all of the various variables we'll use in
+        # model construction
+        ship_name = ship_template["name"]
+        ship_model = ship_template["name"]
+        ship_planet = planet
+        ship_home_planet = planet
+        ship_range = ship_template["max_range"]
+        ship_fuel_level = 100.0
+        ship_cargo_capacity = ship_template["cargo_capacity"]
+        ship_upgrade_capacity = ship_template["upgrade_capacity"]
+        ship_image = random.sample(SHIP_IMAGES, 1)[0]
+        ship_value = ship_template["cost"]
+
+        ship = self.create(
+            name = ship_name,
+            model = ship_model,
+            planet = ship_planet,
+            home_planet = ship_home_planet,
+            max_range = ship_range,
+            fuel_level = ship_fuel_level,
+            cargo_capacity = ship_cargo_capacity,
+            upgrade_capacity = ship_upgrade_capacity,
+            image_name = ship_image,
+            value = ship_value,
+            owner = profile
+        )
+
+        return ship
 
     def seed_ship_at_shipyard(self, shipyard):
         """
@@ -630,7 +739,7 @@ class ShipYard(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False)
 
     # what planet does this belong on?
-    planet = models.ForeignKey(Location, related_name="shipyards")
+    planet = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="shipyards")
 
     def name_display(self):
         """
@@ -741,7 +850,7 @@ class ShipUpgrade(models.Model):
     target = models.CharField(max_length=100, null=False, blank=False, default="cargo")
 
     # which ship is this upgrade on?
-    ship = models.ForeignKey("Ship", blank=True, null=True, related_name="upgrades")
+    ship = models.ForeignKey("Ship", blank=True, null=True, on_delete=models.CASCADE, related_name="upgrades")
 
     # what did this upgrade cost
     cost = models.BigIntegerField(null=False, blank=False, default=100000)
@@ -759,7 +868,7 @@ class ShipUpgrade(models.Model):
     description = models.TextField(null=True, blank=True)
 
     # which shipyard is this upgrade stocked at?
-    shipyard = models.ForeignKey("ShipYard", blank=True, null=True, related_name="upgrades")
+    shipyard = models.ForeignKey("ShipYard", blank=True, null=True, on_delete=models.CASCADE, related_name="upgrades")
 
     def buy(self):
         """
@@ -853,10 +962,10 @@ class Ship(models.Model):
     model = models.CharField(max_length=255, null=False, blank=False)
 
     # a ship is at a planet
-    planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="orbiters")
+    planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="orbiters")
 
     # a ship also has a home planet
-    home_planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.SET(get_default_ship_location), related_name="registrants")
+    home_planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="registrants")
 
     # some basic settings that we'll improve upon later
 
@@ -972,6 +1081,7 @@ class Ship(models.Model):
 
         # it's ours!
         ship_upgrade.ship = self
+        ship_upgrade.shipyard = None
         ship_upgrade.save()
 
         # let's do some install

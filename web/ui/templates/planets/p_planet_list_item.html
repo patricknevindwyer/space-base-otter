@@ -3,10 +3,10 @@
 
 <div class="row">
     <div class="col-md-2">
-        <img src="{% static 'ui/images/planets/'|add:planet.image_name %}" style="width:100px;height:100px">
+        <img src="{% static planet.static_suffix %}" style="width:100px;height:100px">
     </div>
     <div class="col-md-8">
-        <h2>{{ planet.name }}</h2>
+        <h2>{{ planet.name }} <small>{{ planet.location_type }}</small></h2>
         <dl class="dl-horizontal">
             <dt>Imports</dt>
             <dd>{{ planet.imports.count }}</dd>
