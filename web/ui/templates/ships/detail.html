@@ -4,8 +4,8 @@
 
 {% block content %}
 
+{% include "locations/p_ship_location_header.html" with ship=ship location=ship.location active_page="ship" %}
 
-{% include "general/p_ship_on_planet_header.html" with active_page="ship" %}
 {% include "general/p_user_header.html" with user=ship.owner %}
 <div class="row">
     <div class="col-md-6">

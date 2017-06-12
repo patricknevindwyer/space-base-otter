@@ -22,7 +22,7 @@ def goods(request, ship_id, planet_id):
     planet = get_object_or_404(Location, pk=planet_id)
 
     # are we actually at this planet?
-    if ship.planet != planet:
+    if ship.location != planet:
         return redirect(reverse("ship", args=(ship_id,)))
 
     # does the user actually own this ship?
@@ -51,7 +51,7 @@ def import_good(request, ship_id, planet_id, good_id, quantity):
     price = good.price * quantity
 
     # are we actually at this planet?
-    if ship.planet != planet:
+    if ship.location != planet:
         messages.error(request, "Your ship isn't orbiting that planet")
         return redirect(reverse("ship", args=(ship_id,)))
 
@@ -104,7 +104,7 @@ def export_good(request, ship_id, planet_id, good_id, quantity):
     # a few tests first.
 
     # are we actually at this planet?
-    if ship.planet != planet:
+    if ship.location != planet:
         messages.error(request, "Your ship isn't orbiting that planet")
         return redirect(reverse("ship", args=(ship_id,)))
 

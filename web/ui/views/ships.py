@@ -58,7 +58,7 @@ def detail(request, ship_id):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = ship.planet
+    planet = ship.location
 
     # only owners can get the details on a ship
     if request.user.profile == ship.owner:
@@ -77,7 +77,7 @@ def travel(request, ship_id):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = ship.planet
+    planet = ship.location
 
     # only owners can get the details on a ship
     if request.user.profile == ship.owner:

@@ -130,11 +130,11 @@ def user_post_login(sender, user, request, **kwargs):
 
 
 ###
-# PLANETS
+# Locations
 ###
 class LocationManager(models.Manager):
     """
-    Query, build, and otherwise manipulate Planets.
+    Query, build, and otherwise manipulate the different Location types.
     """
 
     def delete_unoccupied(self):
@@ -320,13 +320,13 @@ def default_location_meta():
 
 class Location(models.Model):
     """
-    Describe a planet.
+    Describe a Location.
     """
     objects = LocationManager()
 
     name = models.CharField(max_length=255, null=False, blank=False)
 
-    # where is this planet?
+    # where is this location?
     x_coordinate = models.IntegerField(default=0, null=False, blank=False)
     y_coordinate = models.IntegerField(default=0, null=False, blank=False)
 
@@ -556,7 +556,7 @@ class ShipManager(models.Manager):
         ship = self.create(
             name = ship_name,
             model = ship_model,
-            planet = ship_planet,
+            location = ship_planet,
             home_planet = ship_home_planet,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
@@ -599,7 +599,7 @@ class ShipManager(models.Manager):
         ship = self.create(
             name = ship_name,
             model = ship_model,
-            planet = ship_planet,
+            location = ship_planet,
             home_planet = ship_home_planet,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
@@ -1009,7 +1009,7 @@ class Ship(models.Model):
     model = models.CharField(max_length=255, null=False, blank=False)
 
     # a ship is at a planet
-    planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="orbiters")
+    location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="orbiters")
 
     # a ship also has a home planet
     home_planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="registrants")
@@ -1292,7 +1292,7 @@ class Ship(models.Model):
         # neat. done. let's record this for posterity
         self.record_cargo_buy(good, quantity, good.planet, good.price * quantity)
 
-    def planets_in_range(self):
+    def locations_in_range(self):
         """
         Find the planets that are in range, and compute a bit of data
         :return:
@@ -1307,10 +1307,10 @@ class Ship(models.Model):
             return plist
 
         # preselect a set of planets in the box that our max range describes
-        min_x = self.planet.x_coordinate - max_range
-        max_x = self.planet.x_coordinate + max_range
-        min_y = self.planet.y_coordinate - max_range
-        max_y = self.planet.y_coordinate + max_range
+        min_x = self.location.x_coordinate - max_range
+        max_x = self.location.x_coordinate + max_range
+        min_y = self.location.y_coordinate - max_range
+        max_y = self.location.y_coordinate + max_range
 
         close_enough = Location.objects.filter(
             x_coordinate__gte=min_x,
@@ -1346,7 +1346,7 @@ class Ship(models.Model):
         :param planet:
         :return:
         """
-        return math.sqrt(((self.planet.x_coordinate - planet.x_coordinate)**2) + ((self.planet.y_coordinate - planet.y_coordinate)**2))
+        return math.sqrt(((self.location.x_coordinate - planet.x_coordinate)**2) + ((self.location.y_coordinate - planet.y_coordinate)**2))
 
     def record_cargo_buy(self, good, quantity, planet, cost):
         """
@@ -1409,16 +1409,16 @@ class Ship(models.Model):
 
         # update our travel history
         last_planet = {
-            "name": self.planet.name,
-            "id": self.planet.id,
-            "x_coordinate": self.planet.x_coordinate,
-            "y_coordinate": self.planet.y_coordinate
+            "name": self.location.name,
+            "id": self.location.id,
+            "x_coordinate": self.location.x_coordinate,
+            "y_coordinate": self.location.y_coordinate
         }
         self.computer["travel"]["history"].insert(0,last_planet)
         self.computer["travel"]["history"] = self.computer["travel"]["history"][:self.computer["limits"]["travel"]["history"]]
 
         # travel
-        self.planet = planet
+        self.location = planet
         self.save()
 
     def is_home_planet_in_range(self):
@@ -1430,7 +1430,7 @@ class Ship(models.Model):
         return self.current_range() > self.distance_to(self.home_planet)
 
     def is_home(self):
-        return self.planet == self.home_planet
+        return self.location == self.home_planet
 
     def burn_fuel_for_distance(self, dist):
         """
@@ -1474,7 +1474,7 @@ class Ship(models.Model):
 
         # given the planet markup, what will our used fuel cost to
         # replace?
-        cost = FUEL_UNIT_COST * self.planet.fuel_markup * f_used
+        cost = FUEL_UNIT_COST * self.location.fuel_markup * f_used
         return cost
 
     def refuel(self):

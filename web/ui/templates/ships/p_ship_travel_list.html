@@ -28,7 +28,7 @@
                     <td>{{ planet.distance|floatformat:2 }} LY</td>
                     <td>{{ planet.fuel_burned_percent|floatformat:0 }}%</td>
                     <td>
-                        {% if ship.planet.id != planet.id %}
+                        {% if ship.location.id != planet.id %}
                         <a href="{% url 'ship-travel-to-planet' ship.id planet.id %}" class="btn btn-xs btn-success">{% bootstrap_icon 'transfer' %} Warp to Planet</a>
                         {% endif %}
                     </td>

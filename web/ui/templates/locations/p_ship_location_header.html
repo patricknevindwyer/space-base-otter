@@ -1,0 +1,11 @@
+{% if location.location_type == "planet" %}
+    {% include "locations/planets/p_ship_location_header.html" with location=location ship=ship active_page="ship" %}
+{% elif location.location_type == "asteroid" %}
+    {% include "locations/asteroids/p_ship_location_header.html" with location=location ship=ship active_page="ship" %}
+{% elif location.location_type == "moon" %}
+    {% include "locations/moons/p_ship_location_header.html" with location=location ship=ship active_page="ship" %}
+{% elif location.location_type == "star" %}
+    {% include "locations/stars/p_ship_location_header.html" with location=location ship=ship active_page="ship" %}
+{% elif location.location_type == "nebula" %}
+    {% include "locations/nebulas/p_ship_location_header.html" with location=location ship=ship active_page="ship" %}
+{% endif %}

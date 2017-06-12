@@ -4,14 +4,14 @@
 
 {% block content %}
 
-{% include "general/p_ship_on_planet_header.html" with active_page="travel" %}
+{% include "locations/p_ship_location_header.html" with ship=ship location=ship.location active_page="travel" %}
 
 <div class="row">
     <div class="col-md-6">
         {% include "ships/p_ship_travel.html" with ship=ship %}
     </div>
     <div class="col-md-6">
-        {% include "planets/p_planet_travel.html" with planets=ship.planets_in_range %}
+        {% include "planets/p_planet_travel.html" with planets=ship.locations_in_range %}
     </div>
 </div>
 {% endblock %}

@@ -1,21 +1,22 @@
 # TODO
 
  - more than planets
-  - [x] rename Planet to Location
    - update references to Planet in other models
-   - locations have types
-      - nebulaes
-      - planets
-      - moons
-      - stars
-      - asteroids
+    - Ship
+     - [x] planet
+     - [ ] home_planet
+    - Good
+    - ShipYard
+    - ShipUpgrade
+   - templates/planets
+    - move into multiple places
+     - templates/travel
+     - templates/marketplace
   - update basic generator
-   - generate different types scattered all around
-   - find new images
-   - anywhere can have shipyard
-   - only planets, moons, and asteroids can have marketplaces
-   - different image assets based on location type
-   - different routes based on location type
+   - template refs to planets vs locations
+    - travel
+    - headers
+   - route names 'planets'
   - generate galaxies differently
    - stars have planets
    - stars have asteroids

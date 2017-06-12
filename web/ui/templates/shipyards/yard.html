@@ -4,7 +4,7 @@
 
 {% block content %}
 
-{% include "general/p_ship_on_planet_header.html" with active_page="shipyard" %}
+{% include "locations/p_ship_location_header.html" with ship=ship location=ship.location active_page="shipyard" %}
 {% include "general/p_user_header.html" with user=ship.owner %}
 
 <div class="row">

@@ -23,7 +23,7 @@
                 </tr>
             {% endif %}
             {% for planet in planets %}
-                {% if planet.id != ship.planet.id %}
+                {% if planet.id != ship.location.id %}
                 <tr>
                     <td><a href="{% url 'planet' planet.id %}">{{ planet.name }}</a></td>
                     <td>{{ planet.distance|floatformat:2 }} <abbr title="Light Yeards">LY</abbr></td>

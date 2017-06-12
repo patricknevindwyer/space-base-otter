@@ -24,7 +24,7 @@ def yard(request, ship_id, shipyard_id):
     planet = shipyard.planet
 
     # are we actually at this planet?
-    if ship.planet != planet:
+    if ship.location != planet:
         return redirect(reverse("ship", args=(ship_id,)))
 
     # does the user actually own this ship?
@@ -51,7 +51,7 @@ def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):
     planet = shipyard.planet
 
     # are we actually at the planet for this shipyard?
-    if ship.planet != planet:
+    if ship.location != planet:
         messages.error(request, "Your ship isn't orbiting near that ShipYard")
         return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))
 
