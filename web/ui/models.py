@@ -557,7 +557,7 @@ class ShipManager(models.Manager):
             name = ship_name,
             model = ship_model,
             location = ship_planet,
-            home_planet = ship_home_planet,
+            home_location = ship_home_planet,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
             cargo_capacity = ship_cargo_capacity,
@@ -588,7 +588,7 @@ class ShipManager(models.Manager):
         ship_name = ship_template["name"]
         ship_model = ship_template["name"]
         ship_planet = planet
-        ship_home_planet = planet
+        ship_home_location = planet
         ship_range = ship_template["max_range"]
         ship_fuel_level = 100.0
         ship_cargo_capacity = ship_template["cargo_capacity"]
@@ -600,7 +600,7 @@ class ShipManager(models.Manager):
             name = ship_name,
             model = ship_model,
             location = ship_planet,
-            home_planet = ship_home_planet,
+            home_location = ship_home_location,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
             cargo_capacity = ship_cargo_capacity,
@@ -1012,7 +1012,7 @@ class Ship(models.Model):
     location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="orbiters")
 
     # a ship also has a home planet
-    home_planet = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="registrants")
+    home_location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="registrants")
 
     # some basic settings that we'll improve upon later
 
@@ -1422,16 +1422,16 @@ class Ship(models.Model):
         self.location = planet
         self.save()
 
-    def is_home_planet_in_range(self):
+    def is_home_location_in_range(self):
         """
         Is our home planet within travel distance?
 
         :return:
         """
-        return self.current_range() > self.distance_to(self.home_planet)
+        return self.current_range() > self.distance_to(self.home_location)
 
     def is_home(self):
-        return self.location == self.home_planet
+        return self.location == self.home_location
 
     def burn_fuel_for_distance(self, dist):
         """

@@ -155,7 +155,7 @@ def travel_to_location(request, ship_id, location_id):
 
 @transaction.atomic
 @login_required
-def travel_to_home_planet(request, ship_id):
+def travel_to_home_location(request, ship_id):
     """
     Traveling to your home planet burns all of your fuel, and costs $ == distance. If
     the player doesn't have enough money, it drops to 0.
@@ -166,10 +166,10 @@ def travel_to_home_planet(request, ship_id):
     """
     ship = get_object_or_404(Ship, pk=ship_id)
 
-    home_distance = ship.distance_to(ship.home_planet)
+    home_distance = ship.distance_to(ship.home_location)
 
     # travel
-    ship.travel_to(ship.home_planet)
+    ship.travel_to(ship.home_location)
 
     # fuel
     ship.fuel_level = 0.0

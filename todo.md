@@ -4,14 +4,12 @@
    - update references to Planet in other models
     - Ship
      - [x] planet
-     - [ ] home_planet
+     - [x] home_planet
     - Good
+     - planet
     - ShipYard
-    - ShipUpgrade
-   - templates/planets
-    - move into multiple places
-     - templates/travel
-     - templates/marketplace
+     - shipyard
+
   - update basic generator
    - template refs to planets vs locations
     - travel
