@@ -5,9 +5,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-info">
-            <div class="panel-heading"><h4>Marketplace <small> {% bootstrap_icon 'globe' %} {{ planet.name }}</small></h4></div>
+            <div class="panel-heading"><h4>Marketplace <small> {% bootstrap_icon 'globe' %} {{ location.name }}</small></h4></div>
             <div class="panel-body">
-                This planet is looking to buy:
+                This {{ location.location_type }} is looking to buy:
             </div>
             <table class="table table-condensed table-striped table-hover">
                 <thead>
@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for import in planet.imports.all %}
+                    {% for import in location.imports.all %}
 
                     {% if ship|can_sell_at_profit:import %}
                     <tr class="success">
@@ -40,11 +40,11 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 1 %}">1</a></li>
-                                        <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 10 %}">10</a></li>
-                                        <li><a href="{% url 'marketplace-import' ship.id planet.id import.id 100 %}">100</a></li>
+                                        <li><a href="{% url 'marketplace-import' ship.id location.id import.id 1 %}">1</a></li>
+                                        <li><a href="{% url 'marketplace-import' ship.id location.id import.id 10 %}">10</a></li>
+                                        <li><a href="{% url 'marketplace-import' ship.id location.id import.id 100 %}">100</a></li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="{% url 'marketplace-import' ship.id planet.id import.id ship|quantity_in_cargo:import %}">All</a></li>
+                                        <li><a href="{% url 'marketplace-import' ship.id location.id import.id ship|quantity_in_cargo:import %}">All</a></li>
                                     </ul>
                                 </div>
                             </td>
@@ -56,7 +56,7 @@
                 </tbody>
             </table>
             <div class="panel-body">
-                For sale on this planet:
+                For sale on this {{ location.location_type }}:
             </div>
             <table class="table table-condensed table-striped table-hover">
                 <thead>
@@ -70,7 +70,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for export in planet.exports.all %}
+                    {% for export in location.exports.all %}
                     <tr>
                         <td>{{ export.name }}</td>
                         <td>{{ export.price|floatformat:2 }}</td>
@@ -81,11 +81,11 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 1 %}">1</a></li>
-                                    <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 10 %}">10</a></li>
-                                    <li><a href="{% url 'marketplace-export' ship.id planet.id export.id 100 %}">100</a></li>
+                                    <li><a href="{% url 'marketplace-export' ship.id location.id export.id 1 %}">1</a></li>
+                                    <li><a href="{% url 'marketplace-export' ship.id location.id export.id 10 %}">10</a></li>
+                                    <li><a href="{% url 'marketplace-export' ship.id location.id export.id 100 %}">100</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="{% url 'marketplace-export' ship.id planet.id export.id ship.cargo_free %}">Max</a></li>
+                                    <li><a href="{% url 'marketplace-export' ship.id location.id export.id ship.cargo_free %}">Max</a></li>
                                 </ul>
                             </div>
                         </td>

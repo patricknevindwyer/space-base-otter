@@ -29,7 +29,7 @@ def goods(request, ship_id, planet_id):
     if request.user.profile != ship.owner:
         return redirect(reverse("ships"))
 
-    return render(request, "marketplace/goods.html", context=fill_context({"ship": ship, "planet": planet}))
+    return render(request, "marketplace/goods.html", context=fill_context({"ship": ship, "location": planet}))
 
 
 @transaction.atomic
