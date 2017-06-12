@@ -33,6 +33,8 @@ SHIP_IMAGES = [ship for ship in os.listdir("ui/static/ui/images/ships") if ship.
 # Asteroid Images
 ASTEROID_IMAGES = [a for a in os.listdir("ui/static/ui/images/asteroids") if a.endswith("png")]
 
+# Moon Images
+MOON_IMAGES = [m for m in os.listdir("ui/static/ui/images/moons") if m.endswith("png")]
 
 ## Names
 
@@ -182,7 +184,17 @@ class LocationManager(models.Manager):
             location_image = random.sample(PLANET_IMAGES,1)[0]
 
         elif location_type == "moon":
-            pass
+
+            # we'll use satellite provisional naming ( https://en.wikipedia.org/wiki/Naming_of_moons#Provisional_designations )
+            m_year = random.randrange(2010, 10000)
+            m_plan = random.choice("ABCDEFGHJKLMNO[QRSTUVWXYZ")
+            m_inc = random.randrange(1, 1000)
+
+            location_name = "S/%d %s %d" % (m_year, m_plan, m_inc)
+
+            # grab our image
+            location_image = random.sample(MOON_IMAGES, 1)[0]
+
         elif location_type == "asteroid":
 
             # Asteroids use New-style Provisional Naming ( https://en.wikipedia.org/wiki/Provisional_designation_in_astronomy )
@@ -915,12 +927,13 @@ class ShipUpgrade(models.Model):
         """
         yard = self.shipyard
 
+        # let our shipyard know
+        yard.restock_upgrades()
+
         # we're no longer for purchase!
         self.shipyard = None
         self.save()
 
-        # let our shipyard know
-        yard.restock_upgrades()
 
 
 def default_ship_computer():
@@ -1115,7 +1128,6 @@ class Ship(models.Model):
 
         # it's ours!
         ship_upgrade.ship = self
-        ship_upgrade.shipyard = None
         ship_upgrade.save()
 
         # let's do some install
