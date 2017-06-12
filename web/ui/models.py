@@ -350,7 +350,7 @@ class Location(models.Model):
 
     def add_shipyard(self):
         """
-        Create a shipyard on our planet.
+        Create a shipyard on our location.
         
         :return: 
         """
@@ -578,7 +578,7 @@ class ShipManager(models.Manager):
         """
 
         # what location is this?
-        location = shipyard.planet
+        location = shipyard.location
 
         # get our template
         ship_template = self.__choose_ship_stats()
@@ -716,7 +716,7 @@ class ShipYardManager(models.Manager):
         """
         yard = self.create(
             name=self._create_name(),
-            planet=location
+            location=location
         )
         yard.save()
 
@@ -785,7 +785,7 @@ class ShipYard(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False)
 
     # what location does this belong on?
-    planet = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="shipyards")
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="shipyards")
 
     def name_display(self):
         """

@@ -1,20 +1,11 @@
+# BUGS
+
+ - when you buy a ship, it is somehow still listed as being available in its home shipyard, clicking
+   on it again properly tells you it's already owned
+   
 # TODO
 
- - more than planets
-   - update references to Planet in other models
-    - Ship
-     - [x] planet
-     - [x] home_planet
-    - Good
-     - [x] planet
-    - ShipYard
-     - [ ] shipyard
-
-  - update basic generator
-   - template refs to planets vs locations
-    - travel
-    - headers
-   - route names 'planets'
+ 
   - generate galaxies differently
    - stars have planets
    - stars have asteroids

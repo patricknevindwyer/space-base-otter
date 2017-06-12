@@ -21,7 +21,7 @@ def yard(request, ship_id, shipyard_id):
     """
     ship = get_object_or_404(Ship, pk=ship_id)
     shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
-    location = shipyard.planet
+    location = shipyard.location
 
     # are we actually at this planet?
     if ship.location != location:
@@ -48,7 +48,7 @@ def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):
     ship = get_object_or_404(Ship, pk=ship_id)
     shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
     upgrade = get_object_or_404(ShipUpgrade, pk=shipupgrade_id)
-    location = shipyard.planet
+    location = shipyard.location
 
     # are we actually at the location for this shipyard?
     if ship.location != location:
