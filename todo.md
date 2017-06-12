@@ -2,17 +2,6 @@
 
 # TODO
 
-  - move purchasing of things into a common library
-   - goods
-    - buy
-    - sell
-   - ships
-    - buy
-    - sell?
-   - upgrades
-    - buy
-  - move travel to a common library
-    
   - generate galaxies differently
    - stars have planets
    - stars have asteroids
@@ -23,7 +12,20 @@
     - nebulas
     - do we have this type of relationship? parent child?
     - sure, why not
+  - move travel to a common library
+
   - travel between some parent and child relationships is free
+
+  - move purchasing of things into a common library
+   - goods
+    - buy
+    - sell
+   - ships
+    - buy
+    - sell?
+   - upgrades
+    - buy
+    
   
 
  - NPCs
