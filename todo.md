@@ -6,9 +6,9 @@
      - [x] planet
      - [x] home_planet
     - Good
-     - planet
+     - [x] planet
     - ShipYard
-     - shipyard
+     - [ ] shipyard
 
   - update basic generator
    - template refs to planets vs locations

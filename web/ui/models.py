@@ -248,7 +248,7 @@ class LocationManager(models.Manager):
                 candidate = random.random()
                 if candidate >= im["liklihood"]["import"]:
                     p_import = Good.objects.create(
-                        planet = obj,
+                        location = obj,
                         name = im["good"],
                         is_import = True,
                         is_export = False,
@@ -262,7 +262,7 @@ class LocationManager(models.Manager):
                 candidate = random.random()
                 if candidate >= im["liklihood"]["export"]:
                     p_import = Good.objects.create(
-                        planet = obj,
+                        location = obj,
                         name = im["good"],
                         is_import = False,
                         is_export = True,
@@ -370,13 +370,13 @@ class Location(models.Model):
 ###
 class Good(models.Model):
     """
-    An instance of a good or service, linked to a Planet or a Ship.
+    An instance of a good or service, linked to a location or a Ship.
     """
 
     name = models.CharField(max_length=255, null=False, blank=False)
 
-    # what planet has these goods?
-    planet = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="goods")
+    # what location has these goods?
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="goods")
 
     # is this an import
     is_import = models.BooleanField(null=False)
@@ -534,8 +534,8 @@ class ShipManager(models.Manager):
         :param profile:
         :return:
         """
-        # what planet is this?
-        planet = Location.objects.pick_random()
+        # what location is this?
+        location = Location.objects.pick_random()
 
         # get our template
         ship_template = self.__choose_ship_stats()
@@ -544,8 +544,8 @@ class ShipManager(models.Manager):
         # model construction
         ship_name = ship_template["name"]
         ship_model = ship_template["name"]
-        ship_planet = planet
-        ship_home_planet = planet
+        ship_location = location
+        ship_home_location = location
         ship_range = ship_template["max_range"]
         ship_fuel_level = 100.0
         ship_cargo_capacity = ship_template["cargo_capacity"]
@@ -556,8 +556,8 @@ class ShipManager(models.Manager):
         ship = self.create(
             name = ship_name,
             model = ship_model,
-            location = ship_planet,
-            home_location = ship_home_planet,
+            location = ship_location,
+            home_location = ship_home_location,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
             cargo_capacity = ship_cargo_capacity,
@@ -577,8 +577,8 @@ class ShipManager(models.Manager):
         :return: 
         """
 
-        # what planet is this?
-        planet = shipyard.planet
+        # what location is this?
+        location = shipyard.planet
 
         # get our template
         ship_template = self.__choose_ship_stats()
@@ -587,8 +587,8 @@ class ShipManager(models.Manager):
         # model construction
         ship_name = ship_template["name"]
         ship_model = ship_template["name"]
-        ship_planet = planet
-        ship_home_location = planet
+        ship_location = location
+        ship_home_location = location
         ship_range = ship_template["max_range"]
         ship_fuel_level = 100.0
         ship_cargo_capacity = ship_template["cargo_capacity"]
@@ -599,7 +599,7 @@ class ShipManager(models.Manager):
         ship = self.create(
             name = ship_name,
             model = ship_model,
-            location = ship_planet,
+            location = ship_location,
             home_location = ship_home_location,
             max_range = ship_range,
             fuel_level = ship_fuel_level,
@@ -777,14 +777,14 @@ class ShipYardManager(models.Manager):
 
 class ShipYard(models.Model):
     """
-    Some planets have ship yards. Ship yards hold upgrades and ships for purchase.
+    Some locations have ship yards. Ship yards hold upgrades and ships for purchase.
     """
     objects = ShipYardManager()
 
     # descriptive name of the shipyard
     name = models.CharField(max_length=255, blank=False, null=False)
 
-    # what planet does this belong on?
+    # what location does this belong on?
     planet = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="shipyards")
 
     def name_display(self):
@@ -1008,10 +1008,10 @@ class Ship(models.Model):
     # what type of ship was this?
     model = models.CharField(max_length=255, null=False, blank=False)
 
-    # a ship is at a planet
+    # a ship is at a location
     location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="orbiters")
 
-    # a ship also has a home planet
+    # a ship also has a home location
     home_location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE, related_name="registrants")
 
     # some basic settings that we'll improve upon later
@@ -1251,7 +1251,7 @@ class Ship(models.Model):
         cargo.sell(good, quantity)
 
         # neat. done. let's record this for posterity
-        self.record_cargo_sell(good, quantity, good.planet, good.price * quantity)
+        self.record_cargo_sell(good, quantity, good.location, good.price * quantity)
 
         # is this cargo empty?
         if cargo.quantity == 0:
@@ -1290,11 +1290,11 @@ class Ship(models.Model):
         cargo.buy(good, quantity)
 
         # neat. done. let's record this for posterity
-        self.record_cargo_buy(good, quantity, good.planet, good.price * quantity)
+        self.record_cargo_buy(good, quantity, good.location, good.price * quantity)
 
     def locations_in_range(self):
         """
-        Find the planets that are in range, and compute a bit of data
+        Find the locations that are in range, and compute a bit of data
         :return:
         """
         plist = []
@@ -1306,7 +1306,7 @@ class Ship(models.Model):
         if max_range < 1:
             return plist
 
-        # preselect a set of planets in the box that our max range describes
+        # preselect a set of locations in the box that our max range describes
         min_x = self.location.x_coordinate - max_range
         max_x = self.location.x_coordinate + max_range
         min_y = self.location.y_coordinate - max_range
@@ -1319,61 +1319,61 @@ class Ship(models.Model):
             y_coordinate__lte=max_y
         ).all()
 
-        for planet in close_enough:
+        for location in close_enough:
 
             # now do a real distance calculation
-            real_dist = self.distance_to(planet)
+            real_dist = self.distance_to(location)
             if real_dist > self.current_range():
                 continue
 
-            # ok! our planet is close enough
+            # ok! our location is close enough
             plist.append(
                 {
-                    "name": planet.name,
-                    "id": planet.id,
+                    "name": location.name,
+                    "id": location.id,
                     "distance": real_dist,
                     "fuel_burned_percent": real_dist / max_range * 100.0,
-                    "location_type": planet.location_type
+                    "location_type": location.location_type
                 }
             )
         plist.sort(key=lambda s: s["distance"])
 
         return plist
 
-    def distance_to(self, planet):
+    def distance_to(self, location):
         """
-        How far is it to the given planet.
+        How far is it to the given location.
 
-        :param planet:
+        :param location:
         :return:
         """
-        return math.sqrt(((self.location.x_coordinate - planet.x_coordinate)**2) + ((self.location.y_coordinate - planet.y_coordinate)**2))
+        return math.sqrt(((self.location.x_coordinate - location.x_coordinate)**2) + ((self.location.y_coordinate - location.y_coordinate)**2))
 
-    def record_cargo_buy(self, good, quantity, planet, cost):
+    def record_cargo_buy(self, good, quantity, location, cost):
         """
         Add a record to our cargo log.
         
         :param good: 
         :param quantity: 
-        :param planet: 
+        :param location:
         :param cost: 
         :return: 
         """
-        self._record_cargo("buy", good, quantity, planet, cost)
+        self._record_cargo("buy", good, quantity, location, cost)
 
-    def record_cargo_sell(self, good, quantity, planet, cost):
+    def record_cargo_sell(self, good, quantity, location, cost):
         """
         Add a record to our cargo log.
             
         :param good: 
         :param quantity: 
-        :param planet: 
+        :param location:
         :param cost: 
         :return: 
         """
-        self._record_cargo("sell", good, quantity, planet, cost)
+        self._record_cargo("sell", good, quantity, location, cost)
 
-    def _record_cargo(self, mode, good, quantity, planet, cost):
+    def _record_cargo(self, mode, good, quantity, location, cost):
         """
         Add a record to our cargo log, and trim it down if need be. 
          
@@ -1389,8 +1389,8 @@ class Ship(models.Model):
             "good": good.name,
             "quantity": quantity,
             "planet": {
-                "name": planet.name,
-                "id": planet.id
+                "name": location.name,
+                "id": location.id
             },
             "cost": cost
         }
@@ -1398,33 +1398,33 @@ class Ship(models.Model):
         self.computer["cargo"]["history"] = self.computer["cargo"]["history"][:self.computer["limits"]["cargo"]["history"]]
         self.save()
 
-    def travel_to(self, planet):
+    def travel_to(self, location):
         """
-        Update the ship for travel to a planet. We're going to save our travel history
+        Update the ship for travel to a location. We're going to save our travel history
         as we go.
         
 
-        :param planet:
+        :param location:
         :return:
         """
 
         # update our travel history
-        last_planet = {
+        last_location = {
             "name": self.location.name,
             "id": self.location.id,
             "x_coordinate": self.location.x_coordinate,
             "y_coordinate": self.location.y_coordinate
         }
-        self.computer["travel"]["history"].insert(0,last_planet)
+        self.computer["travel"]["history"].insert(0,last_location)
         self.computer["travel"]["history"] = self.computer["travel"]["history"][:self.computer["limits"]["travel"]["history"]]
 
         # travel
-        self.location = planet
+        self.location = location
         self.save()
 
     def is_home_location_in_range(self):
         """
-        Is our home planet within travel distance?
+        Is our home location within travel distance?
 
         :return:
         """
@@ -1463,7 +1463,7 @@ class Ship(models.Model):
 
     def refuel_cost(self):
         """
-        What's the cost to refuel on our current planet? We need to take
+        What's the cost to refuel on our current location? We need to take
         into account the possibility of not having enough money to fully
         refuel.
 
@@ -1473,7 +1473,7 @@ class Ship(models.Model):
         # how many units of fuel do we need
         f_used, f_available = self.fuel_units()
 
-        # given the planet markup, what will our used fuel cost to
+        # given the location markup, what will our used fuel cost to
         # replace?
         cost = FUEL_UNIT_COST * self.location.fuel_markup * f_used
         return cost
