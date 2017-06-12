@@ -31,7 +31,7 @@ def list(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         planets = planet_pager.page(planet_pager.num_pages)
 
-    return render(request, "planets/list.html", context=fill_context({"planets": planets}))
+    return render(request, "locations/list.html", context=fill_context({"locations": planets}))
 
 
 def destroy_all(request):

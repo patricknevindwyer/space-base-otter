@@ -1,0 +1,25 @@
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+<div class="row">
+    <div class="col-md-2">
+        <img src="{% static location.static_suffix %}" style="width:100px;height:100px">
+    </div>
+    <div class="col-md-8">
+        <h2>{{ location.name }} <small>{{ location.location_type }}</small></h2>
+        <dl class="dl-horizontal">
+            <dt>In Orbit</dt>
+            <dd>{{ location.orbiters.count }}</dd>
+        </dl>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group">
+            <a href="{% url 'planet' location.id %}" class="btn btn-success btn-xs">{% bootstrap_icon 'fullscreen' %} Open</a>
+            {% if location.orbiters.count > 0 %}
+            <a href="#" class="btn btn-danger btn-xs" disabled>{% bootstrap_icon 'remove-sign' %}</a>
+            {% else %}
+            <a href="{% url 'planet-remove' location.id %}" class="btn btn-danger btn-xs" >{% bootstrap_icon 'remove-sign' %}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

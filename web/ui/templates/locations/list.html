@@ -16,26 +16,26 @@
     </div>
     <div class="col-md-8">
 
-        {% for planet in planets %}
-            {% include "planets/p_planet_list_item.html" with planet=planet %}
+        {% for location in locations %}
+            {% include "locations/p_location_list_item.html" with location=location %}
         {% endfor %}
 
         <ul class="pagination">
-            {% if planets.has_previous %}
+            {% if locations.has_previous %}
             <li>
-              <a href="?page={{ planets.previous_page_number }}" aria-label="Previous">&laquo;</a>
+              <a href="?page={{ locations.previous_page_number }}" aria-label="Previous">&laquo;</a>
             </li>
             {% endif %}
-            {% for page in planets.paginator.page_range %}
-                {% if page == planets.number %}
+            {% for page in locations.paginator.page_range %}
+                {% if page == locations.number %}
                     <li class="active"><a href="#">{{ page }}</a></li>
                 {% else %}
                     <li><a href="?page={{ page }}">{{ page }}</a></li>
                 {% endif %}
             {% endfor %}
-            {% if planets.has_next %}
+            {% if locations.has_next %}
             <li>
-              <a href="?page={{ planets.next_page_number }}" aria-label="Next">&raquo;</a>
+              <a href="?page={{ locations.next_page_number }}" aria-label="Next">&raquo;</a>
             </li>
             {% endif %}
           </ul>
