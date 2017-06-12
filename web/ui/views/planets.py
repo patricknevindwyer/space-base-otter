@@ -99,4 +99,4 @@ def detail(request, planet_id):
     """
     planet = get_object_or_404(Location, pk=planet_id)
 
-    return render(request, "planets/detail.html", context=fill_context({"planet": planet}))
+    return render(request, "locations/detail.html", context=fill_context({"location": planet}))

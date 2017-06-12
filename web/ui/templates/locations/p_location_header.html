@@ -1,0 +1,45 @@
+{% load bootstrap3 %}
+{% load humanize %}
+{% load staticfiles %}
+<style>
+    .location-inset {
+        background-image: url({% static location.static_suffix %});
+        background-position: left center;
+        background-repeat: no-repeat;
+    }
+
+    .location-title {
+        position: absolute;
+        color: black;
+        bottom: 35px;
+        right: 30px;
+        font-size: 1.75em;
+    }
+
+    .location-header {
+        font-size: 6em;
+        margin-top:-90px;
+        margin-bottom:-20px;
+        letter-spacing: 0.5em;
+        z-index:-9000;
+    }
+    .div_text_shadow
+{
+color: rgb(255, 255, 255);
+
+
+text-shadow: 1px 1px 0 rgb(200,200,200), -1px -1px 0 rgb(200,200,200), 1px -1px 0 rgb(200,200,200), -1px 1px 0 rgb(200,200,200);
+}
+</style>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well location-inset" style="text-align:center">
+
+            <a href="" class="btn btn-default btn-md" style="opacity:0">&nbsp;</a>
+
+            <span class="location-title">{{ location.location_type|capfirst }} {{ location.name }}</span>
+        </div>
+    </div>
+</div>

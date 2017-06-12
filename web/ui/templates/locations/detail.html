@@ -1,0 +1,11 @@
+{% if location.location_type == "planet" %}
+    {% include "locations/planets/detail.html" with location=location %}
+{% elif location.location_type == "asteroid" %}
+    {% include "locations/asteroids/detail.html" with location=location %}
+{% elif location.location_type == "moon" %}
+    {% include "locations/moons/detail.html" with location=location %}
+{% elif location.location_type == "star" %}
+    {% include "locations/stars/detail.html" with location=location %}
+{% elif location.location_type == "nebula" %}
+    {% include "locations/nebulas/detail.html" with location=location %}
+{% endif %}

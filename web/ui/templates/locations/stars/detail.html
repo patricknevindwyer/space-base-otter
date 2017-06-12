@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block content %}
+{% include 'locations/p_location_header.html' with location=location %}
+
+<div class="row">
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+        {% include "locations/p_planet_orbiters.html" with location=location %}
+        {% include "locations/p_registered_ships.html" with ships=location.registrants %}
+    </div>
+</div>
+{% endblock %}
