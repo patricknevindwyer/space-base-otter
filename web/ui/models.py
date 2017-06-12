@@ -1332,7 +1332,8 @@ class Ship(models.Model):
                     "name": planet.name,
                     "id": planet.id,
                     "distance": real_dist,
-                    "fuel_burned_percent": real_dist / max_range * 100.0
+                    "fuel_burned_percent": real_dist / max_range * 100.0,
+                    "location_type": planet.location_type
                 }
             )
         plist.sort(key=lambda s: s["distance"])
