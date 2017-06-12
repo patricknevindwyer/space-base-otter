@@ -121,9 +121,16 @@ def buy(request, ship_id):
     user.profile.credits = user.profile.credits - ship.value
     user.profile.save()
 
+    # track our yard - we may need to refresh ships
+    yard = ship.shipyard
+
     # assign ownership
     ship.owner = user.profile
+    ship.shipyard = None
     ship.save()
+
+    if yard.ships.count() == 0:
+        yard.seed_ships(3)
 
     messages.info(request, "Congratulations, you bought a ship!")
 

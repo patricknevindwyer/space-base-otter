@@ -1,11 +1,18 @@
 # BUGS
 
- - when you buy a ship, it is somehow still listed as being available in its home shipyard, clicking
-   on it again properly tells you it's already owned
-   
 # TODO
 
- 
+  - move purchasing of things into a common library
+   - goods
+    - buy
+    - sell
+   - ships
+    - buy
+    - sell?
+   - upgrades
+    - buy
+  - move travel to a common library
+    
   - generate galaxies differently
    - stars have planets
    - stars have asteroids
