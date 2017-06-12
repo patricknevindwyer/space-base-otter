@@ -14,7 +14,7 @@
         <tbody>
             {% if not ship.is_home_planet_in_range and not ship.is_home %}
                 <tr class="success">
-                    <td><a href="{% url 'planet' ship.home_planet.id %}">{{ ship.home_planet.name }}</a></td>
+                    <td><a href="{% url 'location' ship.home_planet.id %}">{{ ship.home_planet.name }}</a></td>
                     <td>?? LY</td>
                     <td>100%</td>
                     <td>
@@ -25,13 +25,13 @@
             {% for location in locations %}
                 {% if location.id != ship.location.id %}
                 <tr>
-                    <td><a href="{% url 'planet' location.id %}">{{ location.name }}</a></td>
+                    <td><a href="{% url 'location' location.id %}">{{ location.name }}</a></td>
                     <td>{{ location.distance|floatformat:2 }} <abbr title="Light Yeards">LY</abbr></td>
                     <td>{{ location.fuel_burned_percent|floatformat:0 }}%</td>
                     {% if location.id == ship.home_planet.id %}
-                    <td><a href="{% url 'ship-travel-to-planet' ship.id location.id %}" class="btn btn-xs btn-warning">{% bootstrap_icon 'transfer' %} Warp Home</a></td>
+                    <td><a href="{% url 'ship-travel-to-location' ship.id location.id %}" class="btn btn-xs btn-warning">{% bootstrap_icon 'transfer' %} Warp Home</a></td>
                     {% else %}
-                    <td><a href="{% url 'ship-travel-to-planet' ship.id location.id %}" class="btn btn-xs btn-success">{% bootstrap_icon 'transfer' %} Warp to {{ location.location_type|capfirst }}</a></td>
+                    <td><a href="{% url 'ship-travel-to-location' ship.id location.id %}" class="btn btn-xs btn-success">{% bootstrap_icon 'transfer' %} Warp to {{ location.location_type|capfirst }}</a></td>
                     {% endif %}
                 </tr>
                 {% endif %}

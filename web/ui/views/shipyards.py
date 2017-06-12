@@ -21,10 +21,10 @@ def yard(request, ship_id, shipyard_id):
     """
     ship = get_object_or_404(Ship, pk=ship_id)
     shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
-    planet = shipyard.planet
+    location = shipyard.planet
 
     # are we actually at this planet?
-    if ship.location != planet:
+    if ship.location != location:
         return redirect(reverse("ship", args=(ship_id,)))
 
     # does the user actually own this ship?
@@ -32,7 +32,7 @@ def yard(request, ship_id, shipyard_id):
         return redirect(reverse("ships"))
 
     print "There are %d ships at the yard" % (shipyard.ships.count(),)
-    return render(request, "shipyards/yard.html", context=fill_context({"ship": ship, "planet": planet, "shipyard": shipyard, "upgrade_blurb": ShipUpgrade.objects.upgrade_quality_blurb()}))
+    return render(request, "shipyards/yard.html", context=fill_context({"ship": ship, "location": location, "shipyard": shipyard, "upgrade_blurb": ShipUpgrade.objects.upgrade_quality_blurb()}))
 
 
 def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):
@@ -48,10 +48,10 @@ def buy_upgrade(request, ship_id, shipyard_id, shipupgrade_id):
     ship = get_object_or_404(Ship, pk=ship_id)
     shipyard = get_object_or_404(ShipYard, pk=shipyard_id)
     upgrade = get_object_or_404(ShipUpgrade, pk=shipupgrade_id)
-    planet = shipyard.planet
+    location = shipyard.planet
 
-    # are we actually at the planet for this shipyard?
-    if ship.location != planet:
+    # are we actually at the location for this shipyard?
+    if ship.location != location:
         messages.error(request, "Your ship isn't orbiting near that ShipYard")
         return redirect(reverse("shipyard", args=(ship_id, shipyard_id)))
 

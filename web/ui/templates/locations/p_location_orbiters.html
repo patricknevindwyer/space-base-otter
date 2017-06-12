@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for orbiter in planet.orbiters.all %}
+                {% for orbiter in location.orbiters.all %}
                 <tr>
                     {% if orbiter.is_home %}
                     <td>{% bootstrap_icon 'star' %}</td>

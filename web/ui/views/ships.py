@@ -58,11 +58,11 @@ def detail(request, ship_id):
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = ship.location
+    location = ship.location
 
     # only owners can get the details on a ship
     if request.user.profile == ship.owner:
-        return render(request, "ships/detail.html", context=fill_context({"ship": ship, "planet": planet}))
+        return render(request, "ships/detail.html", context=fill_context({"ship": ship, "location": location}))
     else:
         return redirect(reverse("ships"))
 
@@ -70,22 +70,22 @@ def detail(request, ship_id):
 @login_required
 def travel(request, ship_id):
     """
-    Travel options from a planet.
+    Travel options from a location.
 
     :param request:
     :param ship_id:
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = ship.location
+    location = ship.location
 
     # only owners can get the details on a ship
     if request.user.profile == ship.owner:
 
-        if planet.shipyards.count() == 0:
-            planet.add_shipyard()
+        if location.shipyards.count() == 0:
+            location.add_shipyard()
 
-        return render(request, "ships/travel.html", context=fill_context({"ship": ship, "planet": planet}))
+        return render(request, "ships/travel.html", context=fill_context({"ship": ship, "location": location}))
     else:
         return redirect(reverse("ships"))
 
@@ -133,23 +133,23 @@ def buy(request, ship_id):
 
 @transaction.atomic
 @login_required
-def travel_to_planet(request, ship_id, planet_id):
+def travel_to_location(request, ship_id, location_id):
     """
-    Make a ship travel to a new planet.
+    Make a ship travel to a new location.
 
     :param request:
     :param ship_id:
-    :param planet_id:
+    :param location_id:
     :return:
     """
     ship = get_object_or_404(Ship, pk=ship_id)
-    planet = get_object_or_404(Location, pk=planet_id)
+    location = get_object_or_404(Location, pk=location_id)
 
-    distance = ship.distance_to(planet)
-    ship.travel_to(planet)
+    distance = ship.distance_to(location)
+    ship.travel_to(location)
     ship.burn_fuel_for_distance(distance)
 
-    messages.info(request, "Welcome to %s" % (planet.name,))
+    messages.info(request, "Welcome to %s" % (location.name,))
     return redirect(reverse("ship-travel", args=(ship_id,)))
 
 

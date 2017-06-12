@@ -139,7 +139,7 @@ class LocationManager(models.Manager):
 
     def delete_unoccupied(self):
         """
-        Delete any planets that don't have a player in orbit.
+        Delete any locations that don't have a player in orbit.
 
         :return:
         """
@@ -271,7 +271,7 @@ class LocationManager(models.Manager):
 
         # do we have a shipyard?
         if has_shipyard:
-            yard = ShipYard.objects.create_random_on_planet(obj)
+            yard = ShipYard.objects.create_random_on_location(obj)
 
         return obj
 
@@ -354,7 +354,7 @@ class Location(models.Model):
         
         :return: 
         """
-        ShipYard.objects.create_random_on_planet(self)
+        ShipYard.objects.create_random_on_location(self)
 
     def static_suffix(self):
         """
@@ -704,7 +704,7 @@ class ShipUpgradeManager(models.Manager):
 
 class ShipYardManager(models.Manager):
 
-    def create_random_on_planet(self, planet):
+    def create_random_on_location(self, location):
         """
         Generate a new ship yard.
         
@@ -716,7 +716,7 @@ class ShipYardManager(models.Manager):
         """
         yard = self.create(
             name=self._create_name(),
-            planet=planet
+            planet=location
         )
         yard.save()
 

@@ -13,10 +13,10 @@
             </tr>
         </thead>
         <tbody>
-            {% for planet in ship.computer.travel.history %}
+            {% for location in ship.computer.travel.history %}
                 <tr>
-                    <td>{{ planet.name }}</td>
-                    <td style="text-align:center">{{ planet.x_coordinate }}, {{ planet.y_coordinate }} </td>
+                    <td>{{ location.name }}</td>
+                    <td style="text-align:center">{{ location.x_coordinate }}, {{ location.y_coordinate }} </td>
                 </tr>
             {% empty %}
             <tr>

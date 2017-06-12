@@ -11,27 +11,27 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def list(request):
     """
-    The current set of planets.
+    The current set of locations.
 
     :param request:
     :return:
     """
-    all_planets = Location.objects.all()
+    all_locations = Location.objects.all()
 
     # build pagination
-    planet_pager = Paginator(all_planets, 5)
+    location_pager = Paginator(all_locations, 5)
     page = request.GET.get("page")
 
     try:
-        planets = planet_pager.page(page)
+        locations = location_pager.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        planets = planet_pager.page(1)
+        locations = location_pager.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        planets = planet_pager.page(planet_pager.num_pages)
+        locations = location_pager.page(location_pager.num_pages)
 
-    return render(request, "locations/list.html", context=fill_context({"locations": planets}))
+    return render(request, "locations/list.html", context=fill_context({"locations": locations}))
 
 
 def destroy_all(request):
@@ -41,7 +41,7 @@ def destroy_all(request):
     :return:
     """
     Location.objects.all().delete()
-    return redirect(reverse("planets"))
+    return redirect(reverse("locations"))
 
 
 def create_random(request):
@@ -51,7 +51,7 @@ def create_random(request):
     :return:
     """
     p = Location.objects.create_random()
-    return redirect(reverse("planets"))
+    return redirect(reverse("locations"))
 
 
 def create_multiple(request, quantity):
@@ -62,41 +62,41 @@ def create_multiple(request, quantity):
     """
     for i in range(int(quantity)):
         p = Location.objects.create_random()
-    return redirect(reverse("planets"))
+    return redirect(reverse("locations"))
 
 
-def remove(request, planet_id):
+def remove(request, location_id):
     """
-    Remove a planet.
+    Remove a location.
 
     :param request:
-    :param planet_id:
+    :param location_id:
     :return:
     """
-    planet = get_object_or_404(Location, pk=planet_id)
-    planet.delete()
-    return redirect(reverse("planets"))
+    location = get_object_or_404(Location, pk=location_id)
+    location.delete()
+    return redirect(reverse("locations"))
 
 
 def destroy_unoccupied(request):
     """
-    Delete any planets not currently hosting a player.
+    Delete any locations not currently hosting a player.
     
     :param request: 
     :return: 
     """
     Location.objects.delete_unoccupied()
-    return redirect(reverse("planets"))
+    return redirect(reverse("locations"))
 
 
-def detail(request, planet_id):
+def detail(request, location_id):
     """
-    Detail of a planet.
+    Detail of a location.
 
     :param request:
-    :param planet_id:
+    :param location_id:
     :return:
     """
-    planet = get_object_or_404(Location, pk=planet_id)
+    location = get_object_or_404(Location, pk=location_id)
 
-    return render(request, "locations/detail.html", context=fill_context({"location": planet}))
+    return render(request, "locations/detail.html", context=fill_context({"location": location}))
