@@ -11,3 +11,11 @@ services:
       - "8000:8000"
     depends_on:
       - db
+  redis:
+    image: redis
+  async_shipyard:
+    build: ./web
+    command: python manage.py shipyard_async
+    depends_on:
+      - db
+      - redis

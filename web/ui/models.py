@@ -704,6 +704,14 @@ class ShipUpgradeManager(models.Manager):
 
 class ShipYardManager(models.Manager):
 
+    def too_few_ships_available(self):
+        """
+        Find ship yards with an insufficient number of ships available.
+
+        :return: QuerySet of ShipYard objects
+        """
+        return self.annotate(ship_count=models.Count('ships')).filter(ship_count__lt=3)
+
     def create_random_on_location(self, location):
         """
         Generate a new ship yard.
@@ -855,13 +863,18 @@ class ShipYard(models.Model):
             Ship.objects.seed_ship_at_shipyard(self)
 
 
-    def restock_ships(self, quantity=1):
+    def restock_ships(self, up_to=3):
         """
         What ships are availale for purchase?
         
         :return: 
         """
-        pass
+        current_count = self.ships.count()
+
+        for nc in range(up_to-current_count):
+            Ship.objects.seed_ship_at_shipyard(self)
+
+        return up_to - current_count
 
     def purchase_upgrade(self, upgrade):
         """
