@@ -13,8 +13,16 @@ from ui.models import ShipYard
 class Command(BaseCommand):
     help = 'Handle asynchronous ShipYard tasks'
     lead = "[shipyard_async]"
+
+    # redis config
     control_channel = "shipyard_async_control_" + str(uuid.uuid4())
+
+    # run time control - we spin up every 20 seconds
     duty_cycle = 20
+
+    # settings sync - check every 60 seconds for settings updates
+    last_settings_sync = 0
+    setting_sync_delay = 60
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -22,6 +30,17 @@ class Command(BaseCommand):
         self.log("Connecting to redis")
         self.redis = redis.StrictRedis(host='redis', port=6379, db=0)
         self.seed_control_channel()
+
+    def sync_settings(self):
+        """
+        Pull in our settings from Redis, and sync anything
+        we need to.
+
+        :return:
+        """
+        chan_raw = self.redis.get(self.control_channel)
+        chan = json.loads(chan_raw)
+        self.duty_cycle = chan["duty_cycle"]
 
     def seed_control_channel(self):
         """
@@ -31,18 +50,24 @@ class Command(BaseCommand):
         """
         control = {
             "active": True,
-            "last_sync": str(datetime.now())
+            "last_sync": str(datetime.now()),
+            "duty_cycle": 20
         }
 
         self.redis.set(self.control_channel, json.dumps(control))
 
-    def log(self, msg):
+    def log(self, msg, *kargs, **kwargs):
         """
         Simple logging output.
 
         :param msg:
         :return:
         """
+        if len(kargs) > 0:
+            msg = msg % kargs
+        if len(kwargs) > 0:
+            msg = msg % kwargs
+
         print "%s [%s] - %s" % (self.lead, str(datetime.now()), msg)
 
     def handle(self, *args, **options):
@@ -55,13 +80,17 @@ class Command(BaseCommand):
         """
         self.log("Starting /shipyard_async/")
 
-        keep_running = True
-
         while self.keep_running():
 
-            self.log("starting async shipyard resource check")
+            # do our settings house keeping
+            now = time.time()
+            if now - self.last_settings_sync > self.setting_sync_delay:
+                self.log("synchronizing settings")
+                self.sync_settings()
+                self.last_settings_sync = now
 
             # Let's restock ships
+            self.log("starting shipyard resource check")
             yard = ShipYard.objects.too_few_ships_available().first()
 
             if yard is not None:
