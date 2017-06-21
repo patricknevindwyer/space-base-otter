@@ -51,7 +51,8 @@ class Command(BaseCommand):
         control = {
             "active": True,
             "last_sync": str(datetime.now()),
-            "duty_cycle": 20
+            "duty_cycle": 20,
+            "type": "shipyard_async_control"
         }
 
         self.redis.set(self.control_channel, json.dumps(control))
@@ -102,6 +103,8 @@ class Command(BaseCommand):
 
             # sleep for a bit
             time.sleep(self.duty_cycle)
+
+        self.log("Stopping /shipyard_async/")
 
     def keep_running(self):
         """

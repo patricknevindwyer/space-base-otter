@@ -13,7 +13,7 @@ services:
       - db
   redis:
     image: redis
-  async_shipyard:
+  shipyard_async_control:
     build: ./web
     command: python manage.py shipyard_async
     depends_on:

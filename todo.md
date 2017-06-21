@@ -1,7 +1,17 @@
 # BUGS
 
 # TODO
-
+ - async
+  - make it a base class
+  - check scaling # of runners for each task
+  - add a control command
+   - start / stop
+   - modify settings
+  - async channels need expirations
+  - add a way to look for all active control channels
+  - control channels need to log their unique ID somewhere?
+  - front end needs to occasionally query for backend channels
+  
   - generate galaxies differently
    - stars have planets
    - stars have asteroids
