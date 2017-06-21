@@ -55,7 +55,7 @@ class Command(BaseCommand):
             "type": "shipyard_async_control"
         }
 
-        self.redis.set(self.control_channel, json.dumps(control))
+        self.redis.pexset(self.control_channel, self.duty_cycle * 1000 * 2, json.dumps(control))
 
     def log(self, msg, *kargs, **kwargs):
         """
@@ -124,7 +124,7 @@ class Command(BaseCommand):
         run = chan["active"]
 
         # store our settings
-        self.redis.set(self.control_channel, json.dumps(chan))
+        self.redis.psetex(self.control_channel, self.duty_cycle * 1000 * 2, json.dumps(chan))
 
         return run
 
