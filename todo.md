@@ -1,12 +1,33 @@
 # BUGS
 
+# right now
+ 
+ - generator updates
+  - real fuel_markup
+  - resources
+  - imports/exports
+  - shipyards
+  - bases
+ - update Location model
+  - location hash
+  - parent locations
+  - find travel locations by filtering to locations with no parent (root objects)
+  - parent objects need a description/summary of their children
+  
 # TODO
+ - externalize postgres db
  - async
   - make it a base class
   - check scaling # of runners for each task
   - front end needs to occasionally query for backend channels
   
   - generate galaxies differently
+   - start with just bulk generation of a sector
+    - probability map
+    - top level location striding
+    - star > planet
+    - star > astroids
+    - planet > moon
    - stars have planets
    - stars have asteroids
    - planets have moons
@@ -29,9 +50,23 @@
     - sell?
    - upgrades
     - buy
-    
-  
-
+ - Locations
+  - have total mass
+  - have resources
+   - track in situ vs recovered resources
+ - more ship upgrades
+   - fuel extenders
+   - ships computer improvements
+    - upgrade finder
+ - ships
+  - edit names
+  - uninstall/sell upgrades
+ - marketplaces
+  - don't buy and sell the same things
+  - price fluctuations
+   - pricing data in JSON blob for location?
+ - buildings
+  - generate resources
  - NPCs
   - add NPC base class?
   - profile can point to NPC or User

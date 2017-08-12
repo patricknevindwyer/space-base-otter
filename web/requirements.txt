@@ -2,3 +2,4 @@ Django
 psycopg2
 django-bootstrap3
 redis
+opensimplex
