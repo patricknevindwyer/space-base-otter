@@ -8,6 +8,7 @@
   - imports/exports
   - shipyards
   - bases
+  - generate entire sector
  - update Location model
   - location hash
   - parent locations
