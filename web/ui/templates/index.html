@@ -3,7 +3,11 @@
 {% block content %}
 <div class="row">
     <div class="col-md-4">
-        <h1>{{ planet_count }} planets</h1>
+        <ul class="list-group">
+            {% for loc_count in location_counts %}
+            <li class="list-group-item">{{ loc_count.location_type}} <span class="badge">{{ loc_count.count }}</span></li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}

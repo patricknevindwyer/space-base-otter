@@ -3,17 +3,25 @@
 # right now
  
  - generator updates
-  - real fuel_markup
   - resources
   - imports/exports
   - shipyards
   - bases
   - generate entire sector
+  - location stats
+   - star (mass, size, luminosity, etc)
+   - planet (mass, size, resources, etc)
+   - moon
+   - asteroid
+   - nebula
+ - summary stats at site root
+  - how many of each type
+ - track which sectors have been created
+ 
  - update Location model
-  - location hash
-  - parent locations
   - find travel locations by filtering to locations with no parent (root objects)
   - parent objects need a description/summary of their children
+  - retrieve all objects by `location_hash`
   
 # TODO
  - externalize postgres db

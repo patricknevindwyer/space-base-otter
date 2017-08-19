@@ -340,7 +340,14 @@ class Location(models.Model):
     # What kind of location is this?
     location_type = models.CharField(max_length=255, null=False, blank=False, choices=LOCATION_CHOICES, default="planet")
 
+    # what features does this location have?
     location_meta = JSONField(null=False, blank=False, default=default_location_meta)
+
+    # does this location have a parent location?
+    parent = models.ForeignKey("Location", null=True)
+
+    # location hash let's us grab a whole set of related locations in a single query
+    location_hash = models.CharField(max_length=64, null=True, blank=True, db_index=True)
 
     def imports(self):
         return self.goods.filter(is_import=True)
